@@ -26,7 +26,7 @@
                   </div>
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelS" class="border w-full p-2 rounded">
-                          <option value="">Tout spécialité</option>
+                          <option value="">Toute spécialité</option>
                           <option v-for="(name, index) in specialityOption" :key="index">{{name}}</option>
                       </select>
                   </div>
@@ -139,7 +139,7 @@
                         ]
                     },
                     {
-                        name: 'Université de Paris 2',
+                        name: 'Université de Lyon 2',
                         pays: 'France',
                         ville: 'Lyon',
                         image: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
