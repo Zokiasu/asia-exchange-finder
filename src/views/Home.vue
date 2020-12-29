@@ -1,4 +1,5 @@
 <template>
+
   <div class="bg-black bg-opacity-30 h-auto text-white absolute inset-x-0 top-0 flex flex-col">
 
       <h1 class="font-bold text-center mt-20 ms:mt-24 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Asia Exchange Finder</h1>
@@ -15,19 +16,19 @@
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelV" class="border w-full p-2 rounded">
                           <option value="">Toute ville</option>
-                          <option v-for="(name, index) in cityStartOption" :key="index">{{name}}</option>
+                          <option v-for="(name, index) in option.cityStartOption" :key="index">{{name}}</option>
                       </select>
                   </div>
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelD" class="border w-full p-2 rounded">
                           <option value="">Toute destination</option>
-                          <option v-for="(name, index) in countryOption" :key="index">{{name}}</option>
+                          <option v-for="(name, index) in option.countryOption" :key="index">{{name}}</option>
                       </select>
                   </div>
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelS" class="border w-full p-2 rounded">
                           <option value="">Toute spécialité</option>
-                          <option v-for="(name, index) in specialityOption" :key="index">{{name}}</option>
+                          <option v-for="(name, index) in option.specialityOption" :key="index">{{name}}</option>
                       </select>
                   </div>
               </div>
@@ -44,7 +45,8 @@
                       v-for="university in this.universitysSend"
                       :key="university.name"
                       :university="university"
-                      @onClick = "getuniqueUniversityNameCard">
+                      @onClick = "getuniqueUniversityNameCard"
+                      @created="init">
                   </card>
               </div>
 
@@ -61,14 +63,18 @@
       </div>
 
   </div>
+  
 </template>
 
 <script>
     import $ from 'jQuery'
     import Card from '../components/Card.vue'
     import Navbar from '../components/navbar.vue'
+    import firebase from 'firebase'
+    import db from '../main.js'
 
     export default {
+
         components:{
             Card,
             Navbar
@@ -137,86 +143,6 @@
                                 website: 'https://www.google.com/'
                             },
                         ]
-                    },
-                    {
-                        name: 'Université de Lyon 2',
-                        pays: 'France',
-                        ville: 'Lyon',
-                        image: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
-                        partner: [
-                            {
-                                name: 'University Hello 2',
-                                pays: 'Japon',
-                                ville: 'Tokyo',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Kitty 2',
-                                pays: 'Japon',
-                                ville: 'Kyoto',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                        ]
-                    },
-                    {
-                        name: 'Université de Paris 3',
-                        pays: 'France',
-                        ville: 'Paris',
-                        image: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
-                        partner: [
-                            {
-                                name: 'University Hello 3',
-                                pays: 'Japon',
-                                ville: 'Tokyo',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Kitty 3',
-                                pays: 'Japon',
-                                ville: 'Kyoto',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                        ]
-                    },
-                    {
-                        name: 'Université de Paris 4',
-                        pays: 'France',
-                        ville: 'Paris',
-                        image: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
-                        partner: [
-                            {
-                                name: 'University Hello 4',
-                                pays: 'Japon',
-                                ville: 'Tokyo',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Kitty 4',
-                                pays: 'Japon',
-                                ville: 'Kyoto',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Deins 4',
-                                pays: 'Chine',
-                                ville: 'Hong Kong',
-                                specialité: ['economie', 'politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                        ]
                     }
                 ],
 
@@ -234,29 +160,40 @@
             }
         },
 
-        mounted(){
-            this.init();
+        created(){
+            var testuni = this.universitys
+
+            let testS = db .ref("universitys")
+            testS.once("value", function(snapshot){
+                snapshot.forEach(function(element){
+                    testuni.push(element.val())
+                })
+            })
+            
+            this.universitysSend = testuni
+            this.universitysSend.splice(0,1)
         },
 
         methods: {
 
-            init: function() {
+            init(){
                 var cityStart = [];
                 var countryPartener = [];
                 var specialityPartener = [];
 
-                this.universitys.forEach(el => {
+                this.universitysSend.forEach(el => {
                     cityStart.push(el.ville)
                     el.partner.forEach(el2 => {
-                        el2.specialité.forEach(el3 => {specialityPartener.push(el3)})                        
+                        el2.specialité.forEach(el3 => {
+                            specialityPartener.push(el3)
+                        })                        
                         countryPartener.push(el2.pays)
                     })
                 })
 
-                this.countryOption = [...new Set(countryPartener)]
-                this.specialityOption = [...new Set(specialityPartener)]
-                this.cityStartOption = [...new Set(cityStart)]
-                this.universitysSend = this.universitys
+                this.option.countryOption = [...new Set(countryPartener)]
+                this.option.specialityOption = [...new Set(specialityPartener)]
+                this.option.cityStartOption = [...new Set(cityStart)]
             },
 
             getuniqueUniversityNameCard (val) {

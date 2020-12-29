@@ -25,6 +25,9 @@ export default {
     components:{
         //Tag
     },
+    created() {
+        this.$emit('created');
+    },
     
     methods: {
         openCard(name) {
