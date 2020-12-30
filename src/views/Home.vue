@@ -16,19 +16,19 @@
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelV" class="border w-full p-2 rounded">
                           <option value="">Toute ville</option>
-                          <option v-for="(name, index) in option.cityStartOption" :key="index">{{name}}</option>
+                          <option v-for="(city, index) in option.cityStartOption" :key="index">{{city}}</option>
                       </select>
                   </div>
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelD" class="border w-full p-2 rounded">
                           <option value="">Toute destination</option>
-                          <option v-for="(name, index) in option.countryOption" :key="index">{{name}}</option>
+                          <option v-for="(destination, index) in option.countryOption" :key="index">{{destination}}</option>
                       </select>
                   </div>
                   <div class="pt-6 ms:pl-6">
                       <select v-model="modelS" class="border w-full p-2 rounded">
                           <option value="">Toute spécialité</option>
-                          <option v-for="(name, index) in option.specialityOption" :key="index">{{name}}</option>
+                          <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
                       </select>
                   </div>
               </div>
@@ -43,7 +43,7 @@
               <div class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
                   <card
                       v-for="university in this.universitysSend"
-                      :key="university.name"
+                      :key="university.universitySourceName"
                       :university="university"
                       @onClick = "getuniqueUniversityNameCard"
                       @created="init">
@@ -97,73 +97,41 @@
 
                 universitys: [
                     {
-                        name: 'Université de Paris 1',
-                        pays: 'France',
-                        ville: 'Paris',
-                        image: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
-                        partner: [
+                        universitySourceName: 'Université de Paris 1',
+                        universitySourceCountry: 'France',
+                        universitySourceCity: 'Paris',
+                        universitySourceImageLink: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
+                        universitySourceWebsiteLink: 'https://www.google.com/',
+                        universitySourcerPartner: [
                             {
-                                name: 'University Hello 1',
-                                pays: 'Japon',
-                                ville: 'Tokyo',
-                                specialité: ['politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Kitty 1',
-                                pays: 'Japon',
-                                ville: 'Kyoto',
-                                specialité: ['politique', 'droit', 'informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Deins 1',
-                                pays: 'Chine',
-                                ville: 'Hong Kong',
-                                specialité: ['informatique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Hang 1',
-                                pays: 'Corée du Sud',
-                                ville: 'Séoul',
-                                specialité: ['politique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
-                            },
-                            {
-                                name: 'University Hang 1',
-                                pays: 'Taïwan',
-                                ville: 'Taïpei',
-                                specialité: ['politique'],
-                                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
-                                website: 'https://www.google.com/'
+                                universityPartnerName: 'University Hello 1',
+                                universityPartnerCountry: 'Japon',
+                                universityPartnerCity: 'Tokyo',
+                                universityPartnerSpeciality: ['Politique', 'Droit', 'Informatique'],
+                                universityPartnerCondition: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut semper bibendum posuere. Sed sit amet laoreet ligula. Suspendisse potenti. In hac habitasse platea dictumst. Maecenas mattis tortor lacus, at laoreet dolor laoreet nec. Vestibulum nec porta massa, sed volutpat ligula. Suspendisse porttitor augue ut mauris tristique accumsan. Etiam tempor eu nisl tincidunt tristique. Sed nec tristique mauris. Donec et nibh non diam lobortis dictum sed a metus. Mauris iaculis at risus id sagittis. Quisque a ultrices dolor. Cras faucibus feugiat felis, id mollis ante vehicula et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lacinia consequat ex quis elementum. Fusce nec ex id nisl semper vestibulum ut quis tortor.',
+                                universityPartnerWebsiteLink: 'https://www.google.com/'
                             },
                         ]
                     }
                 ],
 
                 universityObject: {
-                    nameB: '',
-                    paysB: '',
-                    villeB: '',
-                    imageB: '',
-                    partnerB: []
+                    universitySourceName: '',
+                    universitySourceCountry: '',
+                    universitySourceCity: '',
+                    universitySourceImageLink: '',
+                    universitySourceWebsiteLink: '',
+                    universitySourcerPartner: []
                 },
 
-                visible: false,
-
-                uniqueUniversityName: ''
+                visible: false
             }
         },
 
         created(){
             var testuni = this.universitys
 
-            let testS = db .ref("universitys")
+            let testS = db.ref("universitys")
             testS.once("value", function(snapshot){
                 snapshot.forEach(function(element){
                     testuni.push(element.val())
@@ -172,6 +140,7 @@
             
             this.universitysSend = testuni
             this.universitysSend.splice(0,1)
+            console.log(this.universitysSend)
         },
 
         methods: {
@@ -182,12 +151,12 @@
                 var specialityPartener = [];
 
                 this.universitysSend.forEach(el => {
-                    cityStart.push(el.ville)
-                    el.partner.forEach(el2 => {
-                        el2.specialité.forEach(el3 => {
-                            specialityPartener.push(el3)
-                        })                        
-                        countryPartener.push(el2.pays)
+                    cityStart.push(el.universitySourceCity)
+                    el.universitySourcerPartner.forEach(el2 => {
+                        el2.universityPartnerSpeciality.forEach(el3 => {
+                            specialityPartener.push(el3.specialityName)
+                        })                    
+                        countryPartener.push(el2.universityPartnerCountry)
                     })
                 })
 
@@ -201,30 +170,29 @@
                 this.$refs.navbarComponent.drawer();
             },
 
-            setValue: function(tests) {
-                this.uniqueUniversityName = tests;
+            setValue: function(universitySourceNameToFind) {
                 for (var i = 0; i < this.universitys.length; i++) {
-                    if(this.universitys[i].name === this.uniqueUniversityName){
-                        this.universityObject.nameB = this.universitys[i].name,
-                        this.universityObject.paysB = this.universitys[i].pays,
-                        this.universityObject.villeB = this.universitys[i].ville,
-                        this.universityObject.imageB = this.universitys[i].image,
-                        this.universityObject.partnerB = this.universitys[i].partner
+                    if(this.universitys[i].universitySourceName === universitySourceNameToFind){
+                        this.universityObject.universitySourceName = this.universitys[i].universitySourceName,
+                        this.universityObject.universitySourceCountry = this.universitys[i].universitySourceCountry,
+                        this.universityObject.universitySourceCity = this.universitys[i].universitySourceCity,
+                        this.universityObject.universitySourceImageLink = this.universitys[i].universitySourceImageLink,
+                        this.universityObject.universitySourceWebsiteLink = this.universitys[i].universitySourceWebsiteLink,
+                        this.universityObject.universitySourcerPartner = this.universitys[i].universitySourcerPartner
                     }
                 }
             },
 
             searchByFilter() {
-                var filtered
-                filtered = this.universitys.filter((el) => {
+                this.universitysSend = this.universitys.filter((el) => {
                         if(this.modelV == "") {
-                            return (this.booleanByCountry(el.partner))
+                            return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
-                            return (el.ville.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.partner))
+                            return (el.ville.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
                 )
-                this.universitysSend = filtered
+                
                 if(this.universitysSend.length > 0) {
                     this.show = false
                 } else {
@@ -237,7 +205,7 @@
 
                 if(this.modelD != "" && this.modelS != "") {
                     testList.forEach(el => {
-                        if(el.pays === this.modelD && el.specialité.indexOf(this.modelS) > -1) {
+                        if(el.universityPartnerCountry === this.modelD && el.universityPartnerSpeciality.indexOf(this.modelS) > -1) {
                             res = true
                         }
                     })
@@ -245,7 +213,7 @@
 
                 else if(this.modelD == "" && this.modelS != "") {
                      testList.forEach(el => {
-                        if(el.specialité.indexOf(this.modelS) > -1) {
+                        if(el.universityPartnerSpeciality.indexOf(this.modelS) > -1) {
                             res = true
                         }
                     })
@@ -253,7 +221,7 @@
                 
                 else if(this.modelD != "" && this.modelS == "") {
                     testList.forEach(el => {
-                        if(el.pays === this.modelD) {
+                        if(el.universityPartnerCountry === this.modelD) {
                             res = true
                         }
                     })

@@ -15,7 +15,7 @@
       </button>
       <!-- Header -->
       <div>
-        <img class="relative h-60 w-full object-cover object-center" v-bind:src="university.imageB" alt="">
+        <img class="relative h-60 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
         <div class="container absolute top-48 right-0 flex justify-end">
             <a href="https://twitter.com/AsiaStudeler" target="_blank">
                 <button class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
@@ -24,7 +24,7 @@
                 </button>
             </a>
         </div>
-        <p class="absolute top-0 m-3 text-4xl md:text-5xl lg:text-5xl xl:text-7xl text-white">{{ university.nameB }}</p>
+        <p class="absolute top-0 m-3 text-4xl md:text-5xl lg:text-5xl xl:text-7xl text-white">{{ university.universitySourceName }}</p>
       </div>
       <!-- Filters -->
       <div class="px-4 py-2 w-full place-items-center">
@@ -32,8 +32,8 @@
       </div>
       <!-- University Card -->
       <UniversityCardInfo
-                    v-for="university in this.university.partnerB"
-                    :key="university.name"
+                    v-for="university in this.university.universitySourcerPartner"
+                    :key="university.universityPartnerName"
                     :university="university">
       </UniversityCardInfo>
       <!-- Leave -->
