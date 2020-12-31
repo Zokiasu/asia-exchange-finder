@@ -32,6 +32,13 @@
                     <div class="flex flex-wrap mb-6">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceAddress" v-model="source.universitySourceAddress" type="text" placeholder="Address">
+                            <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Address</label>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="universitySourceImageLink" v-model="source.universitySourceImageLink" type="link" placeholder="Image Link">
                             <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Image Link</label>
                         </div>
@@ -57,6 +64,11 @@
                             <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             type="text" v-model="partner.universityPartnerCountry" id="universityPartnerCountry" placeholder="Country">
                             <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerCountry">Country</label>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            type="text" v-model="partner.universityPartnerAddress" id="universityPartnerAddress" placeholder="Address">
+                            <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerAddress">Address</label>
                         </div>
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -152,6 +164,7 @@
                         "universitySourceName": "",
                         "universitySourceCountry": "",
                         "universitySourceCity": "",
+                        "universitySourceAddress": "",
                         "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
                         "universitySourcerPartner": [
@@ -159,6 +172,7 @@
                                 "universityPartnerName": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
+                                "universityPartnerAddress": "",
                                 "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
                                 "universityPartnerSpeciality": [
@@ -216,6 +230,7 @@
                         "universityPartnerName": "",
                         "universityPartnerCountry": "",
                         "universityPartnerCity": "",
+                        "universityPartnerAddress": "",
                         "universityPartnerWebsiteLink": "",
                         "universityPartnerCondition": "",
                         "universityPartnerSpeciality": [
