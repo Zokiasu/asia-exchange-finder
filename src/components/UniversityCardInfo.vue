@@ -43,10 +43,6 @@ import Tag from './Tag.vue'
     universityPartnerName: 'university',
     props: ['university'],
 
-    created(){
-        console.log(this.university.universityPartnerSpeciality)
-    },
-
     data() {
         return{
             link: this.university.universityPartnerWebsiteLink,

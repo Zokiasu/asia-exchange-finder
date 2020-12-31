@@ -1,96 +1,116 @@
 <template>
-    <div class="my-12">
+    <div class="bg-black bg-opacity-30 h-auto text-white absolute inset-x-0 top-0 flex flex-col">
 
-        <form @submit.prevent="loginRequest" id="login-form" class="mx-10 lg:mx-40 xl:mx-64 2xl:mx-96 p-10 rounded-xl border-black bg-gray-500 bg-opacity-50" v-for="(source,a) in form" :key="a">
-            <!-- University Source -->
-            <div class="space-y-5">
-                <div class="grid grid-cols-1 gap-1">
-                    <label class="ms:text-2xl font-bold" for="universitySourceName">University Name</label>
-                    <input class="" type="text" v-model="source.universitySourceName" id="universitySourceName">
-                </div>
-                <div class="grid grid-cols-1 gap-1">
-                    <label class="ms:text-2xl font-bold" for="universitySourceCountry">Country</label>
-                    <input class="" type="text" v-model="source.universitySourceCountry" id="universitySourceCountry">
-                </div>
-                <div class="grid grid-cols-1 gap-1">
-                    <label class="ms:text-2xl font-bold" for="universitySourceCity">City</label>
-                    <input class="" type="text" v-model="source.universitySourceCity" id="universitySourceCity">
-                </div>
-                <div class="grid grid-cols-1 gap-1">
-                    <label class="ms:text-2xl font-bold" for="universitySourceImageLink">Image Link</label>
-                    <input class="" type="link" v-model="source.universitySourceImageLink" id="universitySourceImageLink">
-                </div>
-                <div class="grid grid-cols-1 gap-1">
-                    <label class="ms:text-2xl font-bold" for="universitySourceWebsiteLink">Website Link</label>
-                    <input class="" type="link" v-model="source.universitySourceWebsiteLink" id="universitySourceWebsiteLink">
-                </div>
-            </div>
-            <p class="ms:text-2xl font-bold mt-5">Partner</p>
-            <!-- University Partner -->
-            <div class="bg-gray-600 bg-opacity-70 rounded p-3.5" v-for="(partner,b) in source.universitySourcerPartner" :key="b">
+        <h1 class="font-bold text-center mt-20 ms:mt-24 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Asia Exchange Finder</h1>
 
-                <div class="space-y-2">
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="universityPartnerName">University Name</label>
-                        <input class="" type="text" v-model="partner.universityPartnerName" id="universityPartnerName">
-                    </div>
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="universityPartnerCountry">Country</label>
-                        <input class="" type="text" v-model="partner.universityPartnerCountry" id="universityPartnerCountry">
-                    </div>
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="universityPartnerCity">City</label>
-                        <input class="" type="text" v-model="partner.universityPartnerCity" id="universityPartnerCity">
-                    </div>
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="universityPartnerWebsiteLink">Website Link</label>
-                        <input class="" type="link" v-model="partner.universityPartnerWebsiteLink" id="universityPartnerWebsiteLink">
-                    </div>
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="speciality">Speciality</label>
-                        <div class="form-group grid grid-cols-1 gap-1" v-for="(speciality,k) in partner.universityPartnerSpeciality" :key="k">
-                            <input type="text" class="form-control" v-model="speciality.specialityName" id="specialityName">
-                            <span class="">
-                                <button class="text-blue-500 font-bold mr-2" @click="addSpeciality(k, partner, b)" v-show="k == partner.universityPartnerSpeciality.length-1">Add</button>
-                                <span class="mr-2" v-show="k == partner.universityPartnerSpeciality.length-1 && partner.universityPartnerSpeciality.length > 1">|</span>
-                                <button class="text-red-500 font-bold" @click="removeSpeciality(k, partner, b)" v-show="k || ( !k && partner.universityPartnerSpeciality.length > 1)">Remove</button>
-                            </span>
+        <div class="my-12">
+            <form @submit.prevent="loginRequest" id="login-form" class="mx-10 lg:mx-40 xl:mx-64 2xl:mx-96 px-5 pt-1 pb-5 rounded-xl bg-gray-400 bg-opacity-70 text-black" v-for="(source,a) in form" :key="a">
+                <h2 class="w-full my-2 text-3xl leading-tight font-bold">University form</h2>
+                <!-- University Source -->
+                <div class="space-y-5 font-bold mb-5">
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceName" v-model="source.universitySourceName" type="text" placeholder="University Name">
+                            <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University Name</label>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-1">
-                        <label class="ms:text-xl font-bold" for="Condition">Condition</label>
-                        <!--<AppFormTextarea
-                            name=""
-                            v-model="partner.universityPartnerCondition"
-                        />-->
-                        <textarea v-model="partner.universityPartnerCondition" @input="resize($event)"></textarea>
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceCountry" v-model="source.universitySourceCountry" type="text" placeholder="Country">
+                            <label for="universitySourceCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Country</label>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceCity" v-model="source.universitySourceCity" type="text" placeholder="City">
+                            <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">City</label>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceImageLink" v-model="source.universitySourceImageLink" type="link" placeholder="Image Link">
+                            <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Image Link</label>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap mb-6">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="universitySourceWebsiteLink" v-model="source.universitySourceWebsiteLink" type="link" placeholder="Website Link">
+                            <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
+                        </div>
                     </div>
                 </div>
+                <!-- Partner Form -->
+                <div class="bg-gray-600 bg-opacity-70 rounded px-5 pb-5 pt-1" v-for="(partner,b) in source.universitySourcerPartner" :key="b">
+                    <h2 class="w-full my-2 text-3xl leading-tight font-bold">Partner form</h2>
+                    <div class="flex flex-wrap">
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            type="text" v-model="partner.universityPartnerName" id="universityPartnerName" placeholder="University Name">
+                            <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerName">University Name</label>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            type="text" v-model="partner.universityPartnerCountry" id="universityPartnerCountry" placeholder="Country">
+                            <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerCountry">Country</label>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            type="text" v-model="partner.universityPartnerCity" id="universityPartnerCity" placeholder="City">
+                            <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerCity">City</label>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating">
+                            <input class="tracking-wide py-2 px-4 mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            type="link" v-model="partner.universityPartnerWebsiteLink" id="universityPartnerWebsiteLink" placeholder="Website Link">
+                            <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="universityPartnerWebsiteLink">Website Link</label>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating mb-2">
+                            <div class="" v-for="(speciality,k) in partner.universityPartnerSpeciality" :key="k">
+                                <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                                type="text" v-model="speciality.specialityName" id="specialityName" placeholder="Speciality">
+                                <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="speciality">Speciality</label>
+                                <span class="">
+                                    <button class="text-green-500 text-sm mr-2" @click="addSpeciality(k, partner, b)" v-show="k == partner.universityPartnerSpeciality.length-1">Add Speciality</button>
+                                    <span class="mr-2" v-show="k == partner.universityPartnerSpeciality.length-1 && partner.universityPartnerSpeciality.length > 1">|</span>
+                                    <button class="text-red-500 text-sm" @click="removeSpeciality(k, partner, b)" v-show="k || ( !k && partner.universityPartnerSpeciality.length > 1)">Remove Speciality</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="relative w-full appearance-none label-floating">
+                            <textarea class="autoexpand tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            v-model="partner.universityPartnerCondition" @input="resize($event)" placeholder="Condition..."></textarea>
+                            <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Condition...</label>
+                        </div>
+                    </div>
 
-                <span>
-                    <button class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 font-bold mr-2" @click="addPartner(b, source)" v-show="b == source.universitySourcerPartner.length-1">Add Partner</button>
-                    <span class="mr-2" v-show="b == source.universitySourcerPartner.length-1 && source.universitySourcerPartner.length > 1">|</span>
-                    <button class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 font-bold" @click="removePartner(b, source)" v-show="b || ( !b && source.universitySourcerPartner.length > 1)">Remove Partner</button>
-                </span>
-
-            </div>
-            <!-- Bouton Send -->
-            <div class="w-full">
-                <div v-if="errorMessage !== ''" class="mb-2" role="alert">
-                    {{ errorMessage }}
+                    <span>
+                        <button class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2" @click="addPartner(b, source)" v-show="b == source.universitySourcerPartner.length-1">Add Partner</button>
+                        <span class="mr-2" v-show="b == source.universitySourcerPartner.length-1 && source.universitySourcerPartner.length > 1">|</span>
+                        <button class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5" @click="removePartner(b, source)" v-show="b || ( !b && source.universitySourcerPartner.length > 1)">Remove Partner</button>
+                    </span>
                 </div>
-                <div v-if="successMessage !== ''" class="mb-2" role="alert">
-                    {{ successMessage }}
+                <!-- Bouton Send -->
+                <div class="w-full mt-5">
+                    <div v-if="errorMessage !== ''" class="" role="alert">
+                        {{ errorMessage }}
+                    </div>
+                    <div v-if="successMessage !== ''" class="" role="alert">
+                        {{ successMessage }}
+                    </div>
+                    <button @click="sendData" v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="text-white font-bold bg-green-500 rounded-3xl p-2 w-full">
+                        <span v-if="! xhrRequest">Send</span>
+                        <span v-if="xhrRequest">Please Wait...</span>
+                    </button>
+                    <div v-if="xhrRequest" class="" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-                <button @click="sendData" v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="text-white bg-green-500 rounded-3xl p-2 w-full font-bold">
-                    <span v-if="! xhrRequest">Send</span>
-                    <span v-if="xhrRequest">Please Wait...</span>
-                </button>
-                <div v-if="xhrRequest" class="" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
 
     </div>
 </template>
@@ -98,7 +118,7 @@
 <script>
     import AppFormTextarea from '../components/form/AppFormTextarea.vue'
     import db from '../main.js'
-    
+
     export default {
         components: {
             AppFormTextarea
@@ -110,8 +130,6 @@
                 num = snapshot.numChildren();
             })
             this.numberChildOnDatabase = num
-            console.log("created")
-            console.log(this.numberChildOnDatabase)
         },
 
         async updated(){
@@ -120,8 +138,6 @@
                 num = snapshot.numChildren();
             })
             this.numberChildOnDatabase = num
-            console.log("updated")
-            console.log(this.numberChildOnDatabase)
         },
 
         data () {
@@ -180,7 +196,6 @@
                 v.errorMessage = "";
                 v.successMessage = "";
 
-                console.log(this.form[0])
                 var up = {}
                 up['/universitys/' + this.numberChildOnDatabase] = this.form[0]
                 return db.ref().update(up).then (    
@@ -226,5 +241,22 @@
 </script>
 
 <style>
+  /* RED BORDER ON INVALID INPUT */
+  .check input:invalid {
+      border-color: red;
+  }
+
+  /* FLOATING LABEL */
+  .label-floating input:not(:placeholder-shown),
+  .label-floating textarea:not(:placeholder-shown) {
+      padding-top: 1.4rem;
+  }
+  .label-floating input:not(:placeholder-shown) ~ label,
+  .label-floating textarea:not(:placeholder-shown) ~ label {
+      font-size: 0.8rem;
+      transition: all 0.2s ease-in-out;
+      color: #1f9d55;
+      opacity: 1;
+  }
 
 </style>

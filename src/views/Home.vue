@@ -1,68 +1,68 @@
 <template>
 
-  <div class="bg-black bg-opacity-30 h-auto text-white absolute inset-x-0 top-0 flex flex-col">
+    <div class="bg-black bg-opacity-30 h-auto text-white absolute inset-x-0 top-0 flex flex-col">
 
-      <h1 class="font-bold text-center mt-20 ms:mt-24 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Asia Exchange Finder</h1>
+        <h1 class="font-bold text-center mt-20 ms:mt-24 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Asia Exchange Finder</h1>
 
-      <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
+        <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
 
-          <div class=" grid grid-cols-1 w-full">
+            <div class=" grid grid-cols-1 w-full">
 
-              <!--<div class="container flex mt-20">
-                  <input type="text" class="text-gray-700 dark:text-white rounded border shadow-inner py-2 px-3 w-full" placeholder="Pays, Ville, Domaine,..." >
-              </div>-->
+                <!--<div class="container flex mt-20">
+                <input type="text" class="text-gray-700 dark:text-white rounded border shadow-inner py-2 px-3 w-full" placeholder="Pays, Ville, Domaine,..." >
+                </div>-->
 
-              <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
-                  <div class="pt-6 ms:pl-6">
-                      <select v-model="modelV" class="border w-full p-2 rounded">
-                          <option value="">Toute ville</option>
-                          <option v-for="(city, index) in option.cityStartOption" :key="index">{{city}}</option>
-                      </select>
-                  </div>
-                  <div class="pt-6 ms:pl-6">
-                      <select v-model="modelD" class="border w-full p-2 rounded">
-                          <option value="">Toute destination</option>
-                          <option v-for="(destination, index) in option.countryOption" :key="index">{{destination}}</option>
-                      </select>
-                  </div>
-                  <div class="pt-6 ms:pl-6">
-                      <select v-model="modelS" class="border w-full p-2 rounded">
-                          <option value="">Toute spécialité</option>
-                          <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
-                      </select>
-                  </div>
-              </div>
+                <!-- Filter -->
+                <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
+                    <div class="pt-6 ms:pl-6">
+                        <select v-model="modelV" class="border w-full p-2 rounded">
+                            <option value="">Toute ville</option>
+                            <option v-for="(city, index) in option.cityStartOption" :key="index">{{city}}</option>
+                        </select>
+                    </div>
+                    <div class="pt-6 ms:pl-6">
+                        <select v-model="modelD" class="border w-full p-2 rounded">
+                            <option value="">Toute destination</option>
+                            <option v-for="(destination, index) in option.countryOption" :key="index">{{destination}}</option>
+                        </select>
+                    </div>
+                    <div class="pt-6 ms:pl-6">
+                        <select v-model="modelS" class="border w-full p-2 rounded">
+                            <option value="">Toute spécialité</option>
+                            <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
+                        </select>
+                    </div>
+                </div>
 
-              <!--<a class="mt-6 container flex justify-center" @click="test" v-if="visible">Moins de filtres</a>
-              <a class="mt-6 container flex justify-center" @click="test" v-else>Plus de filtres</a>-->
+                <!--<a class="mt-6 container flex justify-center" @click="test" v-if="visible">Moins de filtres</a>
+                <a class="mt-6 container flex justify-center" @click="test" v-else>Plus de filtres</a>-->
+                <!-- Button Search -->
+                <div class="container flex justify-center">
+                    <button @click="searchByFilter" class="mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
+                </div>
+                <!-- University Card -->
+                <div class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
+                    <card
+                        v-for="university in this.universitysSend"
+                        :key="university.universitySourceName"
+                        :university="university"
+                        @onClick = "getuniqueUniversityNameCard"
+                        @created="init">
+                    </card>
+                </div>
+                <div v-if="show" class="container mb-96 flex justify-center bg-black opacity-85 rounded-xl">
+                    <transition name="fade">
+                    <p v-if="show" class="py-2 text-lg lg:text-3xl text-white">Sélection Inexistante</p>
+                    </transition>
+                </div>
 
-              <div class="container flex justify-center">
-                  <button @click="searchByFilter" class="mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
-              </div>
-                                
-              <div class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
-                  <card
-                      v-for="university in this.universitysSend"
-                      :key="university.universitySourceName"
-                      :university="university"
-                      @onClick = "getuniqueUniversityNameCard"
-                      @created="init">
-                  </card>
-              </div>
+                <navbar ref="navbarComponent" :university="universityObject"></navbar>
 
-              <div v-if="show" class="container mb-96 flex justify-center bg-black opacity-85 rounded-xl">
-                  <transition name="fade">
-                      <p v-if="show" class="py-2 text-lg lg:text-3xl text-white">Sélection Inexistante</p>
-                  </transition>
-              </div>
+            </div>
 
-              <navbar ref="navbarComponent" :university="universityObject"></navbar>
-              
-          </div>
+        </div>
 
-      </div>
-
-  </div>
+    </div>
   
 </template>
 
