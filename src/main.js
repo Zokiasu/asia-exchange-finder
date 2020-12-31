@@ -17,7 +17,6 @@ var firebaseConfig = {
 // Initialize Firebase
 let app = firebase.initializeApp(firebaseConfig);
 let db = app.database()
-firebase.analytics();
 
 createApp(App).use(router).mount('#app')
 

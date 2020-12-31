@@ -1,16 +1,12 @@
 <template>
 
     <div class="bg-black bg-opacity-30 h-auto text-white absolute inset-x-0 top-0 flex flex-col">
-
+        
         <h1 class="font-bold text-center mt-20 ms:mt-24 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">Asia Exchange Finder</h1>
 
         <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
 
             <div class=" grid grid-cols-1 w-full">
-
-                <!--<div class="container flex mt-20">
-                <input type="text" class="text-gray-700 dark:text-white rounded border shadow-inner py-2 px-3 w-full" placeholder="Pays, Ville, Domaine,..." >
-                </div>-->
 
                 <!-- Filter -->
                 <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
@@ -34,23 +30,44 @@
                     </div>
                 </div>
 
-                <!--<a class="mt-6 container flex justify-center" @click="test" v-if="visible">Moins de filtres</a>
-                <a class="mt-6 container flex justify-center" @click="test" v-else>Plus de filtres</a>-->
                 <!-- Button Search -->
                 <div class="container flex justify-center">
                     <button @click="searchByFilter" class="mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
                 </div>
+
                 <!-- University Card -->
-                <div class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
-                    <card
-                        v-for="university in this.universitysSend"
-                        :key="university.universitySourceName"
-                        :university="university"
-                        @onClick = "getuniqueUniversityNameCard"
-                        @created="init">
-                    </card>
-                </div>
-                <div v-if="show" class="container mb-96 flex justify-center bg-black opacity-85 rounded-xl">
+                <transition-group name="fade" mode="in-out">
+                    <div v-if="visible" class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
+                        <card v-for="university in this.universitysSend"
+                            :key="university.universitySourceName"
+                            :university="university"
+                            @onClick = "getuniqueUniversityNameCard"
+                            @created="init">
+                        </card>
+                    </div>
+                    <div v-if="!visible" class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                        <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
+                            <pulse-loader :loading="loading" :color="color" :size="size" class="m-auto"></pulse-loader>
+                        </div>
+                    </div>
+                </transition-group>
+
+                <div class="container mb-96 flex justify-center bg-black opacity-85 rounded-xl">
                     <transition name="fade">
                     <p v-if="show" class="py-2 text-lg lg:text-3xl text-white">Sélection Inexistante</p>
                     </transition>
@@ -70,14 +87,17 @@
     import $ from 'jQuery'
     import Card from '../components/Card.vue'
     import Navbar from '../components/navbar.vue'
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
+    
 
     export default {
 
         components:{
             Card,
-            Navbar
+            Navbar,
+            PulseLoader
         },
 
         data () {
@@ -86,14 +106,14 @@
                 modelD:'',
                 modelS:'',
                 show: false,
+                visible: false,
+                universitysSend: [],
 
                 option: {
                     cityStartOption: [],
                     countryOption: [],
                     specialityOption: [],
                 },
-
-                universitysSend: [],
 
                 universitys: [
                     {
@@ -123,16 +143,13 @@
                     universitySourceWebsiteLink: '',
                     universitySourcerPartner: []
                 },
-
-                visible: false
             }
         },
 
-        created(){
+        async created(){
             var testuni = this.universitys
 
-            let testS = db.ref("universitys")
-            testS.once("value", function(snapshot){
+            await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
                     testuni.push(element.val())
                 })
@@ -140,10 +157,12 @@
             
             this.universitysSend = testuni
             this.universitysSend.splice(0,1)
+            if(this.universitysSend.length > 0){
+                this.visible = !this.visible;
+            }
         },
 
         methods: {
-
             init(){
                 var cityStart = [];
                 var countryPartener = [];
@@ -244,7 +263,7 @@
                 $(el).show().slideUp(800, done)
             },
 
-            test: function() {
+            setVisible: function() {
                 this.visible = !this.visible
             }
         },
@@ -252,22 +271,54 @@
 </script>
 
 <style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
 
-    .show-enter-active,
-    .show-leave-enter {
-        transform: translateX(0);
-        transition: all 1s linear;
-    }
-    .show-enter,
-    .show-leave-to {
-        transform: translateX(100%);
-    }
+.slide-enter-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: ease-in;
+   -webkit-transition-timing-function: ease-in;
+   -o-transition-timing-function: ease-in;
+   transition-timing-function: ease-in;
+}
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
+.slide-leave-active {
+   -moz-transition-duration: 0.3s;
+   -webkit-transition-duration: 0.3s;
+   -o-transition-duration: 0.3s;
+   transition-duration: 0.3s;
+   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
 
+.slide-enter-to, .slide-leave {
+   max-height: 100px;
+   overflow: hidden;
+}
+
+.slide-enter, .slide-leave-to {
+   overflow: hidden;
+   max-height: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>
