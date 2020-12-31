@@ -140,7 +140,6 @@
             
             this.universitysSend = testuni
             this.universitysSend.splice(0,1)
-            console.log(this.universitysSend)
         },
 
         methods: {
@@ -184,11 +183,12 @@
             },
 
             searchByFilter() {
-                this.universitysSend = this.universitys.filter((el) => {
+                this.universitysSend = this.universitys.filter(
+                    (el) => {
                         if(this.modelV == "") {
                             return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
-                            return (el.ville.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
+                            return (el.universitySourceCity.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
                 )
@@ -213,9 +213,11 @@
 
                 else if(this.modelD == "" && this.modelS != "") {
                      testList.forEach(el => {
-                        if(el.universityPartnerSpeciality.indexOf(this.modelS) > -1) {
-                            res = true
-                        }
+                        el.universityPartnerSpeciality.forEach(el2 =>{
+                            if(el2.specialityName === this.modelS) {
+                                res = true
+                            }
+                        })
                     })
                 }
                 
