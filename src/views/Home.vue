@@ -12,19 +12,19 @@
                 <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                     <div class="pt-6 ms:pl-6">
                         <select v-model="modelV" class="border w-full p-2 rounded">
-                            <option value="">Toute ville</option>
+                            <option value="">All Cities</option>
                             <option v-for="(city, index) in option.cityStartOption" :key="index">{{city}}</option>
                         </select>
                     </div>
                     <div class="pt-6 ms:pl-6">
                         <select v-model="modelD" class="border w-full p-2 rounded">
-                            <option value="">Toute destination</option>
+                            <option value="">All Destinations</option>
                             <option v-for="(destination, index) in option.countryOption" :key="index">{{destination}}</option>
                         </select>
                     </div>
                     <div class="pt-6 ms:pl-6">
                         <select v-model="modelS" class="border w-full p-2 rounded">
-                            <option value="">Toute spécialité</option>
+                            <option value="">All specialties</option>
                             <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
                         </select>
                     </div>
@@ -67,11 +67,11 @@
                     </div>
                 </transition-group>
 
-                <div class="container mb-96 flex justify-center bg-black opacity-85 rounded-xl">
-                    <transition name="fade">
-                    <p v-if="show" class="py-2 text-lg lg:text-3xl text-white">Sélection Inexistante</p>
-                    </transition>
-                </div>
+                <transition name="fade">
+                    <div v-if="show" class="container mb-96 flex p-1 justify-center bg-black opacity-85 rounded-xl">
+                        <p class="py-2 text-lg lg:text-2xl text-white text-center">We are sorry,<br>we are not able to find a university that fits the selected parameters.</p>
+                    </div>
+                </transition>
 
                 <navbar ref="navbarComponent" :university="universityObject"></navbar>
 

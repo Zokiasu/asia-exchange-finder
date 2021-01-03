@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import AdminLogin from '../views/AdminLogin.vue'
 import Dashboard from '../views/Dashboard.vue'
 import About from '../views/About.vue'
+import UniversityForm from '../components/UniversityForm.vue'
 import firebase from "firebase";
 
 const routes = [
@@ -27,12 +28,17 @@ const routes = [
     component: AdminLogin,
   },
   {
+    path: '/form',
+    name: 'UniversityForm',
+    component: UniversityForm,
+  },
+  {
     path: '/Dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    /*meta: {
+    meta: {
       requiresAuth:true
-    }*/
+    }
   },
   {
     path: '/about',

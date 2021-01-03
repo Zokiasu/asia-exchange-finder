@@ -19,16 +19,16 @@
         <div class="container absolute top-48 right-0 flex justify-end">
             <a :href="university.universitySourceWebsiteLink" target="_blank">
                 <button class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
-                    rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-blue-900">
-                    Site web
+                    rounded-full shadow ripple waves-light focus:outline-none hover:bg-gray-700">
+                    Website
                 </button>
             </a>
         </div>
-        <p class="absolute top-0 m-3 text-4xl md:text-5xl lg:text-5xl xl:text-7xl text-white">{{ university.universitySourceName }}</p>
+        <p class="absolute top-0 m-3 text-4xl md:text-5xl lg:text-5xl xl:text-7xl text-gray-500">{{ university.universitySourceName }}</p>
       </div>
       <!-- Filters -->
       <div class="px-4 py-2 w-full place-items-center">
-        <p class="font-bold text-3xl text-center">Université Partenaire</p>
+        <p class="font-bold text-3xl text-center">Partner</p>
       </div>
       <!-- University Card -->
       <UniversityCardInfo
@@ -39,7 +39,7 @@
       <!-- Leave -->
       <div class="container mb-5 flex justify-center">
         <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
-          Retour au site
+          Back to site
         </button>
       </div>
     </aside>

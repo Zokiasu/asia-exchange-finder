@@ -16,6 +16,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 let app = firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 let db = app.database()
 
 createApp(App).use(router).mount('#app')
