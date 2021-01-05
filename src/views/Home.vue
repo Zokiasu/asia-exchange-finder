@@ -24,7 +24,7 @@
                     </div>
                     <div class="pt-6 ms:pl-6">
                         <select v-model="modelS" class="border w-full p-2 rounded">
-                            <option value="">All specialties</option>
+                            <option value="">All specialities</option>
                             <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
                         </select>
                     </div>
