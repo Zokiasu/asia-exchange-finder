@@ -8,7 +8,7 @@
       </div>
     </transition>
 
-    <aside class="transform top-0 left-0 w-full bg-white fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
+    <aside class="transform top-0 left-0 w-full dark:bg-black bg-white fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
       <!-- Leave -->
       <button class="z-10 absolute my-5 mx-5 top-0 right-0" aria-label="Close Menu" @click="drawer">
         <img class="w-5" src="https://www.flaticon.com/svg/static/icons/svg/109/109602.svg"/>
@@ -31,7 +31,7 @@
         <p class="font-bold text-3xl text-center">Partner</p>
       </div>
       <!-- University Card -->
-      <UniversityCardInfo
+      <UniversityCardInfo class="xl:mx-40 dark:text-white"
                     v-for="university in this.university.universitySourcerPartner"
                     :key="university.universityPartnerName"
                     :university="university">

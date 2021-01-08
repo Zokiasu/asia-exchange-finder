@@ -1,6 +1,6 @@
 <template>
 
-    <div class="mb-6 m-3 pb-2 bg-gray-500 bg-opacity-20 rounded shadow-2xl">
+    <div class="mb-6 m-3 pb-2 bg-gray-500 bg-opacity-20 rounded shadow-lg">
         <!-- Université + Ville + Pays-->
         <div class="relative w-full bg-blue-500 rounded-t pb-1">
             <p class="px-2 font-bold text-2xl text-white">{{university.universityPartnerName}}</p>

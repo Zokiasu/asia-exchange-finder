@@ -122,13 +122,9 @@
 </template>
 
 <script>
-    import AppFormTextarea from '../components/form/AppFormTextarea.vue'
     import db from '../main.js'
 
     export default {
-        components: {
-            AppFormTextarea
-        },
 
         async created(){
             var num;
@@ -161,6 +157,9 @@
                         "universitySourceAddress": "",
                         "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
+                        "universitySourceDisplay": "False",
+                        "universitySourceCreator": "Zokiasu",
+                        "universitySourceLastUpdate": new Date().toLocaleDateString(),   
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "",
@@ -198,22 +197,18 @@
             },
 
             sendData(){
-                let v = this;
+                this.xhrRequest = true;
+                this.errorMessage = "";
+                this.successMessage = "";
 
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
-
-                var up = {}
-                up['/universitys/' + this.numberChildOnDatabase] = this.form[0]
-                return db.ref().update(up).then (    
+                db.ref().child("universitys").push(this.form[0]).then (    
                     () => {
                         this.$router.replace('/Dashboard')
-                        v.xhrRequest = false;
+                        this.xhrRequest = false;
                     }, 
                     (error) => {
-                        v.errorMessage = error.message;
-                        v.xhrRequest = false;
+                        this.errorMessage = error.message;
+                        this.xhrRequest = false;
                     }
                 )
             },
