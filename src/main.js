@@ -22,3 +22,4 @@ let db = app.database()
 createApp(App).use(router).mount('#app')
 
 export default db
+export {app}

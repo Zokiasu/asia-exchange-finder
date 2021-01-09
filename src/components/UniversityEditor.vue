@@ -95,7 +95,7 @@
                         "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
-                        "universitySourceCreator": "Zokiasu",
+                        "universitySourceCreator": "Anonymous",
                         "universitySourceLastUpdate": new Date().toLocaleDateString(),   
                         "universitySourcerPartner": [
                             {
@@ -175,7 +175,7 @@
                         "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
-                        "universitySourceCreator": "Zokiasu",
+                        "universitySourceCreator": "Anonymous",
                         "universitySourceLastUpdate": new Date().toLocaleDateString(),   
                         "universitySourcerPartner": [
                             {
@@ -185,7 +185,7 @@
                                 "universityPartnerAddress": "",
                                 "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
-                                "universityPartnerCreator": "Zokiasu",
+                                "universityPartnerCreator": "Anonymous",
                                 "universityPartnerSpeciality": [
                                     {
                                         "specialityName": ""

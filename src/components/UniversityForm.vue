@@ -1,6 +1,6 @@
 <template>
     <div class="my-12">
-        <form @submit.prevent="loginRequest" id="login-form" class="mx-10 lg:mx-40 xl:mx-64 2xl:mx-96 px-5 pt-1 pb-5 rounded-xl bg-gray-400 bg-opacity-70 text-black" v-for="(source,a) in form" :key="a">
+        <form id="login-form" class="mx-10 lg:mx-40 xl:mx-64 2xl:mx-96 px-5 pt-1 pb-5 rounded-xl bg-gray-400 bg-opacity-70 text-black" v-for="(source,a) in form" :key="a">
             <h2 class="w-full my-2 text-3xl leading-tight font-bold">University form</h2>
             <!-- University Source -->
             <div class="space-y-5 font-bold mb-5">
@@ -158,7 +158,7 @@
                         "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
-                        "universitySourceCreator": "Zokiasu",
+                        "universitySourceCreator": "Anonymous",
                         "universitySourceLastUpdate": new Date().toLocaleDateString(),   
                         "universitySourcerPartner": [
                             {

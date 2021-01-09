@@ -34,7 +34,7 @@
             <tr v-if="visible">
                 <td colspan="6">
                     <div>
-                        <form @submit.prevent="loginRequest" class="p-5 bg-gray-400 bg-opacity-70 text-black">
+                        <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
 
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import AdminLogin from '../views/AdminLogin.vue'
+import Signup from '../views/Signup.vue'
 import Dashboard from '../views/Dashboard.vue'
 import About from '../views/About.vue'
 import UniversityForm from '../components/UniversityForm.vue'
@@ -11,12 +12,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },/*
+  },
   {
     path: '/signup',
     name: 'Signup',
     component: Signup
-  },
+  },/*
   {
     path: '/login',
     name: 'Login',
@@ -36,9 +37,9 @@ const routes = [
     path: '/Dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    /*meta: {
+    meta: {
       requiresAuth:true
-    }*/
+    }
   },
   {
     path: '/about',
