@@ -21,8 +21,8 @@
                 {{university.universityPartnerCreator}}
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
-                <a v-if="!visible" href="#" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                <a v-if="visible" href="#" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Close</a>
+                <a v-if="!visible" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                <a v-if="visible" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Close</a>
             </td>
         </tr>
         <transition-group name="slide-fade">
@@ -99,54 +99,44 @@
 
 <script>
 
-export default {
+    export default {
 
-    name: 'university',
-    number: 'index',
-    props: ['university', 'index'],
+        name: 'university',
+        number: 'index',
+        props: ['university', 'index'],
 
-    data() {
-        return {
-            visible: false,
-        }
-    },
-
-    methods: {
-        deleteP(){
-            this.$emit("myEvent")
+        data() {
+            return {
+                visible: false,
+            }
         },
 
-        resize(e){
-            e.target.style.height = 'auto'
-            e.target.style.height = `${e.target.scrollHeight}px`
-        },
+        methods: {
+            deleteP(){
+                this.$emit("myEvent")
+            },
 
-        setVisible: function() {
-            this.visible = !this.visible
-        },
+            resize(e){
+                e.target.style.height = 'auto'
+                e.target.style.height = `${e.target.scrollHeight}px`
+            },
 
-        removePartner(index, source) {
-            source.universitySourcerPartner.splice(index, 1);
-        },
+            setVisible: function() {
+                this.visible = !this.visible
+            },
 
-        addSpeciality(index, partner, parentIndex) {
-            partner.universityPartnerSpeciality.push({ "specialityName": "" });
-        },
-        removeSpeciality(index, partner, parentIndex) {
-            partner.universityPartnerSpeciality.splice(index, 1);
+            addSpeciality(index, partner, parentIndex) {
+                partner.universityPartnerSpeciality.push({ "specialityName": "" });
+            },
+            removeSpeciality(index, partner, parentIndex) {
+                partner.universityPartnerSpeciality.splice(index, 1);
+            }
         }
     }
-}
 
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0
-}
 
 .slide-fade-enter-active {
   transition: all .8s ease-out;

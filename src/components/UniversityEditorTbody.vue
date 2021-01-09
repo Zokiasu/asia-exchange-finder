@@ -26,8 +26,8 @@
                 {{university.universitySourceLastUpdate}}
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
-                <a v-if="!visible" href="#" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                <a v-if="visible" href="#" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Close</a>
+                <a v-if="!visible" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                <a v-if="visible" @click="setVisible" class="text-indigo-600 hover:text-indigo-900">Close</a>
             </td>
         </tr>
         <transition-group name="slide-fade">
@@ -130,52 +130,52 @@
 <script>
     import UEPT from './UniversityEditorPartnerTbody.vue'
 
-export default {
+    export default {
 
-        components:{
-            UEPT
+            components:{
+                UEPT
+            },
+
+        name: 'university',
+        props: ['university'],
+
+        data() {
+            return {
+                visible: false,
+            }
         },
 
-    name: 'university',
-    props: ['university'],
+        methods: {
+            deleteU(){
+                this.$emit("myEvents")
+            },
 
-    data() {
-        return {
-            visible: false,
+            setVisible: function() {
+                this.visible = !this.visible
+            },
+
+            addPartner(index, source) {
+                source.universitySourcerPartner.push(
+                    {
+                        "universityPartnerName": "University Partner",
+                        "universityPartnerCountry": "",
+                        "universityPartnerCity": "",
+                        "universityPartnerAddress": "",
+                        "universityPartnerWebsiteLink": "",
+                        "universityPartnerCondition": "",
+                        "universityPartnerSpeciality": [
+                            {
+                                "specialityName": ""
+                            }
+                        ],
+                    }
+                )
+            },
+            removePartner(index) {
+                this.university.universitySourcerPartner.splice(index, 1);
+            },
         }
-    },
-
-    methods: {
-        deleteU(){
-            this.$emit("myEvents")
-        },
-
-        setVisible: function() {
-            this.visible = !this.visible
-        },
-
-        addPartner(index, source) {
-            source.universitySourcerPartner.push(
-                {
-                    "universityPartnerName": "University Partner",
-                    "universityPartnerCountry": "",
-                    "universityPartnerCity": "",
-                    "universityPartnerAddress": "",
-                    "universityPartnerWebsiteLink": "",
-                    "universityPartnerCondition": "",
-                    "universityPartnerSpeciality": [
-                        {
-                            "specialityName": ""
-                        }
-                    ],
-                }
-            )
-        },
-        removePartner(index) {
-            this.university.universitySourcerPartner.splice(index, 1);
-        },
     }
-}
 
 </script>
 
