@@ -2,7 +2,7 @@
 
     <div class="mb-6 m-3 pb-2 bg-gray-500 bg-opacity-20 rounded shadow-lg">
         <!-- Université + Ville + Pays-->
-        <div class="relative w-full bg-blue-500 rounded-t pb-1">
+        <div class="relative w-full bg-blue-500 rounded-sm pb-1">
             <p class="px-2 font-bold text-2xl text-white">{{university.universityPartnerName}}</p>
             <p class="font-bold text-2xl text-white pl-2 md:pl-0 md:absolute md:top-0 md:right-2">{{university.universityPartnerCity}}, {{university.universityPartnerCountry}}</p>
         </div>

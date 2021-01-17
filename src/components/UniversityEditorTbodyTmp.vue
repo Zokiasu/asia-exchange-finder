@@ -111,12 +111,14 @@
                                                 <UEPT v-for="(universityPartnerElement, index) in university.universitySourcerPartner"
                                                     :key="index"
                                                     :universityPartnerElement="universityPartnerElement"
-                                                    :admin="admin"
                                                     @myEvent="removePartner(index)">
                                                 </UEPT>
                                             </table>
                                             <div class="w-full flex justify-between">
-                                                <button v-if="admin" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                <div>
+                                                    <button v-if="herCreation || admin" type="button" @click="callDeleteUniversity()" @show="herCreation(university.universitySourceCreator)" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                    <button type="button" @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
+                                                </div>
                                                 <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
                                                     <div class="relative w-full appearance-none label-floating">
                                                         <select v-model="university.universitySourceDisplay" class="p-2 rounded bg-gray-200 border border-gray-200">
@@ -126,8 +128,8 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <button type="button" @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
-                                                    <button type="button" @click="callSendData()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Send Modify</button>
+                                                    <button type="button" @click="callModfifyData()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Modify</button>
+                                                    <button type="button" @click="callSendData()" class="text-white bg-green-900 rounded-xl px-5 py-1 mt-5 mr-2">Send Modify</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,6 +172,9 @@
             firebase.auth().onAuthStateChanged((user) => {
                 db.ref('users/' + user.uid).once('value').then((snapshot) => {
                     if(user) {
+                        /*console.log(this.university.universitySourceCreator)
+                        console.log("name: " + snapshot.val().pseudo)
+                        console.log(this.admin)*/
                         if(this.university.universitySourceCreator == snapshot.val().pseudo){
                             this.herCreation = true
                         }
@@ -189,7 +194,11 @@
             },
 
             callSendData(){
-                this.$emit("sendData")
+                this.$emit("sendDataToOfficial")
+            },
+
+            callModfifyData(){
+                this.$emit("modifyData")
             },
 
             setVisible: function() {

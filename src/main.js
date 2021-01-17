@@ -15,11 +15,21 @@ var firebaseConfig = {
     measurementId: "G-JG0FNVR88C"
 };
 // Initialize Firebase
-let app = firebase.initializeApp(firebaseConfig);
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-let db = app.database()
+let apps = firebase.initializeApp(firebaseConfig)
+let db = apps.database()
+apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
+var name = "Unknown";
+var grade, users;
+
+firebase.auth().onAuthStateChanged((user) =>  {
+    db.ref('users/' + user.uid).once('value').then((snapshot) => {
+        name = snapshot.val().pseudo
+        grade = snapshot.val().grade
+    })
+})
 
 createApp(App).use(router).mount('#app')
 
 export default db
-export {app}
+export {apps, name, grade}

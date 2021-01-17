@@ -1,35 +1,31 @@
 <template>
     <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
-        <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
-            <form @submit.prevent="signupRequest" id="signup-form" class="bg-white p-10 rounded-2xl">
+        <div class="mx-auto flex justify-center items-center w-full">
+            <form @submit.prevent="loginRequest" id="login-form" class="bg-white p-10 rounded-2xl">
                 <div class="grid grid-cols-1 gap-6">
-                    <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
-                        <div class="relative w-full appearance-none">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="email" v-model="email" type="text" placeholder="Email Address">
+                            <label for="email" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Email Address</label>
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-2 col-span-3">
-                        <div class="relative w-full appearance-none">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="pseudo" v-model="pseudo" type="text" placeholder="Pseudo">
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mb-2 col-span-3">
-                        <div class="relative w-full appearance-none">
+                    <div class="flex flex-wrap mb-2">
+                        <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="password" v-model="password" type="text" placeholder="Password">
+                            <label for="password" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Password</label>
                         </div>
                     </div>
-                    <div class="col-start-1 col-end-7">
-                        <div v-if="errorMessage !== ''" class="mb-2" role="alert">
+                    <div class="grid grid-cols-1 gap-1">
+                        <div v-if="errorMessage !== ''" class="mb-2 text-black" role="alert">
                             {{ errorMessage }}
                         </div>
-                        <div v-if="successMessage !== ''" class="mb-2" role="alert">
+                        <div v-if="successMessage !== ''" class="mb-2 text-black" role="alert">
                             {{ successMessage }}
                         </div>
                         <button v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="Button bg-blue-500 container">
-                            <span v-if="!xhrRequest">Sign Up</span>
+                            <span v-if="!xhrRequest">Login</span>
                             <span v-if="xhrRequest">Please Wait...</span>
                         </button>
                         <div v-if="xhrRequest" class="" role="status">
@@ -41,70 +37,65 @@
             <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
         <div class="col-sm-12 text-center form-group mt-5">
-            <p>You have an account ? <router-link to="/login" class="font-bold text-red-500">Login</router-link></p>
+            <p>Don't have an account ? <router-link to="/signup" class="font-bold text-red-500">Sign Up</router-link></p>
         </div>
     </div>
 </template>
 
 <script>
     import firebase from 'firebase'
-    import {apps} from '../main.js'
+    import {apps, UserAuthenticated} from '../main.js'
     import db from '../main.js'
 
     export default {
         data() {
             return {
-                pseudo: "",
                 email: "",
                 password: "",
-                grade: "Member",
                 xhrRequest: false,
                 errorMessage: "",
                 successMessage: "",
             }
-        }, 
+        },
         methods: {
             close(){
                 this.$emit('created');
             },
+            userlog(){
+                this.$emit('loged');
+            },
 
-            signupRequest() {
-
+            loginRequest() {
                 this.xhrRequest = true;
                 this.errorMessage = "";
                 this.successMessage = "";
-
-                apps
-                    .auth()
-                    .createUserWithEmailAndPassword(this.email, this.password).then(
-                        (authUser) => {
-                            console.log(authUser.user.uid)
-                            db.ref(`users/${authUser.user.uid}`).set({
-                                pseudo:this.pseudo,
-                                email:this.email,
-                                grade:this.grade,
-                            }),
-                            this.successMessage = "Register Successfully.";
-                            this.disablexhrRequest();
-                            this.close();
-                        }
-                    ).catch(
-                        (error) => {
+                apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
+                    return apps.auth().signInWithEmailAndPassword(this.email, this.password).then(
+                            (authUser) => {
+                                this.$router.replace('/')
+                                this.xhrRequest = false;
+                                this.userlog();
+                                this.close();
+                            }
+                    ).catch((error) => {
                             this.errorMessage = error.message;
                             this.xhrRequest = false;
                         }
-                    );
-            },
+                    )
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                });
 
-            disablexhrRequest(){
-                this.xhrRequest = !this.xhrRequest
             }
         }
     }
 </script>
 
-<style>
-    ._loader {
+<style scoped>
+    .loader {
         position:relative;
         top:6px;
         left:10px;
