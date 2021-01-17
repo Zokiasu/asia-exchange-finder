@@ -279,10 +279,8 @@
                         if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
                             testA = db.ref().child('universitys').push().key;
                             this.form[index].universitySourceId = testA;
-                            //up['/universitys/' + testA] = this.form[index]
                             this.writeUpdateData('/universitys/', testA, this.form[index])
                         } else {
-                            //up['/universitys/' + this.form[index].universitySourceId] = this.form[index]
                             this.writeUpdateData('/universitys/', this.form[index].universitySourceId, this.form[index])
                         }
 
@@ -306,13 +304,13 @@
                     this.form[index].universitySourceId = testA;
                     this.form[index].universitySourceLastUpdate = new Date().toLocaleDateString()
                     this.form[index].universitySourceCreator = name
-                    this.editedForm[index].universitySourceDisplay = "False"
+                    this.form[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + testA] = this.form[index]
                     this.editedForm.push(this.form[index])
                 } else {
                     this.form[index].universitySourceLastUpdate = new Date().toLocaleDateString()
                     this.form[index].universitySourceCreator = name
-                    this.editedForm[index].universitySourceDisplay = "False"
+                    this.form[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + this.form[index].universitySourceId] = this.form[index]
                     this.editedForm.push(this.form[index])
                 }
@@ -500,7 +498,7 @@
                 this.form[index].universitySourcerPartner.push(
                     {
                         "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
+                        "universitySourceId": "",
                         "universityPartnerCountry": "",
                         "universityPartnerCity": "",
                         "universityPartnerAddress": "",

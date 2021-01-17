@@ -81,15 +81,14 @@
     import Navbar from '../components/navbar.vue'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
-    import db from '../main.js'
-    
+    import db from '../main.js'    
 
     export default {
 
         components:{
             Card,
             Navbar,
-            PulseLoader
+            PulseLoader,
         },
 
         data () {
