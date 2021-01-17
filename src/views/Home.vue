@@ -80,8 +80,10 @@
     import Card from '../components/Card.vue'
     import Navbar from '../components/navbar.vue'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+    import vSelect from 'vue-select'
     import firebase from 'firebase'
-    import db from '../main.js'    
+    import db from '../main.js'
+    import 'vue-select/dist/vue-select.css'
 
     export default {
 
@@ -89,6 +91,7 @@
             Card,
             Navbar,
             PulseLoader,
+            vSelect
         },
 
         data () {
