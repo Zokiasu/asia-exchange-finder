@@ -45,13 +45,15 @@
 
     async beforeCreate(){
       await firebase.auth().onAuthStateChanged((user) => {
-        db.ref('users/' + user.uid).once('value').then((snapshot) => {
-            if(user) {
-              this.userAuthenticated = true
-              this.actualUser.username = snapshot.val().pseudo
-              this.actualUser.userGrade = snapshot.val().grade
-            }
-        })
+        if(user != undefined) {
+          db.ref('users/' + user.uid).once('value').then((snapshot) => {
+              if(user) {
+                this.userAuthenticated = true
+                this.actualUser.username = snapshot.val().pseudo
+                this.actualUser.userGrade = snapshot.val().grade
+              }
+          })
+        }
       })
     },
 

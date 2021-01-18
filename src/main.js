@@ -23,10 +23,12 @@ var name = "Unknown";
 var grade, users;
 
 firebase.auth().onAuthStateChanged((user) =>  {
-    db.ref('users/' + user.uid).once('value').then((snapshot) => {
-        name = snapshot.val().pseudo
-        grade = snapshot.val().grade
-    })
+    if(user != undefined) {
+        db.ref('users/' + user.uid).once('value').then((snapshot) => {
+            name = snapshot.val().pseudo
+            grade = snapshot.val().grade
+        })
+    }
 })
 
 createApp(App).use(router).mount('#app')

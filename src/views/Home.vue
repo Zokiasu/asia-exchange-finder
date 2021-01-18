@@ -2,30 +2,36 @@
     <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
 
         <div class=" grid grid-cols-1 w-full">
-
             <!-- Filter -->
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="pt-6 ms:pl-6">
-                    <select v-model="modelV" class="border w-full p-2 rounded">
-                        <option value="">All Cities</option>
-                        <option v-for="(city, index) in option.cityStartOption" :key="index">{{city}}</option>
-                    </select>
+                    <Multiselect
+                        class="w-48 bg-white rounded text-black"
+                        mode="single"
+                        searchable="true"
+                        placeholder="All Cities"
+                        v-model="modelV"
+                        :options="option.cityStartOption"/>
                 </div>
                 <div class="pt-6 ms:pl-6">
-                    <select v-model="modelD" class="border w-full p-2 rounded">
-                        <option value="">All Destinations</option>
-                        <option v-for="(destination, index) in option.countryOption" :key="index">{{destination}}</option>
-                    </select>
+                    <Multiselect
+                        class="w-48 bg-white rounded text-black"
+                        mode="single"
+                        searchable="true"
+                        placeholder="All Destinations"
+                        v-model="modelD"
+                        :options="option.countryOption"/>
                 </div>
                 <div class="pt-6 ms:pl-6">
-                    <select v-model="modelS" class="border w-full p-2 rounded">
-                        <option value="">All specialities</option>
-                        <option v-for="(speciality, index) in option.specialityOption" :key="index">{{speciality}}</option>
-                    </select>
+                    <Multiselect
+                        class="w-48 bg-white rounded text-black"
+                        mode="single"
+                        searchable="true"
+                        placeholder="All specialities"
+                        v-model="modelS"
+                        :options="option.specialityOption"/>
                 </div>
             </div>
-
-            <!-- Button Search -->
             <div class="container flex justify-center">
                 <button @click="searchByFilter" class="mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
             </div>
@@ -80,10 +86,9 @@
     import Card from '../components/Card.vue'
     import Navbar from '../components/navbar.vue'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import vSelect from 'vue-select'
     import firebase from 'firebase'
     import db from '../main.js'
-    import 'vue-select/dist/vue-select.css'
+  import Multiselect from '@vueform/multiselect'
 
     export default {
 
@@ -91,7 +96,7 @@
             Card,
             Navbar,
             PulseLoader,
-            vSelect
+            Multiselect,
         },
 
         data () {
@@ -197,7 +202,9 @@
                     cityStart.push(el.universitySourceCity)
                     el.universitySourcerPartner.forEach(el2 => {
                         el2.universityPartnerSpeciality.forEach(el3 => {
-                            specialityPartener.push(el3.specialityName)
+                            if(el3.specialityName != "") {
+                                specialityPartener.push(el3.specialityName)
+                            }
                         })                    
                         countryPartener.push(el2.universityPartnerCountry)
                     })
@@ -230,11 +237,17 @@
             },
 
             searchByFilter() {
+                this.modelV = this.option.cityStartOption[this.modelV]
+                this.modelD = this.option.countryOption[this.modelD]
+                this.modelS = this.option.specialityOption[this.modelS]
+
                 this.universitysSend = this.universitys.filter(
                     (el) => {
-                        if(this.modelV == "") {
+                        if(this.modelV == "" || this.modelV == null || this.modelV == undefined) {
+                            console.log("modelV is " + this.modelV)
                             return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
+                            console.log("modelV is " + this.modelV)
                             return (el.universitySourceCity.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
@@ -247,19 +260,25 @@
                 }
             },
 
-            booleanByCountry(testList) {
+            booleanByCountry(consultList) {
                 var res = false
+                console.log("modelD is " + this.modelD)
+                console.log("modelS is " + this.modelS)
 
-                if(this.modelD != "" && this.modelS != "") {
-                    testList.forEach(el => {
-                        if(el.universityPartnerCountry === this.modelD && el.universityPartnerSpeciality.indexOf(this.modelS) > -1) {
-                            res = true
+                if(this.modelD != undefined && this.modelS != undefined) {
+                    consultList.forEach(el => {
+                        if(el.universityPartnerCountry == this.modelD) {
+                            el.universityPartnerSpeciality.forEach(el2=>{
+                                if(el2.specialityName == this.modelS) {
+                                    res = true
+                                }
+                            })
                         }
                     })
                 }
 
-                else if(this.modelD == "" && this.modelS != "") {
-                     testList.forEach(el => {
+                if(this.modelD == undefined && this.modelS != undefined) {
+                     consultList.forEach(el => {
                         el.universityPartnerSpeciality.forEach(el2 =>{
                             if(el2.specialityName === this.modelS) {
                                 res = true
@@ -268,18 +287,21 @@
                     })
                 }
                 
-                else if(this.modelD != "" && this.modelS == "") {
-                    testList.forEach(el => {
+                if(this.modelD != undefined && this.modelS == undefined) {
+                    consultList.forEach(el => {
                         if(el.universityPartnerCountry === this.modelD) {
                             res = true
                         }
                     })
                 }
 
-                else if(this.modelD == "" && this.modelS == "") {
+                if(this.modelD == undefined && this.modelS == undefined) {
+                    console.log("Nothing")
                     res = true
                 }
-                     
+
+                console.log("res est " + res)
+
                 return res        
             },
 
@@ -298,6 +320,7 @@
     }
 </script>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
 <style>
 
 .slide-fade-enter-active {

@@ -209,16 +209,16 @@
 
         async beforeCreate(){
             await firebase.auth().onAuthStateChanged((user) => {
-                db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                    if(user) {
+                if(user != undefined) {
+                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
                         this.userConnected = true
                         this.actualUser.username = snapshot.val().pseudo
                         this.actualUser.userGrade = snapshot.val().grade
                         if(this.actualUser.userGrade == "Admin") {
                             this.checkAdmin = true
                         }
-                    }
-                })
+                    })
+                }
             })
         },
 
@@ -544,6 +544,8 @@
                         }
                     })
                 }
+
+                this.universitySend = [...new Set(this.universitySend)]
             },
 
             setGeneral: function() {

@@ -168,13 +168,13 @@
 
         beforeCreate(){
             firebase.auth().onAuthStateChanged((user) => {
-                db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                    if(user) {
+                if(user != undefined) {
+                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
                         if(this.university.universitySourceCreator == snapshot.val().pseudo){
                             this.herCreation = true
                         }
-                    }
-                })
+                    })
+                }
             })
         },
 
