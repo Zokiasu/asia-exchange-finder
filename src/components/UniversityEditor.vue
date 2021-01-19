@@ -1,113 +1,120 @@
 <template>
-    <div class="w-full mt-14">
-        <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
-            <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
-            <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
-            <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
-            <p v-if="!checkAdmin">|</p>
-            <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
+<div class="mt-14">
+    <transition-group name="slide-fade">
+        <div v-if="!userConnected" class="w-full flex justify-center">
+            <pulse-loader></pulse-loader>
         </div>
-        <div v-if="!generalUniversity">
-            <notifications group="foo"/>
-            <div class="w-full relative py-2 px-3 flex justify-between">
-                <div class="flex">
-                    <p v-if="!checkAdmin && message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
-                    <transition name="slide-fade" mode="out-in">
-                        <p v-if="!checkAdmin && message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
-                    </transition>
-                </div>
-                <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
-                <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+        <div v-if="userConnected" class="w-full">
+            <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
+                <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
+                <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
+                <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
+                <p v-if="!checkAdmin">|</p>
+                <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
             </div>
-            <div class="flex flex-col mb-20">
-                <div class="overflow-x-auto">
-                    <div class="align-middle inline-block w-full">
-                        <div class="shadow border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        University Name
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Localisation
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Display
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        By
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Edited
-                                    </th>
-                                    <th scope="col" class="relative px-4 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
-                                    </tr>
-                                </thead>
-                                <UET v-for="(university, index) in universitySend"
-                                    :key="index"
-                                    :university="university"
-                                    :admin="checkAdmin"
-                                    @myEvents="removeUniversityFromForm(index)"
-                                    @addPartner="adPartner(index)"
-                                    @sendData="updateFormSpecificData(index)">
-                                </UET>
-                            </table>
+            <div v-if="!generalUniversity">
+                <notifications group="foo"/>
+                <div class="w-full relative py-2 px-3 flex justify-between">
+                    <div class="flex">
+                        <p v-if="!checkAdmin && message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
+                        <transition name="slide-fade" mode="out-in">
+                            <p v-if="!checkAdmin && message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
+                        </transition>
+                    </div>
+                    <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
+                    <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                </div>
+                <div class="flex flex-col mb-20">
+                    <div class="overflow-x-auto">
+                        <div class="align-middle inline-block w-full">
+                            <div class="shadow border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            University Name
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Localisation
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Display
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            By
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Edited
+                                        </th>
+                                        <th scope="col" class="relative px-4 py-3">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <UET v-for="(university, index) in universitySend"
+                                        :key="index"
+                                        :university="university"
+                                        :admin="checkAdmin"
+                                        @myEvents="removeUniversityFromForm(index)"
+                                        @addPartner="adPartner(index)"
+                                        @sendData="updateFormSpecificData(index)">
+                                    </UET>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="generalUniversity && checkAdmin">
+                <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
+                    <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
+                    <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
+                </div>-->
+                <div class="flex flex-col mb-20">
+                    <div class="overflow-x-auto">
+                        <div class="align-middle inline-block w-full">
+                            <div class="shadow border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            University Name
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Localisation
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Display
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            By
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Edited
+                                        </th>
+                                        <th scope="col" class="relative px-4 py-3">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <UETT v-for="(university, index) in editedForm"
+                                        :key="index"
+                                        :university="university"
+                                        :admin="checkAdmin"
+                                        @myEvents="removeUniversityFromTmp(index)"
+                                        @addPartner="adPartner(index)"
+                                        @modifyData="updateEditedFormSpecificData(index)"
+                                        @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
+                                    </UETT>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div v-if="generalUniversity && checkAdmin">
-            <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
-                <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
-                <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
-            </div>-->
-            <div class="flex flex-col mb-20">
-                <div class="overflow-x-auto">
-                    <div class="align-middle inline-block w-full">
-                        <div class="shadow border-b border-gray-200 sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        University Name
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Localisation
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Display
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        By
-                                    </th>
-                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Edited
-                                    </th>
-                                    <th scope="col" class="relative px-4 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
-                                    </tr>
-                                </thead>
-                                <UETT v-for="(university, index) in editedForm"
-                                    :key="index"
-                                    :university="university"
-                                    :admin="checkAdmin"
-                                    @myEvents="removeUniversityFromTmp(index)"
-                                    @addPartner="adPartner(index)"
-                                    @modifyData="updateEditedFormSpecificData(index)"
-                                    @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
-                                </UETT>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </transition-group>
+</div>
 </template>
 
 <script>

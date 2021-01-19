@@ -2,8 +2,11 @@
   <div class="relative bg-black bg-opacity-30 h-screen text-white inset-x-0 top-0 flex flex-col">
     <div class="invisible md:visible space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
       <div class="space-x-2 absolute left-0 ml-6 flex justify-between">
-        <router-link v-if="userAuthenticated" v-show="$route.name!=='Dashboard'" to="/dashboard" class="text-xl">Dashboard</router-link>
-        <router-link v-if="userAuthenticated" v-show="$route.name ==='Dashboard'" to="/" class="text-xl">Home</router-link>
+        <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl">About Us</router-link>
+        <p v-show="$route.name !=='AboutUs'" v-if="userAuthenticated">|</p>
+        <router-link v-if="userAuthenticated" v-show="$route.name ==='Dashboard' || $route.name ==='AboutUs'" to="/" class="text-xl">Home</router-link>
+        <p v-if="userAuthenticated" v-show="$route.name ==='AboutUs'">|</p>
+        <router-link v-if="userAuthenticated" v-show="$route.name!=='Dashboard' || $route.name ==='AboutUs'" to="/dashboard" class="text-xl">Dashboard</router-link>
       </div>
       <p class="text-xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>
@@ -47,11 +50,9 @@
       await firebase.auth().onAuthStateChanged((user) => {
         if(user != undefined) {
           db.ref('users/' + user.uid).once('value').then((snapshot) => {
-              if(user) {
-                this.userAuthenticated = true
-                this.actualUser.username = snapshot.val().pseudo
-                this.actualUser.userGrade = snapshot.val().grade
-              }
+              this.userAuthenticated = true
+              this.actualUser.username = snapshot.val().pseudo
+              this.actualUser.userGrade = snapshot.val().grade
           })
         }
       })
