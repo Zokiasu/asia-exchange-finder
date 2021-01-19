@@ -4,7 +4,7 @@
       <div class="space-x-2 absolute left-0 ml-6 flex justify-between">
         <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl">About Us</router-link>
         <p v-show="$route.name !=='AboutUs'" v-if="userAuthenticated">|</p>
-        <router-link v-if="userAuthenticated" v-show="$route.name ==='Dashboard' || $route.name ==='AboutUs'" to="/" class="text-xl">Home</router-link>
+        <router-link v-show="$route.name ==='Dashboard' || $route.name ==='AboutUs'" to="/" class="text-xl">Home</router-link>
         <p v-if="userAuthenticated" v-show="$route.name ==='AboutUs'">|</p>
         <router-link v-if="userAuthenticated" v-show="$route.name!=='Dashboard' || $route.name ==='AboutUs'" to="/dashboard" class="text-xl">Dashboard</router-link>
       </div>
