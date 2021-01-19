@@ -24,7 +24,7 @@
                 </button>
             </a>
         </div>
-        <p class="absolute top-0 m-3 text-4xl md:text-5xl lg:text-5xl xl:text-7xl text-gray-500">{{ university.universitySourceName }}</p>
+        <p class="absolute top-0 p-4 pt-2 text-4xl text-white bg-blue-600 bg-opacity-60 rounded-br-xl">{{ university.universitySourceName }}</p>
       </div>
       <!-- Filters -->
       <div class="px-4 py-2 w-full place-items-center">

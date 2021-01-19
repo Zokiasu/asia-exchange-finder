@@ -6,7 +6,7 @@
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="email" v-model="email" type="text" placeholder="Email Address">
+                            id="email" v-model="email" type="email" placeholder="Email Address">
                         </div>
                     </div>
                     <div class="flex flex-wrap mb-2 col-span-3">
@@ -18,7 +18,7 @@
                     <div class="flex flex-wrap mb-2 col-span-3">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="password" v-model="password" type="text" placeholder="Password">
+                            id="password" v-model="password" type="password" placeholder="Password">
                         </div>
                     </div>
                     <div class="col-start-1 col-end-7">

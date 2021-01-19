@@ -6,14 +6,14 @@
                     <div class="flex flex-wrap mb-2">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="email" v-model="email" type="text" placeholder="Email Address">
+                            id="email" v-model="email" type="email" placeholder="Email Address">
                             <label for="email" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Email Address</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap mb-2">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="password" v-model="password" type="text" placeholder="Password">
+                            id="password" v-model="password" type="password" placeholder="Password">
                             <label for="password" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Password</label>
                         </div>
                     </div>

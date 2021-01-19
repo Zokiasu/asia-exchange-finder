@@ -66,7 +66,7 @@
                                 <div class="flex flex-wrap col-end-7 col-span-4">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerWebsiteLink" v-model="universityPartnerElement.universityPartnerWebsiteLink" type="link" placeholder="Website Link">
+                                        id="universityPartnerWebsiteLink" v-model="universityPartnerElement.universityPartnerWebsiteLink" type="url" placeholder="Website Link">
                                         <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
                                     </div>
                                 </div>

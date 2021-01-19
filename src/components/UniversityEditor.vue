@@ -18,7 +18,7 @@
                     <div class="flex">
                         <p v-if="!checkAdmin && message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
                         <transition name="slide-fade" mode="out-in">
-                            <p v-if="!checkAdmin && message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
+                            <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                         </transition>
                     </div>
                     <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
