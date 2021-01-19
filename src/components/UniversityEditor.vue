@@ -7,10 +7,15 @@
             <p v-if="!checkAdmin">|</p>
             <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
         </div>
-        <p v-if="!checkAdmin" class="bg-white rounded-2xl text-gray-500 text-center mx-32 py-1 my-6">When display is set to false the information is being processed.</p>
         <div v-if="!generalUniversity">
             <notifications group="foo"/>
-            <div class="w-full relative py-2 px-3 flex justify-end">
+            <div class="w-full relative py-2 px-3 flex justify-between">
+                <div class="flex">
+                    <p v-if="!checkAdmin && message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
+                    <transition name="slide-fade" mode="out-in">
+                        <p v-if="!checkAdmin && message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
+                    </transition>
+                </div>
                 <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
                 <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
             </div>
@@ -133,6 +138,10 @@
                 checkAdmin: false,
                 generalUniversity: false,
                 userConnected: false,
+                message:{
+                    message0: true,
+                    message1: "When display is set to false the information is being processed.",
+                },
                 actualUser:{
                     username: name,
                     userGrade: grade,
@@ -250,8 +259,38 @@
             this.editedForm.splice(0,1)
             this.universitySend = this.form
         },
+
+        mounted: function () {
+            if(grade != "Admin") {
+                this.$nextTick(function () {
+                    window.setInterval(() => {
+                        this.selectMessage()
+                    },6000);
+                })
+            }
+        },
         
         methods: {
+            selectMessage(){
+                var i = this.getRandomInt(3)
+                console.log(i)
+
+                this.message.message0 = false
+
+                if(i == 0) {
+                    this.message.message1 = "When display is set to false the information is being processed."
+                } else if (i == 1) {
+                    this.message.message1 = "Any modification must first be validated by an administrator before appearing officially."
+                } else if (i == 2) {
+                    this.message.message1 = "We thank you for your interest in the project and for your help in making it grow."
+                } 
+                
+                this.message.message0 = true
+            },
+
+            getRandomInt(max) {
+                return Math.floor(Math.random() * Math.floor(max));
+            },
 
             updateFormData(){
                 let v = this;
@@ -566,14 +605,15 @@
 <style>
 
     .slide-fade-enter-active {
-    transition: all .3s ease;
+    transition: all .8s;
     }
     .slide-fade-leave-active {
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .8s;
+    opacity: 0;
     }
     .slide-fade-enter, .slide-fade-leave-to
     /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateX(10px);
+    transform: translateZ(0px) translateX(-10px);
     opacity: 0;
     }
 
@@ -594,5 +634,4 @@
     color: #1f9d55;
     opacity: 1;
     }
-
 </style>
