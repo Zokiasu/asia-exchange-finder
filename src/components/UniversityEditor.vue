@@ -9,6 +9,7 @@
         </div>
         <p v-if="!checkAdmin" class="bg-white rounded-2xl text-gray-500 text-center mx-32 py-1 my-6">When display is set to false the information is being processed.</p>
         <div v-if="!generalUniversity">
+            <notifications group="foo"/>
             <div class="w-full relative py-2 px-3 flex justify-end">
                 <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
                 <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
@@ -33,7 +34,7 @@
                                         By
                                     </th>
                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Created
+                                        Edited
                                     </th>
                                     <th scope="col" class="relative px-4 py-3">
                                         <span class="sr-only">Edit</span>
@@ -55,10 +56,10 @@
             </div>
         </div>
         <div v-if="generalUniversity && checkAdmin">
-            <div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
+            <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
                 <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
                 <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
-            </div>
+            </div>-->
             <div class="flex flex-col mb-20">
                 <div class="overflow-x-auto">
                     <div class="align-middle inline-block w-full">
@@ -79,7 +80,7 @@
                                         By
                                     </th>
                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Created
+                                        Edited
                                     </th>
                                     <th scope="col" class="relative px-4 py-3">
                                         <span class="sr-only">Edit</span>
@@ -120,6 +121,7 @@
             UETT,
             PulseLoader
         },
+        
 
         data () {
             return {
@@ -319,6 +321,9 @@
                     () => {
                         this.$router.replace('/Dashboard')
                         v.xhrRequest = false;
+                        this.$toast.success(`Your changes has been sent successfully.`);
+                        this.$toast.info(`All changes will have to be validated to appear.`);
+                        setTimeout(this.$toast.clear, 10000)
                     }, 
                     (error) => {
                         v.errorMessage = error.message;

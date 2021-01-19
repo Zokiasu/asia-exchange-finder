@@ -101,7 +101,7 @@
                                                         By
                                                     </th>
                                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                                        Created
+                                                        Edited
                                                     </th>
                                                     <th scope="col" class="relative px-4 py-3">
                                                         <span class="sr-only">Edit</span>

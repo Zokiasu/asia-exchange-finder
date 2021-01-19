@@ -12,7 +12,7 @@
                     <div class="flex flex-wrap mb-2 col-span-3">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="pseudo" v-model="pseudo" type="text" placeholder="Pseudo">
+                            id="username" v-model="username" type="text" placeholder="Username">
                         </div>
                     </div>
                     <div class="flex flex-wrap mb-2 col-span-3">
@@ -22,10 +22,10 @@
                         </div>
                     </div>
                     <div class="col-start-1 col-end-7">
-                        <div v-if="errorMessage !== ''" class="mb-2" role="alert">
+                        <div v-if="errorMessage !== ''" class="mb-2 text-red-500" role="alert">
                             {{ errorMessage }}
                         </div>
-                        <div v-if="successMessage !== ''" class="mb-2" role="alert">
+                        <div v-if="successMessage !== ''" class="mb-2 text-green-500" role="alert">
                             {{ successMessage }}
                         </div>
                         <button v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="Button bg-blue-500 container">
@@ -54,7 +54,7 @@
     export default {
         data() {
             return {
-                pseudo: "",
+                username: "",
                 email: "",
                 password: "",
                 grade: "Member",
@@ -80,7 +80,7 @@
                         (authUser) => {
                             console.log(authUser.user.uid)
                             db.ref(`users/${authUser.user.uid}`).set({
-                                pseudo:this.pseudo,
+                                username:this.username,
                                 email:this.email,
                                 grade:this.grade,
                             }),
