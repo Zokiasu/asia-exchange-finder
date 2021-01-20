@@ -1,120 +1,120 @@
 <template>
-<div class="mt-14">
-    <transition-group name="slide-fade">
-        <div v-if="!userConnected" class="w-full flex justify-center">
-            <pulse-loader></pulse-loader>
-        </div>
-        <div v-if="userConnected" class="w-full">
-            <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
-                <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
-                <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
-                <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
-                <p v-if="!checkAdmin">|</p>
-                <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
+    <div class="mt-14">
+        <transition-group name="slide-fade">
+            <div v-if="!userConnected" class="w-full flex justify-center">
+                <pulse-loader></pulse-loader>
             </div>
-            <div v-if="!generalUniversity">
-                <notifications group="foo"/>
-                <div class="w-full relative py-2 px-3 flex justify-between">
-                    <div class="flex">
-                        <p v-if="!checkAdmin && message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
-                        <transition name="slide-fade" mode="out-in">
-                            <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
-                        </transition>
-                    </div>
-                    <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
-                    <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+            <div v-if="userConnected" class="w-full">
+                <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
+                    <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
+                    <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
+                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
+                    <p v-if="!checkAdmin">|</p>
+                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
                 </div>
-                <div class="flex flex-col mb-20">
-                    <div class="overflow-x-auto">
-                        <div class="align-middle inline-block w-full">
-                            <div class="shadow border-b border-gray-200 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            University Name
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Localisation
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Display
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            By
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Edited
-                                        </th>
-                                        <th scope="col" class="relative px-4 py-3">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                        </tr>
-                                    </thead>
-                                    <UET v-for="(university, index) in universitySend"
-                                        :key="index"
-                                        :university="university"
-                                        :admin="checkAdmin"
-                                        @myEvents="removeUniversityFromForm(index)"
-                                        @addPartner="adPartner(index)"
-                                        @sendData="updateFormSpecificData(index)">
-                                    </UET>
-                                </table>
+                <div v-if="!generalUniversity">
+                    <notifications group="foo"/>
+                    <div class="w-full relative py-2 px-3 flex justify-between">
+                        <div class="flex">
+                            <p v-if="message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
+                            <transition name="slide-fade" mode="out-in">
+                                <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
+                            </transition>
+                        </div>
+                        <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
+                        <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                    </div>
+                    <div class="flex flex-col mb-20">
+                        <div class="overflow-x-auto">
+                            <div class="align-middle inline-block w-full">
+                                <div class="shadow border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                University Name
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Localisation
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Display
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                By
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Last Update
+                                            </th>
+                                            <th scope="col" class="relative px-4 py-3">
+                                                <span class="sr-only">Edit</span>
+                                            </th>
+                                            </tr>
+                                        </thead>
+                                        <UET v-for="(university, index) in universitySend"
+                                            :key="index"
+                                            :university="university"
+                                            :admin="checkAdmin"
+                                            @myEvents="removeUniversityFromForm(index)"
+                                            @addPartner="adPartner(index)"
+                                            @sendData="updateFormSpecificData(index)">
+                                        </UET>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="generalUniversity && checkAdmin">
+                    <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
+                        <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
+                        <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
+                    </div>-->
+                    <div class="flex flex-col mb-20">
+                        <div class="overflow-x-auto">
+                            <div class="align-middle inline-block w-full">
+                                <div class="shadow border-b border-gray-200 sm:rounded-lg">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                University Name
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Localisation
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Display
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                By
+                                            </th>
+                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Last Update
+                                            </th>
+                                            <th scope="col" class="relative px-4 py-3">
+                                                <span class="sr-only">Edit</span>
+                                            </th>
+                                            </tr>
+                                        </thead>
+                                        <UETT v-for="(university, index) in editedForm"
+                                            :key="index"
+                                            :university="university"
+                                            :admin="checkAdmin"
+                                            @myEvents="removeUniversityFromTmp(index)"
+                                            @addPartner="adPartner(index)"
+                                            @modifyData="updateEditedFormSpecificData(index)"
+                                            @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
+                                        </UETT>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-if="generalUniversity && checkAdmin">
-                <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
-                    <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
-                    <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
-                </div>-->
-                <div class="flex flex-col mb-20">
-                    <div class="overflow-x-auto">
-                        <div class="align-middle inline-block w-full">
-                            <div class="shadow border-b border-gray-200 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            University Name
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Localisation
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Display
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            By
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Edited
-                                        </th>
-                                        <th scope="col" class="relative px-4 py-3">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                        </tr>
-                                    </thead>
-                                    <UETT v-for="(university, index) in editedForm"
-                                        :key="index"
-                                        :university="university"
-                                        :admin="checkAdmin"
-                                        @myEvents="removeUniversityFromTmp(index)"
-                                        @addPartner="adPartner(index)"
-                                        @modifyData="updateEditedFormSpecificData(index)"
-                                        @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
-                                    </UETT>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </transition-group>
-</div>
+        </transition-group>
+    </div>
 </template>
 
 <script>
@@ -134,7 +134,6 @@
             PulseLoader
         },
         
-
         data () {
             return {
                 numberChildOnDatabase: 0,
@@ -155,7 +154,7 @@
                 },
                 "universitySend": [],
 
-                "form": [
+                "form": [ 
                     {
                         "universitySourceId": "",
                         "universitySourceName": "University Name",
@@ -166,7 +165,7 @@
                         "universitySourceWebsiteLink": "#",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
-                        "universitySourceLastUpdate": new Date().toLocaleDateString(),   
+                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
@@ -178,7 +177,7 @@
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "False",
                                 "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toLocaleDateString(),  
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [
                                     {
                                         "specialityName": ""
@@ -200,7 +199,7 @@
                         "universitySourceWebsiteLink": "#",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
-                        "universitySourceLastUpdate": new Date().toLocaleDateString(),   
+                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
@@ -212,7 +211,7 @@
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "False",
                                 "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toLocaleDateString(),  
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [
                                     {
                                         "specialityName": ""
@@ -230,7 +229,7 @@
                 if(user != undefined) {
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
                         this.userConnected = true
-                        this.actualUser.username = snapshot.val().pseudo
+                        this.actualUser.username = snapshot.val().username
                         this.actualUser.userGrade = snapshot.val().grade
                         if(this.actualUser.userGrade == "Admin") {
                             this.checkAdmin = true
@@ -246,11 +245,9 @@
             
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
-                    //console.log(element.key)
                     tmpForm.push(element.val())
                     if(tmpForm[tmpForm.length-1].universitySourceId == undefined){
                         tmpForm[tmpForm.length-1].universitySourceId = element.key
-                        console.log(tmpForm[tmpForm.length-1].universitySourceId)
                     }
                 })
             })
@@ -280,16 +277,15 @@
         methods: {
             selectMessage(){
                 var i = this.getRandomInt(3)
-                console.log(i)
 
                 this.message.message0 = false
 
                 if(i == 0) {
                     this.message.message1 = "When display is set to false the information is being processed."
                 } else if (i == 1) {
-                    this.message.message1 = "Any modification must first be validated by an administrator before appearing officially."
+                    this.message.message1 = "Any modification must be validated by an administrator before appearing officially."
                 } else if (i == 2) {
-                    this.message.message1 = "We thank you for your interest in the project and for your help in making it grow."
+                    this.message.message1 = "We thank you for your interest in this project and for your help in making it grow."
                 } 
                 
                 this.message.message0 = true
@@ -308,7 +304,6 @@
                 var testA = "";
                 
                 var up = {};
-                console.log(this.form.length)
                 if(this.form.length <= 0){
                     up['/universitys/'] = this.form
                     return db.ref().update(up).then (
@@ -323,16 +318,15 @@
                     )
                 } else {
                     for (let index = 0; index < this.form.length; index++) {
-                        
                         if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
                             testA = db.ref().child('universitys').push().key;
                             this.form[index].universitySourceId = testA;
                             this.writeUpdateData('/universitys/', testA, this.form[index])
+                            this.writeUpdateDataHistory('/universityHistory/', testA, this.form[index])
                         } else {
                             this.writeUpdateData('/universitys/', this.form[index].universitySourceId, this.form[index])
+                             this.writeUpdateDataHistory('/universityHistory/', this.form[index].universitySourceId, this.form[index])
                         }
-
-                        //db.ref().update(up);
                     }
                 }
             },
@@ -350,13 +344,13 @@
                 if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
                     testA = db.ref().child('universitys').push().key;
                     this.form[index].universitySourceId = testA;
-                    this.form[index].universitySourceLastUpdate = new Date().toLocaleDateString()
+                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                     this.form[index].universitySourceCreator = name
                     this.form[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + testA] = this.form[index]
                     this.editedForm.push(this.form[index])
                 } else {
-                    this.form[index].universitySourceLastUpdate = new Date().toLocaleDateString()
+                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                     this.form[index].universitySourceCreator = name
                     this.form[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + this.form[index].universitySourceId] = this.form[index]
@@ -433,6 +427,21 @@
                 )
             },
 
+            writeUpdateDataHistory(datasource, uid, element){
+                var up = {};
+                up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
+                return db.ref().update(up).then (
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.xhrRequest = false;
+                    }, 
+                    (error) => {
+                        this.errorMessage = error.message;
+                        this.xhrRequest = false;
+                    }
+                )
+            },
+
             updateEditedFormSpecificData(index){
                 let v = this;
                 v.xhrRequest = true;
@@ -446,12 +455,12 @@
                 if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
                     testA = db.ref().child('universitys').push().key;
                     this.editedForm[index].universitySourceId = testA;
-                    this.editedForm[index].universitySourceLastUpdate = new Date().toLocaleDateString()
+                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                     this.editedForm[index].universitySourceCreator = name
                     this.editedForm[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + testA] = this.editedForm[index]
                 } else {
-                    this.editedForm[index].universitySourceLastUpdate = new Date().toLocaleDateString()
+                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                     this.editedForm[index].universitySourceCreator = name
                     this.editedForm[index].universitySourceDisplay = "False"
                     up['/universitysEdited/' + this.editedForm[index].universitySourceId] = this.editedForm[index]
@@ -519,7 +528,7 @@
                         "universitySourceWebsiteLink": "#",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
-                        "universitySourceLastUpdate": new Date().toLocaleDateString(),   
+                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
@@ -531,7 +540,7 @@
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "False",
                                 "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toLocaleDateString(),  
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [
                                     {
                                         "specialityName": ""
@@ -557,7 +566,7 @@
                         "universityPartnerCondition": "",
                         "universityPartnerDisplay": "False",
                         "universityPartnerCreator": name,
-                        "universityPartnerLastUpdate": new Date().toLocaleDateString(),  
+                        "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                         "universityPartnerSpeciality": [
                             {
                                 "specialityName": ""
@@ -578,29 +587,28 @@
             },
 
             filterCreation: function(callFilter){
-                console.log("Call filterCreation")
                 this.universitySend = [];
+                var tmpUniversitySend = [];
                 if(callFilter == "General") {
-                    this.universitySend = this.form
+                    tmpUniversitySend = this.form
                 } else {
                     this.form.forEach((el)=>{
                         if(el.universitySourceCreator == name){
-                            this.universitySend.push(el)
+                            tmpUniversitySend.push(el)
                         }
                     })
 
                     this.editedForm.forEach((el)=>{
                         if(el.universitySourceCreator == name){
-                            this.universitySend.push(el)
+                            tmpUniversitySend.push(el)
                         }
                     })
                 }
 
-                this.universitySend = [...new Set(this.universitySend)]
+                this.universitySend = [...new Set(tmpUniversitySend)]
             },
 
             setGeneral: function() {
-                console.log("Call setGeneral")
                 if(grade == "Admin"){
                     this.generalUniversity = !this.generalUniversity
                 }

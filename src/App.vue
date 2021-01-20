@@ -51,7 +51,7 @@
         if(user != undefined) {
           db.ref('users/' + user.uid).once('value').then((snapshot) => {
               this.userAuthenticated = true
-              this.actualUser.username = snapshot.val().pseudo
+              this.actualUser.username = snapshot.val().username
               this.actualUser.userGrade = snapshot.val().grade
           })
         }

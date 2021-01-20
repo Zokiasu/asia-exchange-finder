@@ -101,7 +101,7 @@
                                                         By
                                                     </th>
                                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                                        Edited
+                                                        Last Update
                                                     </th>
                                                     <th scope="col" class="relative px-4 py-3">
                                                         <span class="sr-only">Edit</span>
@@ -170,7 +170,7 @@
             firebase.auth().onAuthStateChanged((user) => {
                 if(user != undefined) {
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                        if(this.university.universitySourceCreator == snapshot.val().pseudo){
+                        if(this.university.universitySourceCreator == snapshot.val().username){
                             this.herCreation = true
                         }
                     })

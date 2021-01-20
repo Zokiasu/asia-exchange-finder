@@ -19,14 +19,15 @@ var firebaseConfig = {
 let apps = firebase.initializeApp(firebaseConfig)
 let db = apps.database()
 apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+firebase.analytics();
 
 var name = "Unknown";
 var grade, users;
 
 firebase.auth().onAuthStateChanged((user) =>  {
     if(user != undefined) {
-        db.ref('users/' + user.uid).once('value').then((snapshot) => {
-            name = snapshot.val().pseudo
+        firebase.database().ref('users/' + user.uid).once('value').then((snapshot) => {
+            name = snapshot.val().username
             grade = snapshot.val().grade
         })
     }

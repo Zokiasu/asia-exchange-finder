@@ -124,11 +124,11 @@
                         "universitySourceCountry": "France",
                         "universitySourceCity": "Paris",
                         "universitySourceAddress": "",
-                        "universitySourceImageLink": "",
-                        "universitySourceWebsiteLink": "",
+                        "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
+                        "universitySourceWebsiteLink": "#",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
-                        "universitySourceLastUpdate": new Date().toLocaleDateString(),   
+                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
@@ -136,11 +136,11 @@
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "",
+                                "universityPartnerWebsiteLink": "#",
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "False",
                                 "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toLocaleDateString(),  
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [
                                     {
                                         "specialityName": ""
@@ -244,13 +244,15 @@
                 this.modelD = this.option.countryOption[this.modelD]
                 this.modelS = this.option.specialityOption[this.modelS]
 
+                if(this.modelV != "" || this.modelV != null || this.modelV != undefined) {
+                    this.registerStats()
+                }
+
                 this.universitysSend = this.universitys.filter(
                     (el) => {
                         if(this.modelV == "" || this.modelV == null || this.modelV == undefined) {
-                            console.log("modelV is " + this.modelV)
                             return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
-                            console.log("modelV is " + this.modelV)
                             return (el.universitySourceCity.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
@@ -263,10 +265,19 @@
                 }
             },
 
+            registerStats(){
+                db.ref("stats").once("value", function(snapshot){
+                    snapshot.forEach(function(element){
+                        console.log("Hello1")
+                    })
+                }).catch(
+                    console.log("Hello2")
+                )
+            },
+
+
             booleanByCountry(consultList) {
                 var res = false
-                console.log("modelD is " + this.modelD)
-                console.log("modelS is " + this.modelS)
 
                 if(this.modelD != undefined && this.modelS != undefined) {
                     consultList.forEach(el => {
@@ -299,11 +310,8 @@
                 }
 
                 if(this.modelD == undefined && this.modelS == undefined) {
-                    console.log("Nothing")
                     res = true
                 }
-
-                console.log("res est " + res)
 
                 return res        
             },

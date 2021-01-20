@@ -58,6 +58,7 @@
                 email: "",
                 password: "",
                 grade: "Member",
+                created: new Date().toISOString().slice(0, 10),
                 xhrRequest: false,
                 errorMessage: "",
                 successMessage: "",
@@ -78,11 +79,10 @@
                     .auth()
                     .createUserWithEmailAndPassword(this.email, this.password).then(
                         (authUser) => {
-                            console.log(authUser.user.uid)
                             db.ref(`users/${authUser.user.uid}`).set({
                                 username:this.username,
-                                email:this.email,
                                 grade:this.grade,
+                                created:this.created
                             }),
                             this.successMessage = "Register Successfully.";
                             this.disablexhrRequest();
