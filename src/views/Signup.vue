@@ -48,7 +48,7 @@
 
 <script>
     import firebase from 'firebase'
-    import {apps} from '../main.js'
+    import {apps, name, grade, defaultAnalytics} from '../main.js'
     import db from '../main.js'
 
     export default {
@@ -84,6 +84,7 @@
                                 grade:this.grade,
                                 created:this.created
                             }),
+                            defaultAnalytics.logEvent('signup', {value:this.username})
                             this.successMessage = "Register Successfully.";
                             this.disablexhrRequest();
                             this.close();

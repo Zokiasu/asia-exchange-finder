@@ -21,7 +21,7 @@
         <!-- universityPartnerWebsiteLink button -->
         <div class="container flex justify-center">
             <a v-bind:href="link" target="_blank">
-                <button class="inline-block px-4 py-1 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-500 
+                <button @click="defaultAnalytics.logEvent('universityPartnerWebsite', {value: university.universityPartnerName})" class="inline-block px-4 py-1 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-500 
                     rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-blue-900">
                     Website
                 </button>

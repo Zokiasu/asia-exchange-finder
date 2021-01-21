@@ -244,15 +244,12 @@
                 this.modelD = this.option.countryOption[this.modelD]
                 this.modelS = this.option.specialityOption[this.modelS]
 
-                if(this.modelV != "" || this.modelV != null || this.modelV != undefined) {
-                    this.registerStats()
-                }
-
                 this.universitysSend = this.universitys.filter(
                     (el) => {
                         if(this.modelV == "" || this.modelV == null || this.modelV == undefined) {
                             return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
+                            defaultAnalytics.logEvent('cityStart', {value:this.modelV})
                             return (el.universitySourceCity.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
@@ -275,11 +272,12 @@
                 )
             },
 
-
             booleanByCountry(consultList) {
                 var res = false
 
                 if(this.modelD != undefined && this.modelS != undefined) {
+                    defaultAnalytics.logEvent('destination', {value:this.modelD})
+                    defaultAnalytics.logEvent('speciality', {value:this.modelS})
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry == this.modelD) {
                             el.universityPartnerSpeciality.forEach(el2=>{
@@ -292,6 +290,7 @@
                 }
 
                 if(this.modelD == undefined && this.modelS != undefined) {
+                    defaultAnalytics.logEvent('speciality', {value:this.modelS})
                      consultList.forEach(el => {
                         el.universityPartnerSpeciality.forEach(el2 =>{
                             if(el2.specialityName === this.modelS) {
@@ -302,6 +301,7 @@
                 }
                 
                 if(this.modelD != undefined && this.modelS == undefined) {
+                    defaultAnalytics.logEvent('destination', {value:this.modelD})
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry === this.modelD) {
                             res = true

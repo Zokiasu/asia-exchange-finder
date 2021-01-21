@@ -44,7 +44,7 @@
 
 <script>
     import firebase from 'firebase'
-    import {apps, UserAuthenticated} from '../main.js'
+    import {apps, name, grade, defaultAnalytics} from '../main.js'
     import db from '../main.js'
 
     export default {
@@ -57,10 +57,12 @@
                 successMessage: "",
             }
         },
+
         methods: {
             close(){
                 this.$emit('created');
             },
+            
             userlog(){
                 this.$emit('loged');
             },
@@ -72,6 +74,7 @@
                 apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
                     return apps.auth().signInWithEmailAndPassword(this.email, this.password).then(
                             (authUser) => {
+                                defaultAnalytics.logEvent('login', {value: this.email})
                                 this.$router.replace('/')
                                 this.xhrRequest = false;
                                 this.userlog();
