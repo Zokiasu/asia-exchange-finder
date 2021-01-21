@@ -49,6 +49,7 @@
 
 <script>
   import UniversityCardInfo from './UniversityCardInfo.vue'
+  import {apps, name, grade, defaultAnalytics} from '../main.js'
 
   export default {
     components:{

@@ -87,6 +87,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
+    import {apps, name, grade, defaultAnalytics} from '../main.js'
     import Multiselect from '@vueform/multiselect'
     import Notifications from "vt-notifications"
 

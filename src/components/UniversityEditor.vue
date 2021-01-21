@@ -123,7 +123,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
+    import {apps, name, grade, defaultAnalytics} from '../main.js'
     import { ssrContextKey } from 'vue'
 
     export default {

@@ -111,8 +111,10 @@
 </template>
 
 <script>
+    import {apps, name, grade, defaultAnalytics} from '../main.js'
 
     export default {
+        
 
         name: 'universityPartnerElement',
         number: 'index',
