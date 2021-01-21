@@ -1,7 +1,7 @@
 <template>
-    <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
+    <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full h-full">
 
-        <div class=" grid grid-cols-1 w-full">
+        <div class="grid grid-cols-1 w-full">
             <!-- Filter -->
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="pt-6 ms:pl-6">
@@ -38,24 +38,22 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible" class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
+                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
                     <card v-for="university in this.universitysSend"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard"
                         @created="init">
                     </card>
+                    <div class="rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
+                        <div class="rounded-lg text-xl h-full space-y-6 py-5 md:py-10 xl:py-16 px-6">
+                            <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
+                            <p v-if="!visible"  class="text-center">Send us your informations with your dashboard!</p>
+                            <p v-if="visible"  class="text-center">Go to register and propose them to us!</p>
+                        </div>
+                    </div>
                 </div>
-                <div v-if="!visible" class="my-10 p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
+                <div v-if="!visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
                     <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
                         <pulse-loader class="m-auto"></pulse-loader>
                     </div>
@@ -339,6 +337,7 @@
 }
 .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  height: 0;
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {

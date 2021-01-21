@@ -10,16 +10,16 @@
     background: transparent; /* make scrollbar transparent */
 }
 
-body {
-    background: url('https://images5.alphacoders.com/685/thumb-1920-685514.jpg');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
+html {
+  background: url('https://images5.alphacoders.com/685/thumb-1920-685514.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
 
 .Button {
   border: none;
