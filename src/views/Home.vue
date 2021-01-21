@@ -48,8 +48,8 @@
                     <div class="rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                         <div class="rounded-lg text-xl h-full space-y-6 py-5 md:py-10 xl:py-16 px-6">
                             <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
-                            <p v-if="!visible"  class="text-center">Send us your informations with your dashboard!</p>
-                            <p v-if="visible"  class="text-center">Go to register and propose them to us!</p>
+                            <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
+                            <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>
                         </div>
                     </div>
                 </div>
@@ -107,6 +107,7 @@
                 modelS:'',
                 show: false,
                 visible: false,
+                userConnected: false,
                 universitysSend: [],
 
                 option: {
@@ -161,6 +162,16 @@
                     universitySourcerPartner: []
                 },
             }
+        },
+
+        async beforeCreate(){
+            await firebase.auth().onAuthStateChanged((user) => {
+                if(user != undefined) {
+                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
+                        this.userConnected = true
+                    })
+                }
+            })
         },
 
         async created(){

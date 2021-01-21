@@ -64,7 +64,11 @@
       signOut: function() {
         firebase.auth().signOut().then(() => {
           this.user = null
-          this.$router.replace('/')
+          if(this.$route.name === 'Home') {
+            this.$router.go()
+          } else {
+            this.$router.replace('/')
+          }
         }).catch(err => console.log(error))
         this.setUserAuthenticated()
       },
