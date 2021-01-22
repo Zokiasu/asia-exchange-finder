@@ -361,10 +361,10 @@
                     () => {
                         this.$router.replace('/Dashboard')
                         v.xhrRequest = false;
+                        defaultAnalytics.logEvent('userEditUniversity', {value:name})
                         this.$toast.success(`Your changes has been sent successfully.`);
                         this.$toast.info(`All changes will have to be validated to appear.`);
                         setTimeout(this.$toast.clear, 10000)
-                        defaultAnalytics.logEvent('userEditUniversity', {value: name})
                     }, 
                     (error) => {
                         v.errorMessage = error.message;

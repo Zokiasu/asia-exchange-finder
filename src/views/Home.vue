@@ -45,7 +45,7 @@
                         @onClick = "getuniqueUniversityNameCard"
                         @created="init">
                     </card>
-                    <div class="rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
+                    <div v-if="!show" class="rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                         <div class="rounded-lg text-xl h-full space-y-6 py-5 md:py-10 xl:py-16 px-6">
                             <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
                             <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
@@ -254,12 +254,15 @@
                 this.modelD = this.option.countryOption[this.modelD]
                 this.modelS = this.option.specialityOption[this.modelS]
 
+                if(this.modelV != undefined) {defaultAnalytics.logEvent('cityStartFilter', {value:this.modelV})}
+                if(this.modelD != undefined) {defaultAnalytics.logEvent('destinationFilter', {value:this.modelD})}
+                if(this.modelS != undefined) {defaultAnalytics.logEvent('specialityFilter', {value:this.modelS})}
+
                 this.universitysSend = this.universitys.filter(
                     (el) => {
                         if(this.modelV == "" || this.modelV == null || this.modelV == undefined) {
                             return (this.booleanByCountry(el.universitySourcerPartner))
                         } else {
-                            defaultAnalytics.logEvent('cityStart', {value:this.modelV})
                             return (el.universitySourceCity.toLowerCase() == this.modelV.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
                         }
                     }
@@ -286,8 +289,6 @@
                 var res = false
 
                 if(this.modelD != undefined && this.modelS != undefined) {
-                    defaultAnalytics.logEvent('destination', {value:this.modelD})
-                    defaultAnalytics.logEvent('speciality', {value:this.modelS})
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry == this.modelD) {
                             el.universityPartnerSpeciality.forEach(el2=>{
@@ -300,7 +301,6 @@
                 }
 
                 if(this.modelD == undefined && this.modelS != undefined) {
-                    defaultAnalytics.logEvent('speciality', {value:this.modelS})
                      consultList.forEach(el => {
                         el.universityPartnerSpeciality.forEach(el2 =>{
                             if(el2.specialityName === this.modelS) {
@@ -311,7 +311,6 @@
                 }
                 
                 if(this.modelD != undefined && this.modelS == undefined) {
-                    defaultAnalytics.logEvent('destination', {value:this.modelD})
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry === this.modelD) {
                             res = true
