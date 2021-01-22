@@ -32,7 +32,6 @@ export default {
     
     methods: {
         openCard(name) {
-            console.log(this.university.universitySourceName)
             defaultAnalytics.logEvent('universitySource', {value: this.university.universitySourceName})
             this.$emit('onClick', name)
         }

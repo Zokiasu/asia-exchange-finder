@@ -1,5 +1,5 @@
 <template>
-  <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30">
+  <div class="relative text-white inset-x-0 top-0 flex flex-col">
     <div class="invisible md:visible space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
       <div class="space-x-2 absolute left-0 ml-6 flex justify-between">
         <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl">About Us</router-link>
