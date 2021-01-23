@@ -55,6 +55,7 @@
                                             :university="university"
                                             :admin="checkAdmin"
                                             :herCreation="yourCreationsFilter"
+                                            ref="form"
                                             @deleteUniversity="removeUniversity(index)"
                                             @addPartner="addPartnerForm(index)"
                                             @sendData="updateOfficialSpecificData(index)">
@@ -544,6 +545,9 @@
                 } else {
                     this.filterCreation('General')
                 }
+                setTimeout(()=>{
+                    this.$refs.form.openUniversityForm()
+                },100)
             },
 
             addPartnerForm(index) {
@@ -621,7 +625,6 @@
             },
 
             filterCreation: function(callFilter){
-                console.log("filterCreation")
                 this.universitySend = [];
                 var tmpUniversitySend = [];
                 if(callFilter == "General") {
