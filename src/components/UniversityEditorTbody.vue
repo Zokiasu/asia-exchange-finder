@@ -26,12 +26,12 @@
                 {{university.universitySourceLastUpdate}}
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
-                <button v-if="!visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-800">Edit</button>
-                <button v-if="visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-800">Close</button>
+                <button v-if="!openingUniversityForm" @click="openUniversityForm" class="font-bold text-indigo-600 hover:text-indigo-800">Edit</button>
+                <button v-if="openingUniversityForm" @click="openUniversityForm" class="font-bold text-indigo-600 hover:text-indigo-800">Close</button>
             </td>
         </tr>
         <transition-group name="slide-fade">
-            <tr v-if="visible">
+            <tr v-if="openingUniversityForm">
                 <td colspan="6">
                     <div>
                         <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
@@ -116,7 +116,7 @@
                                                 </UEPT>
                                             </table>
                                             <div class="w-full flex justify-between">
-                                                <button v-if="herCreation" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                <button v-if="(herCreation && (university.universitySourceDisplay != 'True')) || admin" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
                                                 <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
                                                     <div class="relative w-full appearance-none label-floating">
                                                         <select v-model="university.universitySourceDisplay" class="p-2 rounded bg-gray-200 border border-gray-200">
@@ -162,14 +162,15 @@
 
         data() {
             return {
-                visible: false,
+                openingUniversityForm: false,
             }
         },
 
         methods: {
 
             callDeleteUniversity(){
-                this.$emit("myEvents")
+                console.log("callDeleteUniversity")
+                this.$emit("deleteUniversity")
             },
 
             callAddPartner(){
@@ -181,8 +182,8 @@
                 this.$emit("sendData")
             },
 
-            setVisible: function() {
-                this.visible = !this.visible
+            openUniversityForm: function() {
+                this.openingUniversityForm = !this.openingUniversityForm
             },
 
             addPartner() {

@@ -21,8 +21,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
-                        <button v-if="yourCreationsFilter" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button v-if="yourCreationsFilter || checkAdmin" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -56,9 +55,9 @@
                                             :university="university"
                                             :admin="checkAdmin"
                                             :herCreation="yourCreationsFilter"
-                                            @myEvents="removeUniversityFromForm(index)"
+                                            @deleteUniversity="removeUniversity(index)"
                                             @addPartner="addPartnerForm(index)"
-                                            @sendData="updateFormSpecificData(index)">
+                                            @sendData="updateOfficialSpecificData(index)">
                                         </UET>
                                     </table>
                                 </div>
@@ -67,10 +66,6 @@
                     </div>
                 </div>
                 <div v-if="generalUniversity && checkAdmin">
-                    <!--<div class="w-full relative py-2 px-3 flex space-x-2 justify-start">
-                        <button v-if="checkAdmin" @click="updateEditedFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>
-                        <button v-if="checkAdmin" @click="moveEditedToOfficial()" class="Button bg-green-500 rounded-3xl">Send all data</button>
-                    </div>-->
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
                             <div class="align-middle inline-block w-full">
@@ -104,7 +99,7 @@
                                             :admin="checkAdmin"
                                             @myEvents="removeUniversityFromTmp(index)"
                                             @addPartnerEdited="addPartnerEditedForm(index)"
-                                            @modifyData="updateEditedFormSpecificData(index)"
+                                            @modifyData="updateEditedSpecificData(index)"
                                             @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
                                         </UETT>
                                     </table>
@@ -259,6 +254,7 @@
                     tmpEditedForm.push(element.val())
                 })
             })
+            
             this.form = tmpForm
             this.editedForm = tmpEditedForm
             this.form.splice(0,1)
@@ -277,8 +273,9 @@
         },
         
         methods: {
+
             randomHelpedMessage(){
-                var i = this.getRandomInt(3)
+                var i = this.getRandomInt(5)
 
                 this.message.message0 = false
 
@@ -288,7 +285,11 @@
                     this.message.message1 = "Any modification must be validated by an administrator before appearing officially."
                 } else if (i == 2) {
                     this.message.message1 = "We thank you for your interest in this project and for your help in making it grow."
-                } 
+                }  else if (i == 3) {
+                    this.message.message1 = "In the general section you will find all the currently validated universities."
+                }  else if (i == 4) {
+                    this.message.message1 = "In your creations section you will find all your creations validated or not by the administrators."
+                }
                 
                 this.message.message0 = true
             },
@@ -297,7 +298,7 @@
                 return Math.floor(Math.random() * Math.floor(max));
             },
 
-            updateFormData(){
+            updateAllOfficialData(){
                 let v = this;
                 v.xhrRequest = true;
                 v.errorMessage = "";
@@ -333,7 +334,7 @@
                 }
             },
 
-            updateFormSpecificData(index){
+            updateOfficialSpecificData(index){
                 let v = this;
                 v.xhrRequest = true;
                 v.errorMessage = "";
@@ -375,7 +376,7 @@
                 )
             },
 
-            updateEditedFormData(){
+            updateAllEditedData(){
                 let v = this;
                 v.xhrRequest = true;
                 v.errorMessage = "";
@@ -415,37 +416,7 @@
                 }
             },
 
-            writeUpdateData(datasource, uid, element){
-                var up = {};
-                up[datasource + uid] = element
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        this.errorMessage = error.message;
-                        this.xhrRequest = false;
-                    }
-                )
-            },
-
-            writeUpdateDataHistory(datasource, uid, element){
-                var up = {};
-                up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        this.errorMessage = error.message;
-                        this.xhrRequest = false;
-                    }
-                )
-            },
-
-            updateEditedFormSpecificData(index){
+            updateEditedSpecificData(index){
                 let v = this;
                 v.xhrRequest = true;
                 v.errorMessage = "";
@@ -481,22 +452,34 @@
                 )
             },
 
-            moveEditedToOfficial(){
-                let count = 0;
-                for (let index = 0; index < this.editedForm.length; index++) {
-                    if(this.editedForm[index].universitySourceDisplay == "True") {
-                        for (let index2 = 0; index2 < this.form.length; index2++) {
-                            if(this.editedForm[index].universitySourceId === this.form[index2].universitySourceId){
-                                this.form[index2] = this.editedForm[index]
-                            } else {
-                                count++
-                            }
-                        }
-                        if(count == this.form.length){
-                            this.moveEditedToOfficialSpecific(index)
-                        }
+            writeUpdateData(datasource, uid, element){
+                var up = {};
+                up[datasource + uid] = element
+                return db.ref().update(up).then (
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.xhrRequest = false;
+                    }, 
+                    (error) => {
+                        this.errorMessage = error.message;
+                        this.xhrRequest = false;
                     }
-                }
+                )
+            },
+
+            writeUpdateDataHistory(datasource, uid, element){
+                var up = {};
+                up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
+                return db.ref().update(up).then (
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.xhrRequest = false;
+                    }, 
+                    (error) => {
+                        this.errorMessage = error.message;
+                        this.xhrRequest = false;
+                    }
+                )
             },
 
             moveEditedToOfficialSpecific(dex){
@@ -515,12 +498,12 @@
                     this.form.push(this.editedForm[dex])
                 }
                 this.editedForm.splice(dex, 1)
-                this.updateFormData()
-                this.updateEditedFormData()
+                this.updateAllOfficialData()
+                this.updateAllEditedData()
             },
 
             addUniversity() {
-                this.form.push(
+                this.editedForm.push(
                     {
                         "universitySourceId": "",
                         "universitySourceName": "University Name",
@@ -553,8 +536,14 @@
                         ], 
                     }
                 )
-                this.updateFormSpecificData(this.form.length-1)
+                this.updateEditedSpecificData(this.editedForm.length-1)
                 defaultAnalytics.logEvent('userAddNewUniversity', {value: name})
+
+                if(this.yourCreationsFilter) {
+                    this.filterCreation('Creation')
+                } else {
+                    this.filterCreation('General')
+                }
             },
 
             addPartnerForm(index) {
@@ -608,17 +597,31 @@
                 )
             },
 
-            removeUniversityFromForm(index) {
-                this.form.splice(index, 1);
-                this.updateFormData()
+            removeUniversity(index) { 
+                console.log("removeUniversity : " + this.yourCreationsFilter)
+                if(this.yourCreationsFilter) {
+                    for (let i = 0; i < this.editedForm.length; i++) {
+                        if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
+                            this.editedForm.splice(i, 1);
+                            break;
+                        }
+                    }
+                    
+                    this.updateAllEditedData()
+                    this.filterCreation('Creation')
+                } else {
+                    this.form.splice(index, 1);
+                    this.updateAllOfficialData()
+                }
             },
 
             removeUniversityFromTmp(index) {
                 this.editedForm.splice(index, 1);
-                this.updateEditedFormData()
+                this.updateAllEditedData()
             },
 
             filterCreation: function(callFilter){
+                console.log("filterCreation")
                 this.universitySend = [];
                 var tmpUniversitySend = [];
                 if(callFilter == "General") {
@@ -626,6 +629,7 @@
                     this.yourCreationsFilter = false
                 } else {
                     this.yourCreationsFilter = true
+
                     this.form.forEach((el)=>{
                         if(el.universitySourceCreator == name){
                             tmpUniversitySend.push(el)
@@ -633,6 +637,7 @@
                     })
 
                     this.editedForm.forEach((el)=>{
+                        el
                         if(el.universitySourceCreator == name){
                             tmpUniversitySend.push(el)
                         }
