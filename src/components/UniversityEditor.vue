@@ -10,7 +10,7 @@
                     <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
                     <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
                     <p v-if="!checkAdmin">|</p>
-                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('creation')">Your Creations</button>
+                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('Creation')">Your Creations</button>
                 </div>
                 <div v-if="!generalUniversity">
                     <notifications group="foo"/>
@@ -22,7 +22,7 @@
                             </transition>
                         </div>
                         <!--<button v-if="checkAdmin" @click="updateFormData()" class="Button bg-blue-500 rounded-3xl">Modify all data</button>-->
-                        <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button v-if="yourCreationsFilter" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -55,8 +55,9 @@
                                             :key="index"
                                             :university="university"
                                             :admin="checkAdmin"
+                                            :herCreation="yourCreationsFilter"
                                             @myEvents="removeUniversityFromForm(index)"
-                                            @addPartner="adPartner(index)"
+                                            @addPartner="addPartnerForm(index)"
                                             @sendData="updateFormSpecificData(index)">
                                         </UET>
                                     </table>
@@ -102,7 +103,7 @@
                                             :university="university"
                                             :admin="checkAdmin"
                                             @myEvents="removeUniversityFromTmp(index)"
-                                            @addPartner="adPartner(index)"
+                                            @addPartnerEdited="addPartnerEditedForm(index)"
                                             @modifyData="updateEditedFormSpecificData(index)"
                                             @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
                                         </UETT>
@@ -143,6 +144,7 @@
                 nameFilter: "",
                 checkAdmin: false,
                 generalUniversity: false,
+                yourCreationsFilter: false,
                 userConnected: false,
                 message:{
                     message0: true,
@@ -268,14 +270,14 @@
             if(grade != "Admin") {
                 this.$nextTick(function () {
                     window.setInterval(() => {
-                        this.selectMessage()
+                        this.randomHelpedMessage()
                     },6000);
                 })
             }
         },
         
         methods: {
-            selectMessage(){
+            randomHelpedMessage(){
                 var i = this.getRandomInt(3)
 
                 this.message.message0 = false
@@ -555,8 +557,37 @@
                 defaultAnalytics.logEvent('userAddNewUniversity', {value: name})
             },
 
-            adPartner(index) {
-                this.form[index].universitySourcerPartner.push(
+            addPartnerForm(index) {
+                this.universitySend[index].universitySourcerPartner.push(
+                    {
+                        "universityPartnerName": "University Partner",
+                        "universitySourceId": "",
+                        "universityPartnerCountry": "",
+                        "universityPartnerCity": "",
+                        "universityPartnerAddress": "",
+                        "universityPartnerWebsiteLink": "#",
+                        "universityPartnerCondition": "",
+                        "universityPartnerDisplay": "False",
+                        "universityPartnerCreator": name,
+                        "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                        "universityPartnerSpeciality": [
+                            {
+                                "specialityName": ""
+                            }
+                        ],
+                    }
+                )
+
+                if(this.yourCreationsFilter) {
+                    this.filterCreation('Creation')
+                } else {
+                    this.filterCreation('General')
+                }
+            },
+
+            addPartnerEditedForm(index) {
+                console.log("addPartnerEditedForm")
+                this.editedForm[index].universitySourcerPartner.push(
                     {
                         "universityPartnerName": "University Partner",
                         "universitySourceId": "",
@@ -592,7 +623,9 @@
                 var tmpUniversitySend = [];
                 if(callFilter == "General") {
                     tmpUniversitySend = this.form
+                    this.yourCreationsFilter = false
                 } else {
+                    this.yourCreationsFilter = true
                     this.form.forEach((el)=>{
                         if(el.universitySourceCreator == name){
                             tmpUniversitySend.push(el)
@@ -620,17 +653,25 @@
 
 <style>
 
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
+
     .slide-fade-enter-active {
-    transition: all .8s;
+        transition: all .8s ease-out;
     }
+
     .slide-fade-leave-active {
-    transition: all .8s;
-    opacity: 0;
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
-    .slide-fade-enter, .slide-fade-leave-to
-    /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateZ(0px) translateX(-10px);
-    opacity: 0;
+
+    .slide-fade-enter-from, .slide-fade-leave-to {
+        transform: translateY(20px);
+        opacity: 0;
     }
 
     /* RED BORDER ON INVALID INPUT */

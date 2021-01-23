@@ -153,18 +153,24 @@
 </script>
 
 <style>
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
 
-.slide-fade-enter-active {
-  transition: all .8s ease-out;
-}
+    .slide-fade-enter-active {
+        transition: all .8s ease-out;
+    }
 
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
-}
+    .slide-fade-enter-from, .slide-fade-leave-to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 </style>

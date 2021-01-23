@@ -116,7 +116,7 @@
                                                 </UEPT>
                                             </table>
                                             <div class="w-full flex justify-between">
-                                                <button v-if="admin" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                <button v-if="herCreation" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
                                                 <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
                                                     <div class="relative w-full appearance-none label-floating">
                                                         <select v-model="university.universitySourceDisplay" class="p-2 rounded bg-gray-200 border border-gray-200">
@@ -155,27 +155,15 @@
             UEPT
         },
 
-        name: 'university',
+        university: 'university',
         admin: 'admin',
-        props: ['university', 'admin'],
+        herCreation: 'herCreation',
+        props: ['university', 'admin', 'herCreation'],
 
         data() {
             return {
                 visible: false,
-                herCreation: false,
             }
-        },
-
-        beforeCreate(){
-            firebase.auth().onAuthStateChanged((user) => {
-                if(user != undefined) {
-                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                        if(this.university.universitySourceCreator == snapshot.val().username){
-                            this.herCreation = true
-                        }
-                    })
-                }
-            })
         },
 
         methods: {
@@ -185,6 +173,7 @@
             },
 
             callAddPartner(){
+                console.log("callAddPartner into UET")
                 this.$emit("addPartner")
             },
 
@@ -224,24 +213,24 @@
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0
-}
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
 
-.slide-fade-enter-active {
-  transition: all .8s ease-out;
-}
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
 
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+    .slide-fade-enter-active {
+        transition: all .8s ease-out;
+    }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
-}
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    .slide-fade-enter-from, .slide-fade-leave-to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 </style>

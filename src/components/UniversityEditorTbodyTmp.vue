@@ -116,7 +116,7 @@
                                             </table>
                                             <div class="w-full flex justify-between">
                                                 <div>
-                                                    <button v-if="herCreation || admin" type="button" @click="callDeleteUniversity()" @show="herCreation(university.universitySourceCreator)" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                    <button v-if="admin" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
                                                     <button type="button" @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
                                                 </div>
                                                 <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
@@ -187,7 +187,8 @@
             },
 
             callAddPartner(){
-                this.$emit("addPartner")
+                console.log("callAddPartner")
+                this.$emit("addPartnerEdited")
             },
 
             callSendData(){
@@ -230,24 +231,24 @@
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0
-}
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+    
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
 
-.slide-fade-enter-active {
-  transition: all .8s ease-out;
-}
+    .slide-fade-enter-active {
+        transition: all .8s ease-out;
+    }
 
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+    .slide-fade-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
-}
+    .slide-fade-enter-from, .slide-fade-leave-to {
+        transform: translateY(20px);
+        opacity: 0;
+    }
 </style>
