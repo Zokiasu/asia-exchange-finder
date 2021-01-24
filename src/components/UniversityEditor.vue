@@ -56,9 +56,9 @@
                                             :admin="checkAdmin"
                                             :herCreation="yourCreationsFilter"
                                             ref="form"
-                                            @deleteUniversity="removeUniversity(index)"
+                                            @deleteUniversity="removeUniversityByUser(index)"
                                             @addPartner="addPartnerForm(index)"
-                                            @sendData="updateOfficialSpecificData(index)">
+                                            @sendData="updateEditedSpecificDataByUser(index)">
                                         </UET>
                                     </table>
                                 </div>
@@ -398,32 +398,54 @@
 
                 if(this.editedForm.length <= 0){
                     up['/universitysEdited/'] = this.editedForm
-                    return db.ref().update(up).then (
-                        () => {
-                            this.$router.replace('/Dashboard')
-                            v.xhrRequest = false;
-                        }, 
-                        (error) => {
-                            v.errorMessage = error.message;
-                            v.xhrRequest = false;
-                        }
-                    )
+                    return db.ref().update(up);
                 } else {
-                    for (let index = 0; index < this.editedForm.length; index++) {
-                        
+                    for (let index = 0; index < this.editedForm.length; index++) {                        
                         if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
                             testA = db.ref().child('universitys').push().key;
                             this.editedForm[index].universitySourceId = testA;
-                            //up['/universitysEdited/' + testA] = this.editedForm[index]
                             this.writeUpdateData('/universitysEdited/', testA, this.editedForm[index])
                         } else {
-                            //up['/universitysEdited/' + this.editedForm[index].universitySourceId] = this.editedForm[index]
                             this.writeUpdateData('/universitysEdited/', this.editedForm[index].universitySourceId, this.editedForm[index])
                         }
-
-                        //db.ref().update(up);
                     }
                 }
+            },
+
+            updateEditedSpecificDataByUser(index){
+                let v = this;
+                v.xhrRequest = true;
+                v.errorMessage = "";
+                v.successMessage = "";
+
+                var testA = "";
+
+                var up = {};
+
+                if(this.universitySend[index].universitySourceId == "" || this.universitySend[index].universitySourceId == undefined) {
+                    testA = db.ref().child('universitys').push().key;
+                    this.universitySend[index].universitySourceId = testA;
+                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.universitySend[index].universitySourceCreator = name
+                    this.universitySend[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + testA] = this.universitySend[index]
+                } else {
+                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.universitySend[index].universitySourceCreator = name
+                    this.universitySend[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + this.universitySend[index].universitySourceId] = this.universitySend[index]
+                }
+
+                return db.ref().update(up).then (
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        v.xhrRequest = false;
+                    }, 
+                    (error) => {
+                        v.errorMessage = error.message;
+                        v.xhrRequest = false;
+                    }
+                )
             },
 
             updateEditedSpecificData(index){
@@ -465,16 +487,7 @@
             writeUpdateData(datasource, uid, element){
                 var up = {};
                 up[datasource + uid] = element
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        this.errorMessage = error.message;
-                        this.xhrRequest = false;
-                    }
-                )
+                return db.ref().update(up);
             },
 
             writeUpdateDataHistory(datasource, uid, element){
@@ -609,6 +622,24 @@
                         ],
                     }
                 )
+            },
+
+            removeUniversityByUser(index) { 
+                console.log("removeUniversity : " + this.yourCreationsFilter)
+                if(this.yourCreationsFilter) {
+                    for (let i = 0; i < this.editedForm.length; i++) {
+                        if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
+                            this.editedForm.splice(i, 1);
+                            break;
+                        }
+                    }
+                    
+                    this.filterCreation('Creation')
+                    
+                    var up = {};
+                    up['/universitysEdited/'] = this.editedForm
+                    return db.ref().update(up);
+                }
             },
 
             removeUniversity(index) { 

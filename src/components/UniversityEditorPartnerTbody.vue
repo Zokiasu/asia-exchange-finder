@@ -36,36 +36,36 @@
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerAddress" v-model="universityPartnerElement.universityPartnerAddress" type="text" placeholder="Address">
-                                        <label for="universityPartnerAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Address</label>
+                                        id="universityPartnerAddress" v-model="universityPartnerElement.universityPartnerAddress" type="text" placeholder="Partner Address">
+                                        <label for="universityPartnerAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Address</label>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerCountry" v-model="universityPartnerElement.universityPartnerCountry" type="text" placeholder="Country">
-                                        <label for="universityPartnerCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Country</label>
+                                        id="universityPartnerCountry" v-model="universityPartnerElement.universityPartnerCountry" type="text" placeholder="Partner Country">
+                                        <label for="universityPartnerCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Country</label>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerCity" v-model="universityPartnerElement.universityPartnerCity" type="text" placeholder="City">
-                                        <label for="universityPartnerCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">City</label>
+                                        id="universityPartnerCity" v-model="universityPartnerElement.universityPartnerCity" type="text" placeholder="Partner City">
+                                        <label for="universityPartnerCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner City</label>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap col-end-7 col-span-4">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerWebsiteLink" v-model="universityPartnerElement.universityPartnerWebsiteLink" type="url" placeholder="Website Link">
-                                        <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
+                                        id="universityPartnerWebsiteLink" v-model="universityPartnerElement.universityPartnerWebsiteLink" type="url" placeholder="Partner Website Link">
+                                        <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website Link</label>
                                     </div>
                                 </div>
                                 <div class="relative w-full appearance-none label-floating mb-2 col-start-1 col-end-7">
                                     <div class="" v-for="(speciality,k) in universityPartnerElement.universityPartnerSpeciality" :key="k">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        type="text" v-model="speciality.specialityName" id="specialityName" placeholder="Speciality">
-                                        <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="speciality">Speciality</label>
+                                        type="text" v-model="speciality.specialityName" id="specialityName" placeholder="Partner Speciality">
+                                        <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="speciality">Partner Speciality</label>
                                         <span class="">
                                             <button type="button" class="text-green-500 text-sm mr-2" @click="addSpeciality(k, universityPartnerElement, b)" v-show="k == universityPartnerElement.universityPartnerSpeciality.length-1">Add Speciality</button>
                                             <span class="mr-2" v-show="k == universityPartnerElement.universityPartnerSpeciality.length-1 && universityPartnerElement.universityPartnerSpeciality.length > 1">|</span>
@@ -76,8 +76,8 @@
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
                                         <textarea class="autoexpand tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                            v-model="universityPartnerElement.universityPartnerCondition" @input="resize($event)" placeholder="Condition..."></textarea>
-                                        <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Condition...</label>
+                                            v-model="universityPartnerElement.universityPartnerCondition" @input="resize($event)" placeholder="Partner Condition..."></textarea>
+                                        <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Partner Condition...</label>
                                     </div>
                                 </div>
                             </div>
