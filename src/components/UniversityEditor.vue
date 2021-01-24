@@ -624,8 +624,7 @@
                 )
             },
 
-            removeUniversityByUser(index) { 
-                console.log("removeUniversity : " + this.yourCreationsFilter)
+            removeUniversityByUser(index) {
                 if(this.yourCreationsFilter) {
                     for (let i = 0; i < this.editedForm.length; i++) {
                         if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
@@ -633,31 +632,13 @@
                             break;
                         }
                     }
-                    
+                    apps.database().ref('/universitysEdited/' + this.universitySend[index].universitySourceId).set(null)
                     this.filterCreation('Creation')
-                    
-                    var up = {};
-                    up['/universitysEdited/'] = this.editedForm
-                    return db.ref().update(up);
                 }
             },
 
-            removeUniversity(index) { 
-                console.log("removeUniversity : " + this.yourCreationsFilter)
-                if(this.yourCreationsFilter) {
-                    for (let i = 0; i < this.editedForm.length; i++) {
-                        if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
-                            this.editedForm.splice(i, 1);
-                            break;
-                        }
-                    }
-                    
-                    this.updateAllEditedData()
-                    this.filterCreation('Creation')
-                } else {
-                    this.form.splice(index, 1);
-                    this.updateAllOfficialData()
-                }
+            removeUniversity(index) {
+                
             },
 
             removeUniversityFromTmp(index) {
