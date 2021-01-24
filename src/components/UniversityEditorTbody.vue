@@ -170,7 +170,11 @@
 
             callDeleteUniversity(){
                 console.log("callDeleteUniversity")
-                this.$emit("deleteUniversity")
+                this.openingUniversityForm = !this.openingUniversityForm
+
+                setTimeout(()=>{
+                    this.$emit("deleteUniversity")
+                },1000)
             },
 
             callAddPartner(){

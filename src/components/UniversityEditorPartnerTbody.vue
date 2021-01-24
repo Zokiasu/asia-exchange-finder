@@ -4,9 +4,7 @@
             <td class="px-4 py-4 whitespace-nowrap">
                 <div class="flex items-center">
                     <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">
-                        {{universityPartnerElement.universityPartnerName}}
-                        </div>
+                        <div class="text-sm font-medium text-gray-900">{{universityPartnerElement.universityPartnerName}}</div>
                     </div>
                 </div>
             </td>
@@ -14,15 +12,9 @@
                 <div class="text-sm text-gray-900">{{universityPartnerElement.universityPartnerCity}}</div>
                 <div class="text-sm text-gray-500">{{universityPartnerElement.universityPartnerCountry}}</div>
             </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                {{universityPartnerElement.universityPartnerDisplay}}
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                {{universityPartnerElement.universityPartnerCreator}}
-            </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                {{universityPartnerElement.universityPartnerLastUpdate}}
-            </td>
+            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerDisplay}}</td>
+            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerCreator}}</td>
+            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerLastUpdate}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
                 <button v-if="!visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-900">Edit</button>
                 <button v-if="visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-900">Close</button>
@@ -33,12 +25,11 @@
                 <td colspan="6">
                     <div>
                         <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
-
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universityPartnerName" v-model="universityPartnerElement.universityPartnerName" type="text" placeholder="University Name">
+                                            id="universityPartnerName" v-model="universityPartnerElement.universityPartnerName" type="text" placeholder="University Name">
                                         <label for="universityPartnerName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University Name</label>
                                     </div>
                                 </div>
@@ -70,7 +61,6 @@
                                         <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
                                     </div>
                                 </div>
-
                                 <div class="relative w-full appearance-none label-floating mb-2 col-start-1 col-end-7">
                                     <div class="" v-for="(speciality,k) in universityPartnerElement.universityPartnerSpeciality" :key="k">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -86,7 +76,7 @@
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
                                         <textarea class="autoexpand tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        v-model="universityPartnerElement.universityPartnerCondition" @input="resize($event)" placeholder="Condition..."></textarea>
+                                            v-model="universityPartnerElement.universityPartnerCondition" @input="resize($event)" placeholder="Condition..."></textarea>
                                         <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Condition...</label>
                                     </div>
                                 </div>
@@ -112,9 +102,13 @@
 
 <script>
     import {apps, name, grade, defaultAnalytics} from '../main.js'
+    import InputTag from 'vue-input-tag'
 
     export default {
-        
+
+        components:{
+            InputTag,
+        },
 
         name: 'universityPartnerElement',
         number: 'index',
@@ -144,6 +138,7 @@
             addSpeciality(index, partner, parentIndex) {
                 partner.universityPartnerSpeciality.push({ "specialityName": "" });
             },
+
             removeSpeciality(index, partner, parentIndex) {
                 partner.universityPartnerSpeciality.splice(index, 1);
             }

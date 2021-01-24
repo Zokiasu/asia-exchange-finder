@@ -36,9 +36,6 @@
             </form>
             <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
-        <div class="col-sm-12 text-center form-group mt-5">
-            <p>Don't have an account ? <router-link to="/signup" class="font-bold text-red-500">Sign Up</router-link></p>
-        </div>
     </div>
 </template>
 

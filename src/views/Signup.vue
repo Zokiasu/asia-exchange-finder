@@ -40,9 +40,6 @@
             </form>
             <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
-        <div class="col-sm-12 text-center form-group mt-5">
-            <p>You have an account ? <router-link to="/login" class="font-bold text-red-500">Login</router-link></p>
-        </div>
     </div>
 </template>
 

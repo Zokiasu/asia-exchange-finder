@@ -21,7 +21,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <button v-if="yourCreationsFilter || checkAdmin" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button v-if="yourCreationsFilter" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -67,6 +67,15 @@
                     </div>
                 </div>
                 <div v-if="generalUniversity && checkAdmin">
+                    <div class="w-full relative py-2 px-3 flex justify-between">
+                        <div class="flex">
+                            <p v-if="message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
+                            <transition name="slide-fade" mode="out-in">
+                                <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
+                            </transition>
+                        </div>
+                        <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                    </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
                             <div class="align-middle inline-block w-full">
@@ -547,6 +556,7 @@
                 }
                 setTimeout(()=>{
                     this.$refs.form.openUniversityForm()
+                    document.body.scrollTop = document.body.scrollHeight;
                 },100)
             },
 
