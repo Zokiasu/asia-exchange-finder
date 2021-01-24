@@ -12,6 +12,7 @@
                     <p v-if="!checkAdmin">|</p>
                     <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('Creation')">Your Creations</button>
                 </div>
+                <!--General/Your Creation-->
                 <div v-if="!generalUniversity">
                     <notifications group="foo"/>
                     <div class="w-full relative py-2 px-3 flex justify-between">
@@ -21,7 +22,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <button v-if="yourCreationsFilter" @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button v-if="yourCreationsFilter" @click="addUniversityInProcess()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -57,7 +58,7 @@
                                             :herCreation="yourCreationsFilter"
                                             ref="form"
                                             @deleteUniversity="removeUniversityByUser(index)"
-                                            @addPartner="addPartnerForm(index)"
+                                            @addPartner="addPartnerByUser(index)"
                                             @sendData="updateEditedSpecificDataByUser(index)">
                                         </UET>
                                     </table>
@@ -66,6 +67,7 @@
                         </div>
                     </div>
                 </div>
+                <!--In Process-->
                 <div v-if="generalUniversity && checkAdmin">
                     <div class="w-full relative py-2 px-3 flex justify-between">
                         <div class="flex">
@@ -74,7 +76,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <button @click="addUniversity()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button @click="addUniversityInProcess()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -107,10 +109,10 @@
                                             :key="index"
                                             :university="university"
                                             :admin="checkAdmin"
-                                            @myEvents="removeUniversityFromTmp(index)"
-                                            @addPartnerEdited="addPartnerEditedForm(index)"
-                                            @modifyData="updateEditedSpecificData(index)"
-                                            @sendDataToOfficial="moveEditedToOfficialSpecific(index)">
+                                            @removeTmpUniversity="removeUniversityInProcess(index)"
+                                            @addPartnerEdited="addPartnerInProcess(index)"
+                                            @modifyData="updateSpecificDataInProcess(index)"
+                                            @sendDataToOfficial="moveDataToInProgressToOfficialSpecific(index)">
                                         </UETT>
                                     </table>
                                 </div>
@@ -308,224 +310,44 @@
                 return Math.floor(Math.random() * Math.floor(max));
             },
 
-            updateAllOfficialData(){
-                let v = this;
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
+            filterCreation: function(callFilter){
+                console.log("filtreCreators")
+                this.universitySend = [];
+                var tmpUniversitySend = [];
+                if(callFilter == "General") {
+                    tmpUniversitySend = this.form
+                    this.yourCreationsFilter = false
+                } else {
+                    this.yourCreationsFilter = true
 
-                var testA = "";
-                
-                var up = {};
-                if(this.form.length <= 0){
-                    up['/universitys/'] = this.form
-                    return db.ref().update(up).then (
-                        () => {
-                            this.$router.replace('/Dashboard')
-                            v.xhrRequest = false;
-                        }, 
-                        (error) => {
-                            v.errorMessage = error.message;
-                            v.xhrRequest = false;
+                    this.form.forEach((el)=>{
+                        if(el.universitySourceCreator == name){
+                            tmpUniversitySend.push(el)
                         }
-                    )
-                } else {
-                    for (let index = 0; index < this.form.length; index++) {
-                        if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
-                            testA = db.ref().child('universitys').push().key;
-                            this.form[index].universitySourceId = testA;
-                            this.writeUpdateData('/universitys/', testA, this.form[index])
-                            this.writeUpdateDataHistory('/universityHistory/', testA, this.form[index])
-                        } else {
-                            this.writeUpdateData('/universitys/', this.form[index].universitySourceId, this.form[index])
-                             this.writeUpdateDataHistory('/universityHistory/', this.form[index].universitySourceId, this.form[index])
+                    })
+
+                    this.editedForm.forEach((el)=>{
+                        el
+                        if(el.universitySourceCreator == name){
+                            tmpUniversitySend.push(el)
                         }
-                    }
+                    })
+                }
+
+                this.universitySend = [...new Set(tmpUniversitySend)]
+            },
+
+            setGeneral: function() {
+                if(grade == "Admin"){
+                    this.generalUniversity = !this.generalUniversity
                 }
             },
 
-            updateOfficialSpecificData(index){
-                let v = this;
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
+            //General function
 
-                var testA = "";
-
-                var up = {};
-
-                if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
-                    testA = db.ref().child('universitys').push().key;
-                    this.form[index].universitySourceId = testA;
-                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.form[index].universitySourceCreator = name
-                    this.form[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + testA] = this.form[index]
-                    this.editedForm.push(this.form[index])
-                } else {
-                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.form[index].universitySourceCreator = name
-                    this.form[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + this.form[index].universitySourceId] = this.form[index]
-                    this.editedForm.push(this.form[index])
-                }
-
-                return db.ref().update(up).then(
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        v.xhrRequest = false;
-                        defaultAnalytics.logEvent('userEditUniversity', {value:name})
-                        this.$toast.success(`Your changes has been sent successfully.`);
-                        this.$toast.info(`All changes will have to be validated to appear.`);
-                        setTimeout(this.$toast.clear, 10000)
-                    }, 
-                    (error) => {
-                        v.errorMessage = error.message;
-                        v.xhrRequest = false;
-                    }
-                )
-            },
-
-            updateAllEditedData(){
-                let v = this;
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
-
-                var testA = "";
-                
-                var up = {};
-
-                if(this.editedForm.length <= 0){
-                    up['/universitysEdited/'] = this.editedForm
-                    return db.ref().update(up);
-                } else {
-                    for (let index = 0; index < this.editedForm.length; index++) {                        
-                        if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
-                            testA = db.ref().child('universitys').push().key;
-                            this.editedForm[index].universitySourceId = testA;
-                            this.writeUpdateData('/universitysEdited/', testA, this.editedForm[index])
-                        } else {
-                            this.writeUpdateData('/universitysEdited/', this.editedForm[index].universitySourceId, this.editedForm[index])
-                        }
-                    }
-                }
-            },
-
-            updateEditedSpecificDataByUser(index){
-                let v = this;
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
-
-                var testA = "";
-
-                var up = {};
-
-                if(this.universitySend[index].universitySourceId == "" || this.universitySend[index].universitySourceId == undefined) {
-                    testA = db.ref().child('universitys').push().key;
-                    this.universitySend[index].universitySourceId = testA;
-                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.universitySend[index].universitySourceCreator = name
-                    this.universitySend[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + testA] = this.universitySend[index]
-                } else {
-                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.universitySend[index].universitySourceCreator = name
-                    this.universitySend[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + this.universitySend[index].universitySourceId] = this.universitySend[index]
-                }
-
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        v.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        v.errorMessage = error.message;
-                        v.xhrRequest = false;
-                    }
-                )
-            },
-
-            updateEditedSpecificData(index){
-                let v = this;
-                v.xhrRequest = true;
-                v.errorMessage = "";
-                v.successMessage = "";
-
-                var testA = "";
-
-                var up = {};
-
-                if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
-                    testA = db.ref().child('universitys').push().key;
-                    this.editedForm[index].universitySourceId = testA;
-                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.editedForm[index].universitySourceCreator = name
-                    this.editedForm[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + testA] = this.editedForm[index]
-                } else {
-                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.editedForm[index].universitySourceCreator = name
-                    this.editedForm[index].universitySourceDisplay = "False"
-                    up['/universitysEdited/' + this.editedForm[index].universitySourceId] = this.editedForm[index]
-                }
-
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        v.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        v.errorMessage = error.message;
-                        v.xhrRequest = false;
-                    }
-                )
-            },
-
-            writeUpdateData(datasource, uid, element){
-                var up = {};
-                up[datasource + uid] = element
-                return db.ref().update(up);
-            },
-
-            writeUpdateDataHistory(datasource, uid, element){
-                var up = {};
-                up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        this.errorMessage = error.message;
-                        this.xhrRequest = false;
-                    }
-                )
-            },
-
-            moveEditedToOfficialSpecific(dex){
-                let count = 0;
-
-                for (let index2 = 0; index2 < this.form.length; index2++) {
-                    if(this.editedForm[dex].universitySourceId === this.form[index2].universitySourceId){
-                        this.form[index2] = this.editedForm[dex]
-                        count = 0
-                    } else {
-                        count++
-                    }
-                }
-
-                if(count == this.form.length){
-                    this.form.push(this.editedForm[dex])
-                }
-                this.editedForm.splice(dex, 1)
-                this.updateAllOfficialData()
-                this.updateAllEditedData()
-            },
-
-            addUniversity() {
+            addUniversityInProcess() {
+                console.log("addUniversityInProcess")
+                //added a new University into evaluation process
                 this.editedForm.push(
                     {
                         "universitySourceId": "",
@@ -559,21 +381,51 @@
                         ], 
                     }
                 )
-                this.updateEditedSpecificData(this.editedForm.length-1)
-                defaultAnalytics.logEvent('userAddNewUniversity', {value: name})
-
+                //Updating data during the evaluation process
+                this.updateSpecificDataInProcess(this.editedForm.length-1)
+                //Check actual filter used
                 if(this.yourCreationsFilter) {
+                    //Update 'Your Creation' page
                     this.filterCreation('Creation')
                 } else {
+                    //Update 'General' page
                     this.filterCreation('General')
                 }
-                setTimeout(()=>{
+                /*setTimeout(()=>{
                     this.$refs.form.openUniversityForm()
                     document.body.scrollTop = document.body.scrollHeight;
-                },100)
+                },200)*/
+                defaultAnalytics.logEvent('userAddNewUniversity', {value: name})
             },
 
-            addPartnerForm(index) {
+            writeUpdateData(datasource, uid, element){
+                console.log("writeUpdateData")
+                var up = {};
+                up[datasource + uid] = element
+                return db.ref().update(up);
+            },
+
+            writeUpdateDataHistory(datasource, uid, element){
+                console.log("writeUpdateDataHistory")
+                var up = {};
+                up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
+                return db.ref().update(up).then (
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.xhrRequest = false;
+                    }, 
+                    (error) => {
+                        this.errorMessage = error.message;
+                        this.xhrRequest = false;
+                    }
+                )
+            },
+
+            //User function
+
+            addPartnerByUser(index) {
+                console.log("addPartnerByUser")
+                //added a new partner in university into user list
                 this.universitySend[index].universitySourcerPartner.push(
                     {
                         "universityPartnerName": "University Partner",
@@ -593,16 +445,62 @@
                         ],
                     }
                 )
-
+                //Check actual filter used
                 if(this.yourCreationsFilter) {
+                    //Update 'Your Creation' page
                     this.filterCreation('Creation')
                 } else {
+                    //Update 'General' page
                     this.filterCreation('General')
                 }
             },
 
-            addPartnerEditedForm(index) {
-                console.log("addPartnerEditedForm")
+            removeUniversityByUser(index) {
+                console.log("removeUniversityByUser")
+                //Check if user is on 'Your Creation' page
+                if(this.yourCreationsFilter) {
+                    for (let i = 0; i < this.editedForm.length; i++) {
+
+                        if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
+                            this.editedForm.splice(i, 1);
+                            break;
+                        }
+                    }
+                    //Remove university in firebase for In Process list
+                    apps.database().ref('/universitysEdited/' + this.universitySend[index].universitySourceId).set(null)
+                    //Update 'Your Creation' page
+                    this.filterCreation('Creation')
+                }
+            },
+
+            updateEditedSpecificDataByUser(index){
+                console.log("updateEditedSpecificDataByUser")
+
+                var testA = "";
+                var up = {};
+
+                if(this.universitySend[index].universitySourceId == "" || this.universitySend[index].universitySourceId == undefined) {
+                    testA = db.ref().child('universitys').push().key;
+                    this.universitySend[index].universitySourceId = testA;
+                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.universitySend[index].universitySourceCreator = name
+                    this.universitySend[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + testA] = this.universitySend[index]
+                } else {
+                    this.universitySend[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.universitySend[index].universitySourceCreator = name
+                    this.universitySend[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + this.universitySend[index].universitySourceId] = this.universitySend[index]
+                }
+
+                return db.ref().update(up);
+            },
+
+            //Admin function
+
+            addPartnerInProcess(index) {
+                console.log("addPartnerInProcess")
+                //added a new partner in university into evaluation process
                 this.editedForm[index].universitySourcerPartner.push(
                     {
                         "universityPartnerName": "University Partner",
@@ -624,58 +522,146 @@
                 )
             },
 
-            removeUniversityByUser(index) {
-                if(this.yourCreationsFilter) {
-                    for (let i = 0; i < this.editedForm.length; i++) {
-                        if(this.universitySend[index].universitySourceId == this.editedForm[i].universitySourceId){
-                            this.editedForm.splice(i, 1);
-                            break;
+            removeUniversityInProcess(index) {
+                console.log("removeUniversityInProcess")
+                //Remove university in firebase for In Process list
+                apps.database().ref('/universitysEdited/' + this.editedForm[index].universitySourceId).set(null)
+                this.editedForm.splice(index, 1);
+            },
+
+            addAllDataInOfficialBase(){
+                console.log("addAllDataInOfficialBase")
+
+                var testA = "";
+                var up = {};
+
+                if(this.form.length <= 0){
+                    up['/universitys/'] = this.form
+                    return db.ref().update(up);
+                } else {
+                    for (let index = 0; index < this.form.length; index++) {
+                        if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
+                            //If the university has not yet been associated with its unique id the search and record it.
+                            testA = db.ref().child('universitys').push().key;
+                            this.form[index].universitySourceId = testA;
+                            //Add university changes in official database
+                            this.writeUpdateData('/universitys/', testA, this.form[index])
+                            //Adds university changes to its modification history
+                            this.writeUpdateDataHistory('/universityHistory/', testA, this.form[index])
+                        } else {
+                            this.writeUpdateData('/universitys/', this.form[index].universitySourceId, this.form[index])
+                            //Adds university changes to its modification history
+                            this.writeUpdateDataHistory('/universityHistory/', this.form[index].universitySourceId, this.form[index])
                         }
                     }
-                    apps.database().ref('/universitysEdited/' + this.universitySend[index].universitySourceId).set(null)
-                    this.filterCreation('Creation')
                 }
             },
 
-            removeUniversity(index) {
-                
-            },
+            addAllDataInInProcessBase(){
+                console.log("addAllDataInInProcessBase")
 
-            removeUniversityFromTmp(index) {
-                this.editedForm.splice(index, 1);
-                this.updateAllEditedData()
-            },
+                var testA = "";
+                var up = {};
 
-            filterCreation: function(callFilter){
-                this.universitySend = [];
-                var tmpUniversitySend = [];
-                if(callFilter == "General") {
-                    tmpUniversitySend = this.form
-                    this.yourCreationsFilter = false
+                if(this.editedForm.length <= 0){
+                    up['/universitysEdited/'] = this.editedForm
+                    return db.ref().update(up);
                 } else {
-                    this.yourCreationsFilter = true
-
-                    this.form.forEach((el)=>{
-                        if(el.universitySourceCreator == name){
-                            tmpUniversitySend.push(el)
+                    for (let index = 0; index < this.editedForm.length; index++) {
+                        if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
+                            //If the university has not yet been associated with its unique id the search and record it.
+                            testA = db.ref().child('universitys').push().key;
+                            this.editedForm[index].universitySourceId = testA;
+                            //Add university changes in process database
+                            this.writeUpdateData('/universitysEdited/', testA, this.editedForm[index])
+                        } else {
+                            //Add university changes in process database
+                            this.writeUpdateData('/universitysEdited/', this.editedForm[index].universitySourceId, this.editedForm[index])
                         }
-                    })
-
-                    this.editedForm.forEach((el)=>{
-                        el
-                        if(el.universitySourceCreator == name){
-                            tmpUniversitySend.push(el)
-                        }
-                    })
+                    }
                 }
-
-                this.universitySend = [...new Set(tmpUniversitySend)]
             },
 
-            setGeneral: function() {
-                if(grade == "Admin"){
-                    this.generalUniversity = !this.generalUniversity
+            updateSpecificDataInProcess(index){
+                console.log("updateEditedSpecificData")
+
+                var testA = "";
+                var up = {};
+
+                if(this.editedForm[index].universitySourceId == "" || this.editedForm[index].universitySourceId == undefined) {
+                    testA = db.ref().child('universitys').push().key;
+                    this.editedForm[index].universitySourceId = testA;
+                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.editedForm[index].universitySourceCreator = name
+                    this.editedForm[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + testA] = this.editedForm[index]
+                } else {
+                    this.editedForm[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.editedForm[index].universitySourceCreator = name
+                    this.editedForm[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + this.editedForm[index].universitySourceId] = this.editedForm[index]
                 }
+
+                return db.ref().update(up);
+            },
+
+            moveDataToInProgressToOfficialSpecific(dex){
+                console.log("moveDataToInProgressToOfficialSpecific")
+                let count = 0;
+
+                for (let index2 = 0; index2 < this.form.length; index2++) {
+                    //Check if the university is in the online base to update it
+                    if(this.editedForm[dex].universitySourceId === this.form[index2].universitySourceId){
+                        this.form[index2] = this.editedForm[dex]
+                        count = 0;
+                        break;
+                    } else {
+                        count++
+                    }
+                }
+                //If the university is not present in the list of the online base
+                if(count == this.form.length){
+                    this.form.push(this.editedForm[dex])
+                }
+                //Remove the university from the list in progress
+                this.editedForm.splice(dex, 1)
+                //Updates the list of the official database
+                this.addAllDataInOfficialBase()
+                //Updated the list of the database under study
+                this.addAllDataInInProcessBase()
+            },
+
+            //Under consideration
+            updateOfficialSpecificData(index){
+                console.log("updateOfficialSpecificData")
+                var testA = "";
+                var up = {};
+
+                if(this.form[index].universitySourceId == "" || this.form[index].universitySourceId == undefined) {
+                    testA = db.ref().child('universitys').push().key;
+                    this.form[index].universitySourceId = testA;
+                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.form[index].universitySourceCreator = name
+                    this.form[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + testA] = this.form[index]
+                    this.editedForm.push(this.form[index])
+                } else {
+                    this.form[index].universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.form[index].universitySourceCreator = name
+                    this.form[index].universitySourceDisplay = "False"
+                    up['/universitysEdited/' + this.form[index].universitySourceId] = this.form[index]
+                    this.editedForm.push(this.form[index])
+                }
+
+                return db.ref().update(up).then(
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        defaultAnalytics.logEvent('userEditUniversity', {value:name})
+                        this.$toast.success(`Your changes has been sent successfully.`);
+                        this.$toast.info(`All changes will have to be validated to appear.`);
+                        setTimeout(this.$toast.clear, 10000)
+                    }
+                )
             },
         }
     }

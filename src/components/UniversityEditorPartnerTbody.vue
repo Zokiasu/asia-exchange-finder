@@ -82,8 +82,8 @@
                                 </div>
                             </div>
                             <div class="w-full flex justify-between">
-                                <button @click="deleteP()" class="text-red-600">Delete</button>
-                                <div class="flex flex-wrap col-start-1 col-span-3 mt-5">
+                                <button @click="callDeletePartner()" class="text-red-600">Delete</button>
+                                <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
                                     <div class="relative w-full appearance-none label-floating">
                                         <select v-model="universityPartnerElement.universityPartnerDisplay" class="p-2 rounded bg-gray-200 border border-gray-200">
                                             <option>True</option>
@@ -122,8 +122,8 @@
         },
 
         methods: {
-            deleteP(){
-                this.$emit("myEvent")
+            callDeletePartner(){
+                this.$emit("deletePartner")
             },
 
             resize(e){

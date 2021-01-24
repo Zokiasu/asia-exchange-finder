@@ -2,13 +2,13 @@
   <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 p-0 min-h-screen">
     <div class="invisible md:visible space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
       <div class="space-x-2 absolute left-0 ml-6 flex justify-between">
-        <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl">About Us</router-link>
-        <p v-show="$route.name !=='AboutUs'" v-if="userAuthenticated">|</p>
-        <router-link v-show="$route.name ==='Dashboard' || $route.name ==='AboutUs'" to="/" class="text-xl">Home</router-link>
-        <p v-if="userAuthenticated" v-show="$route.name ==='AboutUs'">|</p>
-        <router-link v-if="userAuthenticated" v-show="$route.name!=='Dashboard' || $route.name ==='AboutUs'" to="/dashboard" class="text-xl">Dashboard</router-link>
+        <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl 2xl:text-2xl">About Us</router-link>
+        <p class=" 2xl:text-xl" v-show="$route.name !=='AboutUs'" v-if="userAuthenticated">|</p>
+        <router-link v-show="$route.name ==='Dashboard' || $route.name ==='AboutUs'" to="/" class="text-xl 2xl:text-2xl">Home</router-link>
+        <p class=" 2xl:text-xl" v-if="userAuthenticated" v-show="$route.name ==='AboutUs'">|</p>
+        <router-link v-if="userAuthenticated" v-show="$route.name!=='Dashboard' || $route.name ==='AboutUs'" to="/dashboard" class="text-xl 2xl:text-2xl">Dashboard</router-link>
       </div>
-      <p class="text-xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
+      <p class="text-xl 2xl:text-2xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>
       <button v-if="!userAuthenticated" @click="setVisibleLogin" class="bg-blue-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log In</button>
       <button v-if="!userAuthenticated" @click="setVisibleSignUp" class="bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</button>

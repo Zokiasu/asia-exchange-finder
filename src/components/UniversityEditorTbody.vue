@@ -35,7 +35,6 @@
                 <td colspan="6">
                     <div>
                         <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
-
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
@@ -47,8 +46,8 @@
                                 <div class="flex flex-wrap col-start-1 col-span-3">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universitySourceAddress" v-model="university.universitySourceAddress" type="text" placeholder="Address">
-                                        <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Address</label>
+                                        id="universitySourceAddress" v-model="university.universitySourceAddress" type="text" placeholder="University address">
+                                        <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University address</label>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap">
@@ -68,8 +67,8 @@
                                 <div class="flex flex-wrap col-start-1 col-span-3">
                                     <div class="relative w-full appearance-none label-floating">
                                         <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        id="universitySourceImageLink" v-model="university.universitySourceImageLink" type="url" placeholder="Image Link">
-                                        <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Image Link</label>
+                                        id="universitySourceImageLink" v-model="university.universitySourceImageLink" type="url" placeholder="Photo link of the university">
+                                        <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Photo link of the university</label>
                                     </div>
                                 </div>
                                 <div class="flex flex-wrap col-end-7 col-span-3">
@@ -80,7 +79,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="flex flex-col">
                                 <div class="overflow-x-auto">
                                     <div class="align-middle inline-block w-full">
@@ -188,25 +186,6 @@
 
             openUniversityForm: function() {
                 this.openingUniversityForm = !this.openingUniversityForm
-            },
-
-            addPartner() {
-                this.university.universitySourcerPartner.push(
-                    {
-                        "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
-                        "universityPartnerCountry": "",
-                        "universityPartnerCity": "",
-                        "universityPartnerAddress": "",
-                        "universityPartnerWebsiteLink": "",
-                        "universityPartnerCondition": "",
-                        "universityPartnerSpeciality": [
-                            {
-                                "specialityName": ""
-                            }
-                        ],
-                    }
-                )
             },
             
             removePartner(index) {
