@@ -14,7 +14,7 @@
       <button v-if="!userAuthenticated" @click="setVisibleSignUp" class="bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</button>
     </div>
     <h1 class="font-bold text-center mt-10 ms:mt-20 mb-16 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"><router-link to="/">Asia Exchange Finder</router-link></h1>
-    <h2 class="text-center mb-5 ms:mb-0 text-xl">Find your exchange to an Asian country.</h2>
+    <h2 class="text-center mb-5 ms:mb-0 text-xl 2xl:text-2xl">Find your exchange to an Asian country.</h2>
     <router-view/>
     <Login @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto flex flex-col"/>
     <Signup @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto flex flex-col"/>

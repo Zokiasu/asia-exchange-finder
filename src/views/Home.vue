@@ -68,8 +68,8 @@
 
             <transition name="slide-fade">
                 <div v-if="show" class="container mb-10 justify-center bg-gray-500 w-full bg-opacity-75 p-10">
-                    <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university that fits the selected parameters.</p>
-                    <p class="text-xl lg:text-2xl text-white text-center">If you know of a university offering the chosen conditions, do not hesitate to add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/dashboard">Dashboard</router-link> page.</p>
+                    <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
+                    <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/dashboard">Dashboard</router-link> page.</p>
                 </div>
             </transition>
 
