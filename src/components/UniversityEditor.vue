@@ -131,8 +131,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
-    import { ssrContextKey } from 'vue'
+    import {apps, name, grade} from '../main.js'
 
     export default {
 
@@ -395,7 +394,6 @@
                     this.$refs.form.openUniversityForm()
                     document.body.scrollTop = document.body.scrollHeight;
                 },200)*/
-                defaultAnalytics.logEvent('userAddNewUniversity', {value: name})
             },
 
             writeUpdateData(datasource, uid, element){
@@ -656,7 +654,6 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/Dashboard')
-                        defaultAnalytics.logEvent('userEditUniversity', {value:name})
                         this.$toast.success(`Your changes has been sent successfully.`);
                         this.$toast.info(`All changes will have to be validated to appear.`);
                         setTimeout(this.$toast.clear, 10000)

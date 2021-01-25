@@ -87,7 +87,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
+    import {apps, name, grade} from '../main.js'
     import Multiselect from '@vueform/multiselect'
     import Notifications from "vt-notifications"
 
@@ -253,10 +253,9 @@
                 this.modelV = this.option.cityStartOption[this.modelV]
                 this.modelD = this.option.countryOption[this.modelD]
                 this.modelS = this.option.specialityOption[this.modelS]
-
-                if(this.modelV != undefined) {defaultAnalytics.logEvent('cityStartFilter', {value:this.modelV})}
-                if(this.modelD != undefined) {defaultAnalytics.logEvent('destinationFilter', {value:this.modelD})}
-                if(this.modelS != undefined) {defaultAnalytics.logEvent('specialityFilter', {value:this.modelS})}
+                console.log(this.modelV)
+                console.log(this.modelD)
+                console.log(this.modelS)
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {

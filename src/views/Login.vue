@@ -41,7 +41,7 @@
 
 <script>
     import firebase from 'firebase'
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
+    import {apps, name, grade} from '../main.js'
     import db from '../main.js'
 
     export default {
@@ -71,7 +71,6 @@
                 apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
                     return apps.auth().signInWithEmailAndPassword(this.email, this.password).then(
                             (authUser) => {
-                                defaultAnalytics.logEvent('login', {value: this.email})
                                 this.$router.replace('/')
                                 this.xhrRequest = false;
                                 this.userlog();

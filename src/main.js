@@ -17,9 +17,9 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 let apps = firebase.initializeApp(firebaseConfig)
+firebase.analytics();
 let db = apps.database()
 apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-const defaultAnalytics = firebase.analytics();
 
 var name = "Unknown";
 var grade, users;
@@ -36,4 +36,4 @@ firebase.auth().onAuthStateChanged((user) =>  {
 createApp(App).use(Toaster).use(router).mount('#app')
 
 export default db
-export {apps, name, grade, defaultAnalytics}
+export {apps, name, grade}

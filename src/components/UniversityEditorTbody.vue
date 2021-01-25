@@ -143,9 +143,6 @@
 
 <script>
     import UEPT from './UniversityEditorPartnerTbody.vue'
-    import firebase from 'firebase'
-    import db from '../main.js'
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
 
     export default {
 

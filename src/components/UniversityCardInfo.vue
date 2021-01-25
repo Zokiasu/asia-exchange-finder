@@ -26,12 +26,12 @@
         <!-- Exchange -->
         <div class="p-2">
             <p class="mb-1 font-bold">Requirements :</p>
-            <p>{{university.universityPartnerCondition}}</p>
+            <p class="whitespace-pre-line">{{university.universityPartnerCondition}}</p>
         </div>
         <!-- universityPartnerWebsiteLink button -->
         <div class="container flex justify-center">
             <a v-bind:href="link" target="_blank">
-                <button @click="analytics(university.universityPartnerName)" class="inline-block px-4 py-1 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-500 
+                <button class="inline-block px-4 py-1 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-500 
                     rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-blue-900">
                     Website
                 </button>
@@ -43,7 +43,6 @@
 
 <script>
     import Tag from './Tag.vue'
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
 
   export default {
 
@@ -61,9 +60,7 @@
     },
 
     methods: {
-      analytics(nameUniversityPartner){
-        defaultAnalytics.logEvent('universityPartnerWebsite', {value:nameUniversityPartner})
-      }
+        
     },
 
     

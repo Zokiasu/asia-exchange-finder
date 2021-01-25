@@ -18,7 +18,7 @@
         <img class="relative h-60 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
         <div class="container absolute top-48 right-0 flex justify-end">
             <a :href="university.universitySourceWebsiteLink" target="_blank">
-                <button @click="analytics(university.universitySourceName)" class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
+                <button class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
                     rounded-full shadow ripple waves-light focus:outline-none hover:bg-gray-700">
                     Website
                 </button>
@@ -49,7 +49,6 @@
 
 <script>
   import UniversityCardInfo from './UniversityCardInfo.vue'
-  import {apps, name, grade, defaultAnalytics} from '../main.js'
 
   export default {
     components:{
@@ -69,10 +68,6 @@
       drawer() {
         this.isOpen = !this.isOpen;
       },
-
-      analytics(nameUniversity){
-        defaultAnalytics.logEvent('universitySourceWebsite', {value:nameUniversity})
-      }
     },
 
     watch: {

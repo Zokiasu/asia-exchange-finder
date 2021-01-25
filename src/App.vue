@@ -26,7 +26,7 @@
   import Login from './views/Login.vue'
   import Signup from './views/Signup.vue'
   import firebase from 'firebase'
-  import {apps, name, grade, defaultAnalytics} from './main.js'
+  import {apps, name, grade} from './main.js'
   import db from './main.js'
 
   export default {

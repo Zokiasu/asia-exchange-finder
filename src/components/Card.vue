@@ -17,7 +17,6 @@
 
 <script>
 //import Tag from './Tag.vue'
-import {apps, name, grade, defaultAnalytics} from '../main.js'
 
 export default {
     name: 'university',
@@ -32,8 +31,6 @@ export default {
     
     methods: {
         openCard(nameUniversity) {
-            console.log(nameUniversity)
-            defaultAnalytics.logEvent('universitySourceVisited', {value:nameUniversity})
             this.$emit('onClick', nameUniversity)
         }
     }

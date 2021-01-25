@@ -101,7 +101,6 @@
 </template>
 
 <script>
-    import {apps, name, grade, defaultAnalytics} from '../main.js'
     import InputTag from 'vue-input-tag'
 
     export default {
