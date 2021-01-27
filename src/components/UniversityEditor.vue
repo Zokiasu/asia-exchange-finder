@@ -396,16 +396,7 @@
                 console.log("writeUpdateDataHistory")
                 var up = {};
                 up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
-                return db.ref().update(up).then (
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.xhrRequest = false;
-                    }, 
-                    (error) => {
-                        this.errorMessage = error.message;
-                        this.xhrRequest = false;
-                    }
-                )
+                return db.ref().update(up);
             },
 
             //User function
@@ -425,11 +416,7 @@
                         "universityPartnerDisplay": "True",
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                        "universityPartnerSpeciality": [
-                            {
-                                value: '', label: ''
-                            }
-                        ],
+                        "universityPartnerSpeciality": [],
                     }
                 )
                 //Check actual filter used
@@ -480,7 +467,14 @@
                     up['/universitysEdited/' + this.universitySend[index].universitySourceId] = this.universitySend[index]
                 }
 
-                return db.ref().update(up);
+                return db.ref().update(up).then(
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.$toast.success(`Your changes has been sent successfully.`);
+                        this.$toast.info(`All changes will have to be validated to appear.`);
+                        setTimeout(this.$toast.clear, 10000)
+                    }
+                )
             },
 
             //Admin function
@@ -500,11 +494,7 @@
                         "universityPartnerDisplay": "True",
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                        "universityPartnerSpeciality": [
-                            {
-                                value: '', label: ''
-                            }
-                        ],
+                        "universityPartnerSpeciality": [],
                     }
                 )
             },
@@ -656,14 +646,7 @@
                     this.editedForm.push(this.form[index])
                 }
 
-                return db.ref().update(up).then(
-                    () => {
-                        this.$router.replace('/Dashboard')
-                        this.$toast.success(`Your changes has been sent successfully.`);
-                        this.$toast.info(`All changes will have to be validated to appear.`);
-                        setTimeout(this.$toast.clear, 10000)
-                    }
-                )
+                return db.ref().update(up);
             },
         },
     }
