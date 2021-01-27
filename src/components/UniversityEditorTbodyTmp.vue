@@ -34,7 +34,7 @@
             <tr v-if="visible">
                 <td colspan="6">
                     <div>
-                        <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
+                        <div class="p-5 bg-gray-400 bg-opacity-70 text-black">
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
@@ -135,8 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </form>
+                        </div>
                     </div>
                 </td>
             </tr>

@@ -87,7 +87,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
+    import {name} from '../main.js'
     import Multiselect from '@vueform/multiselect'
     import Notifications from "vt-notifications"
 
@@ -98,7 +98,7 @@
             Navbar,
             PulseLoader,
             Multiselect,
-            Notifications
+            Notifications,
         },
 
         data () {
@@ -125,7 +125,7 @@
                         "universitySourceCity": "Paris",
                         "universitySourceAddress": "",
                         "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "#",
+                        "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
@@ -136,16 +136,12 @@
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "#",
+                                "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "False",
+                                "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [
-                                    {
-                                        "specialityName": ""
-                                    }
-                                ],
+                                "universityPartnerSpeciality": [],
                             }
                         ], 
                     }

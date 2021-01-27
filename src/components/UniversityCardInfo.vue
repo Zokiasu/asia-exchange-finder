@@ -19,8 +19,8 @@
         <!-- Partner speciality -->
         <div class="p-2">
             <p class="mb-1 font-bold">Partner's Speciality :</p>
-            <div class="relative bottom-0 mb-2 mr-1 inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"  v-for="(universityPartnerName, index) in university.universityPartnerSpeciality" :key="index">
-                    <tag :tags="universityPartnerName.specialityName"/>
+            <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"  v-for="(universityPartnerName, index) in university.universityPartnerSpeciality" :key="index">
+                    <tag :tags="universityPartnerName"/>
             </div>
         </div> 
         <!-- Exchange -->

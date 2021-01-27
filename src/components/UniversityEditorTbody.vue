@@ -34,7 +34,7 @@
             <tr v-if="openingUniversityForm">
                 <td colspan="6">
                     <div>
-                        <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
+                        <div class="p-5 bg-gray-400 bg-opacity-70 text-black">
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
@@ -114,7 +114,8 @@
                                                 </UEPT>
                                             </table>
                                             <div class="w-full flex justify-between">
-                                                <button v-if="(herCreation && (university.universitySourceDisplay != 'True')) || admin" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                <button v-if="(herCreation && (university.universitySourceDisplay != 'True'))" type="button" @click="callDeleteUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
+                                                <button v-if="admin" type="button" @click="callDeleteOfficialUniversity()" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Delete University</button>
                                                 <div v-if="admin" class="flex flex-wrap col-start-1 col-span-3 mt-5">
                                                     <div class="relative w-full appearance-none label-floating">
                                                         <select v-model="university.universitySourceDisplay" class="p-2 rounded bg-gray-200 border border-gray-200">
@@ -133,7 +134,7 @@
                                 </div>
                             </div>
 
-                        </form>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -162,6 +163,15 @@
         },
 
         methods: {
+
+            callDeleteOfficialUniversity(){
+                console.log("callDeleteOfficialUniversity")
+                this.openingUniversityForm = !this.openingUniversityForm
+
+                setTimeout(()=>{
+                    this.$emit("deleteOfficialUniversity")
+                },1000)
+            },
 
             callDeleteUniversity(){
                 console.log("callDeleteUniversity")

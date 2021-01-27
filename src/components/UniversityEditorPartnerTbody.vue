@@ -16,15 +16,15 @@
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerCreator}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerLastUpdate}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
-                <button v-if="!visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-900">Edit</button>
-                <button v-if="visible" @click="setVisible" class="font-bold text-indigo-600 hover:text-indigo-900">Close</button>
+                <button v-if="!partnerView" @click="openPartner" class="font-bold text-indigo-600 hover:text-indigo-900">Edit</button>
+                <button v-if="partnerView" @click="openPartner" class="font-bold text-indigo-600 hover:text-indigo-900">Close</button>
             </td>
         </tr>
         <transition-group name="slide-fade">
-            <tr v-if="visible">
+            <tr v-if="partnerView">
                 <td colspan="6">
                     <div>
-                        <form class="p-5 bg-gray-400 bg-opacity-70 text-black">
+                        <div class="p-5 bg-gray-400 bg-opacity-70 text-black">
                             <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating">
@@ -61,18 +61,6 @@
                                         <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website Link</label>
                                     </div>
                                 </div>
-                                <div class="relative w-full appearance-none label-floating mb-2 col-start-1 col-end-7">
-                                    <div class="" v-for="(speciality,k) in universityPartnerElement.universityPartnerSpeciality" :key="k">
-                                        <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                                        type="text" v-model="speciality.specialityName" id="specialityName" placeholder="Partner Speciality">
-                                        <label class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="speciality">Partner Speciality</label>
-                                        <span class="">
-                                            <button type="button" class="text-green-500 text-sm mr-2" @click="addSpeciality(k, universityPartnerElement, b)" v-show="k == universityPartnerElement.universityPartnerSpeciality.length-1">Add Speciality</button>
-                                            <span class="mr-2" v-show="k == universityPartnerElement.universityPartnerSpeciality.length-1 && universityPartnerElement.universityPartnerSpeciality.length > 1">|</span>
-                                            <button type="button" class="text-red-500 text-sm" @click="removeSpeciality(k, universityPartnerElement, b)" v-show="k || ( !k && universityPartnerElement.universityPartnerSpeciality.length > 1)">Remove Speciality</button>
-                                        </span>
-                                    </div>
-                                </div>
                                 <div class="flex flex-wrap col-start-1 col-end-7">
                                     <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
                                         <textarea class="autoexpand tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -80,6 +68,15 @@
                                         <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Partner Condition...</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="w-full col-start-1 col-end-7">
+                                <smart-tagz
+                                    input-placeholder="Select Countries ..."
+                                    :defaultTags= universityPartnerElement.universityPartnerSpeciality
+                                    :on-changed="logResult"
+                                    :allowPaste="{delimiter: ','}"
+                                    :allowDuplicates="false"
+                                />
                             </div>
                             <div class="w-full flex justify-between">
                                 <button @click="callDeletePartner()" class="text-red-600">Delete</button>
@@ -92,7 +89,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -101,23 +98,49 @@
 </template>
 
 <script>
-    import InputTag from 'vue-input-tag'
+    import { SmartTagz } from "smart-tagz";
+    import "smart-tagz/dist/smart-tagz.css";
+    import { defineComponent } from "vue";
+    import Multiselect from '@vueform/multiselect'
 
-    export default {
+    export default defineComponent ({
+        name: "Basic",
 
         components:{
-            InputTag,
+            SmartTagz,
+            Multiselect
         },
 
-        name: 'universityPartnerElement',
-        number: 'index',
+        universityPartnerElement: 'universityPartnerElement',
+        index: 'index',
         admin: 'admin',
         props: ['universityPartnerElement', 'index', 'admin'],
 
         data() {
             return {
-                visible: false,
+                partnerView: false,
+                specialityVisible: false,
+                hello:[],
+                value: [],
+                options: ['Batman', 'Robin', 'Joker']
+                
             }
+        },
+
+        setup(props) {
+            const logResult = (result) =>{
+
+                for (let index = 0; index < result.length; index++) {
+                    
+                }
+                console.log("1: " + result)
+                console.log("2: " + props.universityPartnerElement.universityPartnerSpeciality)
+                props.universityPartnerElement.universityPartnerSpeciality = result
+                console.log("3: " + props.universityPartnerElement.universityPartnerSpeciality)
+            };
+            return {
+                logResult,
+            };
         },
 
         methods: {
@@ -130,22 +153,20 @@
                 e.target.style.height = `${e.target.scrollHeight}px`
             },
 
-            setVisible: function() {
-                this.visible = !this.visible
+            openPartner: function() {
+                console.log("partnerView")
+                this.partnerView = !this.partnerView
             },
 
-            addSpeciality(index, partner, parentIndex) {
-                partner.universityPartnerSpeciality.push({ "specialityName": "" });
+            setSpecialityVisible: function() {
+                this.specialityVisible = !this.specialityVisible
             },
-
-            removeSpeciality(index, partner, parentIndex) {
-                partner.universityPartnerSpeciality.splice(index, 1);
-            }
         }
-    }
+    });
 
 </script>
 
+<style src="@vueform/multiselect/themes/default.css"></style>
 <style>
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s

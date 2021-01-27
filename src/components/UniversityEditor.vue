@@ -58,6 +58,7 @@
                                             :herCreation="yourCreationsFilter"
                                             ref="form"
                                             @deleteUniversity="removeUniversityByUser(index)"
+                                            @deleteOfficialUniversity="removeOfficialUniversityByAdmin(index)"
                                             @addPartner="addPartnerByUser(index)"
                                             @sendData="updateEditedSpecificDataByUser(index)">
                                         </UET>
@@ -170,7 +171,7 @@
                         "universitySourceCity": "Paris",
                         "universitySourceAddress": "",
                         "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "#",
+                        "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
@@ -181,16 +182,12 @@
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "#",
+                                "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "False",
+                                "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [
-                                    {
-                                        "specialityName": ""
-                                    }
-                                ],
+                                "universityPartnerSpeciality": [],
                             }
                         ], 
                     }
@@ -204,7 +201,7 @@
                         "universitySourceCity": "Paris",
                         "universitySourceAddress": "",
                         "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "#",
+                        "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
@@ -215,16 +212,12 @@
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "#",
+                                "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "False",
+                                "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [
-                                    {
-                                        "specialityName": ""
-                                    }
-                                ],
+                                "universityPartnerSpeciality": [],
                             }
                         ], 
                     }
@@ -355,7 +348,7 @@
                         "universitySourceCity": "Paris",
                         "universitySourceAddress": "",
                         "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "#",
+                        "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
@@ -366,16 +359,12 @@
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "#",
+                                "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "False",
+                                "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [
-                                    {
-                                        "specialityName": ""
-                                    }
-                                ],
+                                "universityPartnerSpeciality": [],
                             }
                         ], 
                     }
@@ -431,14 +420,14 @@
                         "universityPartnerCountry": "",
                         "universityPartnerCity": "",
                         "universityPartnerAddress": "",
-                        "universityPartnerWebsiteLink": "#",
+                        "universityPartnerWebsiteLink": "",
                         "universityPartnerCondition": "",
-                        "universityPartnerDisplay": "False",
+                        "universityPartnerDisplay": "True",
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                         "universityPartnerSpeciality": [
                             {
-                                "specialityName": ""
+                                value: '', label: ''
                             }
                         ],
                     }
@@ -506,18 +495,34 @@
                         "universityPartnerCountry": "",
                         "universityPartnerCity": "",
                         "universityPartnerAddress": "",
-                        "universityPartnerWebsiteLink": "#",
+                        "universityPartnerWebsiteLink": "",
                         "universityPartnerCondition": "",
-                        "universityPartnerDisplay": "False",
+                        "universityPartnerDisplay": "True",
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                         "universityPartnerSpeciality": [
                             {
-                                "specialityName": ""
+                                value: '', label: ''
                             }
                         ],
                     }
                 )
+            },
+
+            removeOfficialUniversityByAdmin(index) {
+                console.log("removeOfficialUniversityByAdmin")
+                for (let i = 0; i < this.form.length; i++) {
+                    if(this.universitySend[index].universitySourceId == this.form[i].universitySourceId){
+                        //Remove university in firebase for In Process list
+                        apps.database().ref('/universitys/' + this.universitySend[index].universitySourceId).set(null)
+                        apps.database().ref('/universityHistory/' + this.universitySend[index].universitySourceId).set(null)
+                        apps.database().ref('/universitysEdited/' + this.universitySend[index].universitySourceId).set(null)
+                        this.form.splice(i, 1);
+                        break;
+                    }
+                }
+                //Update 'Your Creation' page
+                this.filterCreation('General')
             },
 
             removeUniversityInProcess(index) {
@@ -660,7 +665,7 @@
                     }
                 )
             },
-        }
+        },
     }
 </script>
 

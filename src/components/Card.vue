@@ -16,7 +16,8 @@
 </template>
 
 <script>
-//import Tag from './Tag.vue'
+    //import Tag from './Tag.vue'
+    import {analytics} from '../main.js'
 
 export default {
     name: 'university',
@@ -31,6 +32,8 @@ export default {
     
     methods: {
         openCard(nameUniversity) {
+            console.log(nameUniversity)
+            analytics.logEvent("showUniversity", {value: nameUniversity})
             this.$emit('onClick', nameUniversity)
         }
     }
