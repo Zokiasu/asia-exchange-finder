@@ -211,8 +211,8 @@
                     cityStart.push(el.universitySourceCity)
                     el.universitySourcerPartner.forEach(el2 => {
                         el2.universityPartnerSpeciality.forEach(el3 => {
-                            if(el3.specialityName != "") {
-                                specialityPartener.push(el3.specialityName)
+                            if(el3 != "" && el3 != "N/A") {
+                                specialityPartener.push(el3)
                             }
                         })                    
                         countryPartener.push(el2.universityPartnerCountry)
@@ -287,7 +287,7 @@
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry == this.modelD) {
                             el.universityPartnerSpeciality.forEach(el2=>{
-                                if(el2.specialityName == this.modelS) {
+                                if(el2 == this.modelS) {
                                     res = true
                                 }
                             })
@@ -298,7 +298,7 @@
                 if(this.modelD == undefined && this.modelS != undefined) {
                      consultList.forEach(el => {
                         el.universityPartnerSpeciality.forEach(el2 =>{
-                            if(el2.specialityName === this.modelS) {
+                            if(el2 === this.modelS) {
                                 res = true
                             }
                         })
