@@ -71,11 +71,13 @@
                             </div>
                             <div class="w-full col-start-1 col-end-7">
                                 <smart-tagz
+                                    editable
                                     input-placeholder="Select Countries ..."
                                     :defaultTags= universityPartnerElement.universityPartnerSpeciality
                                     :on-changed="logResult"
                                     :allowPaste="{delimiter: ','}"
                                     :allowDuplicates="false"
+                                    :max-tags="100"
                                 />
                             </div>
                             <div class="w-full flex justify-between">
@@ -129,14 +131,7 @@
 
         setup(props) {
             const logResult = (result) =>{
-
-                for (let index = 0; index < result.length; index++) {
-                    
-                }
-                console.log("1: " + result)
-                console.log("2: " + props.universityPartnerElement.universityPartnerSpeciality)
                 props.universityPartnerElement.universityPartnerSpeciality = result
-                console.log("3: " + props.universityPartnerElement.universityPartnerSpeciality)
             };
             return {
                 logResult,
