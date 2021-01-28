@@ -1,47 +1,47 @@
 <template>
-    <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
-        <div class="mx-auto flex justify-center items-center w-full">
-            <div class="p-5 bg-gray-300 bg-opacity-90 text-black">
+    <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-90 min-h-screen w-full">
+        <div class="mx-auto flex justify-center items-center w-full ">
+            <div class="p-5 bg-gray-300 bg-opacity-90 text-black rounded-xl">
                 <div class="font-bold mb-5 grid grid-cols-3 gap-2">
                     <div class="flex flex-wrap col-start-1 col-end-7">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceName" v-model="university.universitySourceName" type="text" placeholder="University Name">
+                            id="universitySourceName" v-model="university[0].universitySourceName" type="text" placeholder="University Name">
                             <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University Name</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap col-start-1 col-span-3">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceAddress" v-model="university.universitySourceAddress" type="text" placeholder="University address">
+                            id="universitySourceAddress" v-model="university[0].universitySourceAddress" type="text" placeholder="University address">
                             <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University address</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceCountry" v-model="university.universitySourceCountry" type="text" placeholder="Country">
+                            id="universitySourceCountry" v-model="university[0].universitySourceCountry" type="text" placeholder="Country">
                             <label for="universitySourceCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Country</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap col-span-2">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceCity" v-model="university.universitySourceCity" type="text" placeholder="City">
+                            id="universitySourceCity" v-model="university[0].universitySourceCity" type="text" placeholder="City">
                             <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">City</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap col-start-1 col-span-3">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceImageLink" v-model="university.universitySourceImageLink" type="url" placeholder="Photo link of the university">
+                            id="universitySourceImageLink" v-model="university[0].universitySourceImageLink" type="url" placeholder="Photo link of the university">
                             <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Photo link of the university</label>
                         </div>
                     </div>
                     <div class="flex flex-wrap col-end-7 col-span-3">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceWebsiteLink" v-model="university.universitySourceWebsiteLink" type="url" placeholder="Website Link">
+                            id="universitySourceWebsiteLink" v-model="university[0].universitySourceWebsiteLink" type="url" placeholder="Website Link">
                             <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
                         </div>
                     </div>
@@ -60,9 +60,6 @@
                                             Localisation
                                         </th>
                                         <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            Display
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
                                             By
                                         </th>
                                         <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
@@ -73,7 +70,7 @@
                                         </th>
                                         </tr>
                                     </thead>
-                                    <UEPT v-for="(universityPartnerElement, index) in university.universitySourcerPartner"
+                                    <UEPT v-for="(universityPartnerElement, index) in university[0].universitySourcerPartner"
                                         :key="index"
                                         :universityPartnerElement="universityPartnerElement"
                                         :admin="admin"
@@ -82,10 +79,13 @@
                                 </table>
                                 <div class="w-full flex justify-between">
                                     <div>
-                                        <button type="button" @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
+                                        <button @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
                                     </div>
                                     <div>
-                                        <button type="button" @click="callSendData()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Send University</button>
+                                        <button @click="close" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Annuler</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" @click="callNewUniversity()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Send University</button>
                                     </div>
                                 </div>
                             </div>
@@ -93,13 +93,12 @@
                     </div>
                 </div>
             </div>
-            <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
     </div>
 </template>
 
 <script>
-    import UEPT from '../components/UniversityEditorPartnerTbody.vue'
+    import UEPT from './UniversityEditorPartnerTbody.vue'
     import firebase from 'firebase'
     import db from '../main.js'
     import {apps, name, grade} from '../main.js'
@@ -151,7 +150,7 @@
             firebase.auth().onAuthStateChanged((user) => {
                 db.ref('users/' + user.uid).once('value').then((snapshot) => {
                     if(user) {
-                        if(this.university.universitySourceCreator == snapshot.val().username){
+                        if(this.university[0].universitySourceCreator == snapshot.val().username){
                             this.herCreation = true
                         }
                     }
@@ -160,30 +159,36 @@
         },
 
         methods: {
-
-            callDeleteUniversity(){
-                this.$emit("removeTmpUniversity")
+            close(){
+                this.$emit('created');
             },
 
             callAddPartner(){
-                console.log("callAddPartner")
-                this.$emit("addPartnerEdited")
+                this.university[0].universitySourcerPartner.push(
+                    {
+                        "universityPartnerName": "University Partner",
+                        "universitySourceId": "",
+                        "universityPartnerCountry": "",
+                        "universityPartnerCity": "",
+                        "universityPartnerAddress": "",
+                        "universityPartnerWebsiteLink": "",
+                        "universityPartnerCondition": "",
+                        "universityPartnerDisplay": "True",
+                        "universityPartnerCreator": name,
+                        "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                        "universityPartnerSpeciality": [],
+                    }
+                )
             },
 
-            callSendData(){
-                this.$emit("sendDataToOfficial")
-            },
-
-            callModfifyData(){
-                this.$emit("modifyData")
-            },
-
-            setVisible: function() {
-                this.visible = !this.visible
+            callNewUniversity(){
+                console.log(this.university[0])
+                this.$emit("addNewUniversity", this.university[0])
+                this.$emit('created');
             },
             
             removePartner(index) {
-                this.university.universitySourcerPartner.splice(index, 1);
+                this.university[0].universitySourcerPartner.splice(index, 1);
             },
         }
     }

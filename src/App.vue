@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import Login from './views/Login.vue'
-  import Signup from './views/Signup.vue'
+  import Login from './components/Login.vue'
+  import Signup from './components/Signup.vue'
   import firebase from 'firebase'
   import {apps, name, grade} from './main.js'
   import db from './main.js'

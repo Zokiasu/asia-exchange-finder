@@ -93,9 +93,6 @@
                                                         Localisation
                                                     </th>
                                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                                        Display
-                                                    </th>
-                                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
                                                         By
                                                     </th>
                                                     <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
@@ -147,7 +144,6 @@
     import UEPT from './UniversityEditorPartnerTbody.vue'
     import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
 
     export default {
 

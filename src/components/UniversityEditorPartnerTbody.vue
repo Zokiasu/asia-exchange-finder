@@ -12,7 +12,6 @@
                 <div class="text-sm text-gray-900">{{universityPartnerElement.universityPartnerCity}}</div>
                 <div class="text-sm text-gray-500">{{universityPartnerElement.universityPartnerCountry}}</div>
             </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerDisplay}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerCreator}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerLastUpdate}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">

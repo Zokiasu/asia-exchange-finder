@@ -1,20 +1,24 @@
 <template>
     <div class="mt-14">
         <transition-group name="slide-fade">
+            <!-- Waiting Dashboard -->
             <div v-if="!userConnected" class="w-full flex justify-center">
                 <pulse-loader></pulse-loader>
             </div>
+            <!-- Dashboard -->
             <div v-if="userConnected" class="w-full">
-
+                <!-- Navigation -->
                 <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
+                    
                     <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
                     <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
-                    <button v-if="!checkAdmin" @click="filterCreation('General')">General</button>
+
+                    <button v-if="!checkAdmin" @click="filterCreation('General')" :class="[ !yourCreationsFilter ? 'text-red-500 font-semibold' : 'text-white' ]">General</button>
                     <p v-if="!checkAdmin">|</p>
-                    <button v-if="!checkAdmin" @click="filterCreation('Creation')">Your Creations</button>
+                    <button v-if="!checkAdmin" @click="filterCreation('Creation')" :class="[ !yourCreationsFilter ? 'text-white' : 'text-red-500 font-semibold' ]">Your Creations</button>
                 </div>
 
-                <!--General/Your Creation-->
+                <!-- General/Your Creation -->
                 <div v-if="!generalUniversity">
                     <notifications group="foo"/>
                     <div class="w-full relative py-2 px-3 flex justify-between">
@@ -24,7 +28,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <button v-if="yourCreationsFilter" @click="addUniversityInProcess()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button v-if="yourCreationsFilter" @click="setCreateUniversity" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -38,6 +42,9 @@
                                                 </th>
                                                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Localisation
+                                                </th>
+                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Display
                                                 </th>
                                                 <th v-if="checkAdmin" scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Display
@@ -53,7 +60,8 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <UET v-for="(university, index) in universitySend"
+                                        <UET class="bg-gray-200" 
+                                            v-for="(university, index) in universitySend"
                                             :key="index"
                                             :university="university"
                                             :admin="checkAdmin"
@@ -71,7 +79,7 @@
                     </div>
                 </div>
 
-                <!--In Process-->
+                <!-- In Process -->
                 <div v-if="generalUniversity && checkAdmin">
                     <div class="w-full relative py-2 px-3 flex justify-between">
                         <div class="flex">
@@ -80,7 +88,7 @@
                                 <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
                             </transition>
                         </div>
-                        <button @click="addUniversityInProcess()" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
+                        <button @click="setCreateUniversity" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
@@ -127,11 +135,18 @@
             </div>
         </transition-group>
     </div>
+    <CUP 
+    @created="setCreateUniversity" 
+    @addNewUniversity="addNewUniversityInProcess" 
+    v-if="createUniversityPopUp" 
+    class="mx-auto flex flex-col">
+    </CUP>
 </template>
 
 <script>
     import UET from './UniversityEditorTbody.vue'
     import UETT from './UniversityEditorTbodyTmp.vue'
+    import CUP from './CreateUniversityPopUp.vue'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import db from '../main.js'
@@ -142,6 +157,7 @@
         components:{
             UET,
             UETT,
+            CUP,
             PulseLoader
         },
         
@@ -156,6 +172,7 @@
                 generalUniversity: false,
                 yourCreationsFilter: false,
                 userConnected: false,
+                createUniversityPopUp: false,
                 message:{
                     message0: true,
                     message1: "When display is set to false the information is being processed.",
@@ -165,7 +182,6 @@
                     userGrade: grade,
                 },
                 "universitySend": [],
-
                 "form": [ 
                     {
                         "universitySourceId": "",
@@ -195,7 +211,6 @@
                         ], 
                     }
                 ],
-
                 "editedForm": [
                     {
                         "universitySourceId": "",
@@ -338,6 +353,10 @@
                 }
             },
 
+            setCreateUniversity: function() {
+                this.createUniversityPopUp = !this.createUniversityPopUp
+            },
+
             //General function
 
             addUniversityInProcess() {
@@ -370,6 +389,40 @@
                                 "universityPartnerSpeciality": [],
                             }
                         ], 
+                    }
+                )
+                //Updating data during the evaluation process
+                this.updateSpecificDataInProcess(this.editedForm.length-1)
+                //Check actual filter used
+                if(this.yourCreationsFilter) {
+                    //Update 'Your Creation' page
+                    this.filterCreation('Creation')
+                } else {
+                    //Update 'General' page
+                    this.filterCreation('General')
+                }
+                /*setTimeout(()=>{
+                    this.$refs.form.openUniversityForm()
+                    document.body.scrollTop = document.body.scrollHeight;
+                },200)*/
+            },
+
+            addNewUniversityInProcess(newUniversity) {
+                console.log("addUniversityInProcess")
+                //added a new University into evaluation process
+                this.editedForm.push(
+                    {
+                        "universitySourceId": newUniversity.universitySourceId,
+                        "universitySourceName": newUniversity.universitySourceName,
+                        "universitySourceCountry": newUniversity.universitySourceCountry,
+                        "universitySourceCity": newUniversity.universitySourceCity,
+                        "universitySourceAddress": newUniversity.universitySourceAddress,
+                        "universitySourceImageLink": newUniversity.universitySourceImageLink,
+                        "universitySourceWebsiteLink": newUniversity.universitySourceWebsiteLink,
+                        "universitySourceDisplay": newUniversity.universitySourceDisplay,
+                        "universitySourceCreator": newUniversity.universitySourceCreator,
+                        "universitySourceLastUpdate": newUniversity.universitySourceLastUpdate,   
+                        "universitySourcerPartner": newUniversity.universitySourcerPartner, 
                     }
                 )
                 //Updating data during the evaluation process

@@ -7,16 +7,12 @@
                 <p class="block text-blue-500 hover:text-blue-600 font-semibold mb-2 text-lg">
                     {{ university.universitySourceName }}
                 </p>
-                <!--<div class="relative bottom-0 mb-2 mr-1 inline bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"  v-for="(name, index) in university.universitySourceCountry" :key="index">
-                    <tag :tags="name"/>
-                </div>-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    //import Tag from './Tag.vue'
     import {analytics} from '../main.js'
 
 export default {
@@ -24,7 +20,7 @@ export default {
     props: ['university'],
 
     components:{
-        //Tag
+        
     },
     created() {
         this.$emit('created');

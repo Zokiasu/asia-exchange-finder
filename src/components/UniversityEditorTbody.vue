@@ -14,9 +14,9 @@
                 <div class="text-sm text-gray-900">{{university.universitySourceCity}}</div>
                 <div class="text-sm text-gray-500">{{university.universitySourceCountry}}</div>
             </td>
-            <td v-if="admin" class="px-4 py-2 whitespace-nowrap">
+            <td class="px-4 py-2 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
-                {{university.universitySourceDisplay}}
+                <p v-if="university.universitySourceDisplay == 'True'" class="text-green-500 font-bold">Online</p><p v-if="university.universitySourceDisplay == 'False'" class="text-red-500 font-bold">In progress</p>
                 </span>
             </td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
