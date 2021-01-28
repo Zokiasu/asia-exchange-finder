@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <div class="bg-white rounded-lg overflow-hidden shadow relative">
+        <div class="bg-white rounded-lg overflow-hidden shadow relative h-full">
             <button @click="openCard(university.universitySourceName)" class="Button bg-blue-500 rounded-3xl m-2 px-2 absolute right-0 block shadow-2xl">More Info</button>
             <img class="h-56 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
             <div class="p-4 h-auto">

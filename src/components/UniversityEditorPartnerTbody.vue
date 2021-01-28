@@ -71,7 +71,7 @@
                             <div class="w-full col-start-1 col-end-7">
                                 <smart-tagz
                                     editable
-                                    input-placeholder="Select Countries ..."
+                                    input-placeholder="Speciality ..."
                                     :defaultTags= universityPartnerElement.universityPartnerSpeciality
                                     :on-changed="logResult"
                                     :allowPaste="{delimiter: ','}"
