@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import AboutUs from '../views/AboutUs.vue'
-import Test from '../components/CreateUniversityPopUp.vue'
+import Test from '../views/Test.vue'
 import Dashboard from '../views/Dashboard.vue'
 import firebase from "firebase";
 

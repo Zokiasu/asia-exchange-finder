@@ -1,219 +1,41 @@
 <template>
-    <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
-        <div class="mx-auto flex justify-center items-center w-full">
-            <div class="p-5 bg-gray-300 bg-opacity-90 text-black">
-                <div class="font-bold mb-5 grid grid-cols-3 gap-2">
-                    <div class="flex flex-wrap col-start-1 col-end-7">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceName" v-model="university.universitySourceName" type="text" placeholder="University Name">
-                            <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University Name</label>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap col-start-1 col-span-3">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceAddress" v-model="university.universitySourceAddress" type="text" placeholder="University address">
-                            <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">University address</label>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceCountry" v-model="university.universitySourceCountry" type="text" placeholder="Country">
-                            <label for="universitySourceCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Country</label>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap col-span-2">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceCity" v-model="university.universitySourceCity" type="text" placeholder="City">
-                            <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">City</label>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap col-start-1 col-span-3">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceImageLink" v-model="university.universitySourceImageLink" type="url" placeholder="Photo link of the university">
-                            <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Photo link of the university</label>
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap col-end-7 col-span-3">
-                        <div class="relative w-full appearance-none label-floating">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="universitySourceWebsiteLink" v-model="university.universitySourceWebsiteLink" type="url" placeholder="Website Link">
-                            <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Website Link</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <div class="overflow-x-auto">
-                        <div class="align-middle inline-block w-full">
-                            <div class="shadow sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200">
-                                    <thead class="bg-gray-500">
-                                        <tr>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            University Partner Name
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            Localisation
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            Display
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            By
-                                        </th>
-                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
-                                            Last Update
-                                        </th>
-                                        <th scope="col" class="relative px-4 py-3">
-                                            <span class="sr-only">Edit</span>
-                                        </th>
-                                        </tr>
-                                    </thead>
-                                    <UEPT v-for="(universityPartnerElement, index) in university.universitySourcerPartner"
-                                        :key="index"
-                                        :universityPartnerElement="universityPartnerElement"
-                                        :admin="admin"
-                                        @deletePartner="removePartner(index)">
-                                    </UEPT>
-                                </table>
-                                <div class="w-full flex justify-between">
-                                    <div>
-                                        <button type="button" @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" @click="callSendData()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Send University</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
-        </div>
-    </div>
+    <smart-tagz
+        editable
+        autosuggest
+        input-placeholder="Select Countries ..."
+        :defaultTags="['United Kingdom', 'Uruguay', 'Uzbekistan']"
+        :sources="['United Kingdom', 'Uruguay', 'Uzbekistan']"
+        :on-changed="logResult"
+        :allowPaste="{delimiter: ','}"
+        :allowDuplicates="false"
+        :max-tags="100"
+    />
 </template>
 
 <script>
-    import UEPT from '../components/UniversityEditorPartnerTbody.vue'
-    import firebase from 'firebase'
-    import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
+    import { SmartTagz } from "smart-tagz";
+    import "smart-tagz/dist/smart-tagz.css";
+    import { defineComponent } from "vue";
+    import Multiselect from '@vueform/multiselect'
 
-    export default {
-
-        components:{
-            UEPT
+    export default  defineComponent ({
+        name: "Basic",
+        components: {
+            SmartTagz,
+            Multiselect
         },
 
-        data() {
+        setup() {
+            const logResult = (result) =>{
+                console.log(result)
+            };
             return {
-                visible: false,
-                herCreation: false,
-
-                "university": [ 
-                    {
-                        "universitySourceId": "",
-                        "universitySourceName": "University Name",
-                        "universitySourceCountry": "France",
-                        "universitySourceCity": "Paris",
-                        "universitySourceAddress": "",
-                        "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "",
-                        "universitySourceDisplay": "False",
-                        "universitySourceCreator": name,
-                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
-                        "universitySourcerPartner": [
-                            {
-                                "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
-                                "universityPartnerCountry": "",
-                                "universityPartnerCity": "",
-                                "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "",
-                                "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "True",
-                                "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [],
-                            }
-                        ], 
-                    }
-                ],
-            }
+                logResult,
+            };
         },
-
-        beforeCreate(){
-            firebase.auth().onAuthStateChanged((user) => {
-                db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                    if(user) {
-                        if(this.university.universitySourceCreator == snapshot.val().username){
-                            this.herCreation = true
-                        }
-                    }
-                })
-            })
-        },
-
-        methods: {
-
-            callDeleteUniversity(){
-                this.$emit("removeTmpUniversity")
-            },
-
-            callAddPartner(){
-                console.log("callAddPartner")
-                this.$emit("addPartnerEdited")
-            },
-
-            callSendData(){
-                this.$emit("sendDataToOfficial")
-            },
-
-            callModfifyData(){
-                this.$emit("modifyData")
-            },
-
-            setVisible: function() {
-                this.visible = !this.visible
-            },
-            
-            removePartner(index) {
-                this.university.universitySourcerPartner.splice(index, 1);
-            },
-        }
-    }
-
+    });
 </script>
 
 <style>
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
-    }
-    
-    .fade-enter, .fade-leave-to {
-        opacity: 0
-    }
 
-    .slide-fade-enter-active {
-        transition: all .8s ease-out;
-    }
-
-    .slide-fade-leave-active {
-        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    }
-
-    .slide-fade-enter-from{
-        transform: translateY(20px);
-        opacity: 0;
-    } 
-    
-    .slide-fade-leave-to {
-        transform: translateX(20px);
-        opacity: 0;
-    }
 </style>

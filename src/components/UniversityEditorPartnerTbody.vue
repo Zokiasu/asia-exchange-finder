@@ -12,6 +12,7 @@
                 <div class="text-sm text-gray-900">{{universityPartnerElement.universityPartnerCity}}</div>
                 <div class="text-sm text-gray-500">{{universityPartnerElement.universityPartnerCountry}}</div>
             </td>
+            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerDisplay}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerCreator}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerLastUpdate}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
@@ -71,8 +72,10 @@
                             <div class="w-full col-start-1 col-end-7">
                                 <smart-tagz
                                     editable
+                                    autosuggest
                                     input-placeholder="Speciality ..."
                                     :defaultTags= universityPartnerElement.universityPartnerSpeciality
+                                    :sources= listOfSpeciality
                                     :on-changed="logResult"
                                     :allowPaste="{delimiter: ','}"
                                     :allowDuplicates="false"
@@ -115,7 +118,8 @@
         universityPartnerElement: 'universityPartnerElement',
         index: 'index',
         admin: 'admin',
-        props: ['universityPartnerElement', 'index', 'admin'],
+        listOfSpeciality: 'listOfSpeciality',
+        props: ['universityPartnerElement', 'index', 'admin', 'listOfSpeciality'],
 
         data() {
             return {

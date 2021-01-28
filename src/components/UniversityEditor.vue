@@ -63,6 +63,7 @@
                                             :university="university"
                                             :admin="checkAdmin"
                                             :herCreation="yourCreationsFilter"
+                                            :listOfSpeciality="listOfSpeciality"
                                             ref="form"
                                             @deleteUniversity="removeUniversityByUser(index)"
                                             @deleteOfficialUniversity="removeOfficialUniversityByAdmin(index)"
@@ -118,6 +119,7 @@
                                             :key="index"
                                             :university="university"
                                             :admin="checkAdmin"
+                                            :listOfSpeciality="listOfSpeciality"
                                             @removeTmpUniversity="removeUniversityInProcess(index)"
                                             @addPartnerEdited="addPartnerInProcess(index)"
                                             @modifyData="updateSpecificDataInProcess(index)"
@@ -133,10 +135,11 @@
         </transition-group>
     </div>
     <CUP 
-    @created="setCreateUniversity" 
-    @addNewUniversity="addNewUniversityInProcess" 
-    v-if="createUniversityPopUp" 
-    class="mx-auto flex flex-col">
+        @created="setCreateUniversity" 
+        @addNewUniversity="addNewUniversityInProcess"
+        :listOfSpeciality="listOfSpeciality"
+        v-if="createUniversityPopUp" 
+        class="mx-auto flex flex-col">
     </CUP>
 </template>
 
@@ -160,19 +163,15 @@
         
         data () {
             return {
-                numberChildOnDatabase: 0,
-                xhrRequest: false,
-                errorMessage: "",
-                successMessage: "",
-                nameFilter: "",
                 checkAdmin: false,
                 generalUniversity: false,
                 yourCreationsFilter: false,
                 userConnected: false,
                 createUniversityPopUp: false,
+                listOfSpeciality: [],
                 message:{
                     message0: true,
-                    message1: "When display is set to false the information is being processed.",
+                    message1: "Any modification must be validated by an administrator before appearing officially.",
                 },
                 actualUser:{
                     username: name,
@@ -273,6 +272,30 @@
                     tmpEditedForm.push(element.val())
                 })
             })
+
+            var specialityPartener = [];
+
+            tmpForm.forEach(el => {
+                el.universitySourcerPartner.forEach(el2 => {
+                    el2.universityPartnerSpeciality.forEach(el3 => {
+                        if(el3 != "" && el3 != "N/A") {
+                            specialityPartener.push(el3)
+                        }
+                    })
+                })
+            })
+
+            tmpEditedForm.forEach(el => {
+                el.universitySourcerPartner.forEach(el2 => {
+                    el2.universityPartnerSpeciality.forEach(el3 => {
+                        if(el3 != "" && el3 != "N/A") {
+                            specialityPartener.push(el3)
+                        }
+                    })
+                })
+            })
+
+            this.listOfSpeciality = [...new Set(specialityPartener)]
             
             this.form = tmpForm
             this.editedForm = tmpEditedForm
@@ -294,19 +317,17 @@
         methods: {
 
             randomHelpedMessage(){
-                var i = this.getRandomInt(5)
+                var i = this.getRandomInt(4)
 
                 this.message.message0 = false
 
-                if(i == 0) {
-                    this.message.message1 = "When display is set to false the information is being processed."
-                } else if (i == 1) {
+                if (i == 0) {
                     this.message.message1 = "Any modification must be validated by an administrator before appearing officially."
-                } else if (i == 2) {
+                } else if (i == 1) {
                     this.message.message1 = "We thank you for your interest in this project and for your help in making it grow."
-                }  else if (i == 3) {
+                }  else if (i == 2) {
                     this.message.message1 = "In the general section you will find all the currently validated universities."
-                }  else if (i == 4) {
+                }  else if (i == 3) {
                     this.message.message1 = "In your creations section you will find all your creations validated or not by the administrators."
                 }
                 

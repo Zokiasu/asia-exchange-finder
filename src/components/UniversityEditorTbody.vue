@@ -110,6 +110,7 @@
                                                     :key="index"
                                                     :universityPartnerElement="universityPartnerElement"
                                                     :admin="admin"
+                                                    :listOfSpeciality="listOfSpeciality"
                                                     @myEvent="removePartner(index)">
                                                 </UEPT>
                                             </table>
@@ -154,7 +155,8 @@
         university: 'university',
         admin: 'admin',
         herCreation: 'herCreation',
-        props: ['university', 'admin', 'herCreation'],
+        listOfSpeciality: 'listOfSpeciality',
+        props: ['university', 'admin', 'herCreation', 'listOfSpeciality'],
 
         data() {
             return {

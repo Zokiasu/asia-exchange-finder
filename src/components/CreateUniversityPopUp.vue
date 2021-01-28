@@ -60,6 +60,9 @@
                                             Localisation
                                         </th>
                                         <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
+                                            Display
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
                                             By
                                         </th>
                                         <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">
@@ -74,6 +77,7 @@
                                         :key="index"
                                         :universityPartnerElement="universityPartnerElement"
                                         :admin="admin"
+                                        :listOfSpeciality="listOfSpeciality"
                                         @deletePartner="removePartner(index)">
                                     </UEPT>
                                 </table>
@@ -108,6 +112,8 @@
         components:{
             UEPT
         },
+
+        props: ['listOfSpeciality'],
 
         data() {
             return {
