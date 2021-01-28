@@ -34,6 +34,7 @@
     "vue-content-loading": "^1.6.0",
     "vue-gtag": "^1.10.0",
     "vue-input-tag": "^2.0.7",
+    "vue-js-toggle-button": "^1.3.3",
     "vue-loading-overlay": "^3.4.2",
     "vue-loading-skeleton": "^1.1.9",
     "vue-notification": "^1.3.20",
@@ -42,6 +43,7 @@
     "vue-sequential-entrance": "^1.1.3",
     "vue-spinner": "^1.0.4",
     "vuejs-input-tag-component": "^1.0.3",
+    "vuejs-toggle-switch": "^1.3.2",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {

@@ -14,7 +14,7 @@
                 <div class="text-sm text-gray-900">{{university.universitySourceCity}}</div>
                 <div class="text-sm text-gray-500">{{university.universitySourceCountry}}</div>
             </td>
-            <td class="px-4 py-2 whitespace-nowrap">
+            <td v-if="admin" class="px-4 py-2 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
                 {{university.universitySourceDisplay}}
                 </span>
@@ -217,11 +217,16 @@
     }
 
     .slide-fade-leave-active {
-        transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
 
-    .slide-fade-enter-from, .slide-fade-leave-to {
+    .slide-fade-enter-from{
         transform: translateY(20px);
+        opacity: 0;
+    } 
+    
+    .slide-fade-leave-to {
+        transform: translateX(20px);
         opacity: 0;
     }
 </style>

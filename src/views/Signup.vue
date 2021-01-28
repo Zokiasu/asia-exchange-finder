@@ -81,7 +81,8 @@
                                 grade:this.grade,
                                 created:this.created
                             }),
-                            this.successMessage = "Register Successfully.";
+                            authUser.user.sendEmailVerification();
+                            this.successMessage = "A verification email has been sent.";
                             this.disablexhrRequest();
                             this.close();
                         }

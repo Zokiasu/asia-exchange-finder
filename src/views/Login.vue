@@ -36,6 +36,9 @@
             </form>
             <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
+        <div class="col-sm-12 text-center form-group mt-5">
+            <button @click="resetPassword()" class="font-bold text-red-500">Reset Password</button>
+        </div>
     </div>
 </template>
 
@@ -62,6 +65,18 @@
             
             userlog(){
                 this.$emit('loged');
+            },
+
+            resetPassword(){
+                if (!this.email) {
+                    this.errorMessage = "Please type in a valid email address.";
+                    return;
+                }
+                apps.auth().sendPasswordResetEmail(this.email).then(() => {
+                    this.successMessage = "The password reset email has been sent to " + this.email
+                }).catch(error => {
+                    this.errorMessage = error.message;
+                });
             },
 
             loginRequest() {

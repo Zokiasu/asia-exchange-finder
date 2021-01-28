@@ -5,13 +5,15 @@
                 <pulse-loader></pulse-loader>
             </div>
             <div v-if="userConnected" class="w-full">
+
                 <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
                     <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
                     <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
-                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('General')">General</button>
+                    <button v-if="!checkAdmin" @click="filterCreation('General')">General</button>
                     <p v-if="!checkAdmin">|</p>
-                    <button class="focus:text-red-600" v-if="!checkAdmin" @click="filterCreation('Creation')">Your Creations</button>
+                    <button v-if="!checkAdmin" @click="filterCreation('Creation')">Your Creations</button>
                 </div>
+
                 <!--General/Your Creation-->
                 <div v-if="!generalUniversity">
                     <notifications group="foo"/>
@@ -31,24 +33,24 @@
                                     <table class="min-w-full divide-y divide-gray-200">
                                         <thead class="bg-gray-50">
                                             <tr>
-                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                University Name
-                                            </th>
-                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Localisation
-                                            </th>
-                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Display
-                                            </th>
-                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                By
-                                            </th>
-                                            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Last Update
-                                            </th>
-                                            <th scope="col" class="relative px-4 py-3">
-                                                <span class="sr-only">Edit</span>
-                                            </th>
+                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    University Name
+                                                </th>
+                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Localisation
+                                                </th>
+                                                <th v-if="checkAdmin" scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Display
+                                                </th>
+                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    By
+                                                </th>
+                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Last Update
+                                                </th>
+                                                <th scope="col" class="relative px-4 py-3">
+                                                    <span class="sr-only">Edit</span>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <UET v-for="(university, index) in universitySend"
@@ -68,6 +70,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!--In Process-->
                 <div v-if="generalUniversity && checkAdmin">
                     <div class="w-full relative py-2 px-3 flex justify-between">
@@ -667,11 +670,16 @@
     }
 
     .slide-fade-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
 
-    .slide-fade-enter-from, .slide-fade-leave-to {
+    .slide-fade-enter-from{
         transform: translateY(20px);
+        opacity: 0;
+    } 
+    
+    .slide-fade-leave-to {
+        transform: translateX(20px);
         opacity: 0;
     }
 
