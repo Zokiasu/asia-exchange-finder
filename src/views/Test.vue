@@ -3,12 +3,23 @@
         editable
         autosuggest
         input-placeholder="Select Countries ..."
-        :defaultTags="['United Kingdom', 'Uruguay', 'Uzbekistan']"
         :sources="['United Kingdom', 'Uruguay', 'Uzbekistan']"
         :on-changed="logResult"
         :allowPaste="{delimiter: ','}"
         :allowDuplicates="false"
         :max-tags="100"
+    />
+    <Multiselect
+        :class="[ value != '' ? 'w-auto bg-white rounded text-black' : 'w-48 bg-white rounded text-black' ]"
+        v-model="value"
+        mode="tags"
+        :searchable="false"
+        :createTag="false"
+        :options="[
+        { value: 'batman', label: 'Batman' },
+        { value: 'robin', label: 'Robin' },
+        { value: 'joker', label: 'Joker' },
+        ]"
     />
 </template>
 
@@ -23,6 +34,12 @@
         components: {
             SmartTagz,
             Multiselect
+        },
+
+        data(){
+            return{
+                value:[]
+            }
         },
 
         setup() {

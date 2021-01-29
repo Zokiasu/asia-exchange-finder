@@ -8,7 +8,7 @@
                     <Multiselect
                         class="w-48 bg-white rounded text-black"
                         mode="single"
-                        searchable="true"
+                        :searchable="true"
                         placeholder="All Cities"
                         v-model="modelV"
                         :options="option.cityStartOption"/>
@@ -17,7 +17,7 @@
                     <Multiselect
                         class="w-48 bg-white rounded text-black"
                         mode="single"
-                        searchable="true"
+                        :searchable="true"
                         placeholder="All Destinations"
                         v-model="modelD"
                         :options="option.countryOption"/>
@@ -26,7 +26,7 @@
                     <Multiselect
                         class="w-48 bg-white rounded text-black"
                         mode="single"
-                        searchable="true"
+                        :searchable="true"
                         placeholder="All specialities"
                         v-model="modelS"
                         :options="option.specialityOption"/>
@@ -90,8 +90,12 @@
     import {name} from '../main.js'
     import Multiselect from '@vueform/multiselect'
     import Notifications from "vt-notifications"
+    import { SmartTagz } from "smart-tagz";
+    import "smart-tagz/dist/smart-tagz.css";
+    import { defineComponent } from "vue";
 
-    export default {
+    export default defineComponent ({
+        name: "Basic",
 
         components:{
             Card,
@@ -99,6 +103,16 @@
             PulseLoader,
             Multiselect,
             Notifications,
+            SmartTagz,
+        },
+
+        setup() {
+            const logResult = (result) =>{
+                console.log(result)
+            };
+            return {
+                logResult,
+            };
         },
 
         data () {
@@ -159,6 +173,15 @@
                     universitySourcerPartner: []
                 },
             }
+        },
+
+        setup() {
+            const logResult = (result) =>{
+                console.log(result)
+            };
+            return {
+                logResult,
+            };
         },
 
         async beforeCreate(){
@@ -332,7 +355,7 @@
                 this.visible = !this.visible
             }
         },
-    }
+    });
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
