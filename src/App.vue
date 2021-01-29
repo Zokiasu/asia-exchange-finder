@@ -18,27 +18,31 @@
     <router-view/>
     <Login @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto flex flex-col"/>
     <Signup @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto flex flex-col"/>
+    <Contact :actualUser="actualUser" @created="setVisibleContact" v-if="contactPopup" class="mx-auto flex flex-col"/>
   </div>
+  <button @click="setVisibleContact" target="_blank" class="z-50 text text-white font-bold bg-red-600 rounded-tr-xl border border-white bottom-0 left-0 fixed align-bottom px-2 py-1" style="padding-top: 4px !important;">Feedback</button>
   <a href="https://www.instagram.com/asiastudeler/" target="_blank" class="z-50 text-sm text-white font-bold bg-black rounded-tl-xl border border-white bottom-0 right-0 fixed align-bottom px-2 py-1" style="padding-top: 4px !important;">Asia Studeler</a>
 </template>
 
 <script>
   import Login from './components/Login.vue'
   import Signup from './components/Signup.vue'
-  import firebase from 'firebase'
+  import Contact from './components/Contact.vue'
   import {apps, name, grade} from './main.js'
   import db from './main.js'
 
   export default {
     components:{
         Login,
-        Signup
+        Signup,
+        Contact
     },
 
     data(){
       return {
         loginPopup: false,
         signupPopup: false,
+        contactPopup: false,
         userAuthenticated: false,
         actualUser:{
           username: name,
@@ -79,6 +83,10 @@
 
       setVisibleSignUp: function() {
           this.signupPopup = !this.signupPopup
+      },
+
+      setVisibleContact: function() {
+          this.contactPopup = !this.contactPopup
       },
 
       setUserAuthenticated: function() {

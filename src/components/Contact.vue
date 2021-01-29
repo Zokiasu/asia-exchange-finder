@@ -1,14 +1,14 @@
 <template>
     <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-90 min-h-screen w-full">
         <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
-            <form class=" w-96 contact-form bg-white p-10 rounded-2xl items-center" @submit.prevent="sendEmail">
+            <form class="contact-form bg-white p-10 rounded-2xl items-center" @submit.prevent="sendEmail">
                 <div class="pb-5">
                     <label class="text-black font-bold text-2xl">Contact</label>
                 </div>
                 <div class="grid grid-cols-1 gap-6">
                     <div class="flex flex-wrap mb-2 col-span-3">
                         <div class="relative w-full appearance-none">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            <input disabled class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             type="text" name="to_name" placeholder="To" v-model="name">
                         </div>
                     </div>
