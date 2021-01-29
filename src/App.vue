@@ -66,7 +66,7 @@
     methods:{
 
       signOut: function() {
-        firebase.auth().signOut().then(() => {
+        apps.auth().signOut().then(() => {
           this.user = null
           if(this.$route.name === 'Home') {
             this.$router.go()
