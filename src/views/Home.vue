@@ -6,7 +6,7 @@
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="pt-6 ms:pl-6">
                     <Multiselect
-                        class="w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="All Cities"
@@ -15,7 +15,7 @@
                 </div>
                 <div class="pt-6 ms:pl-6">
                     <Multiselect
-                        class="w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="All Destinations"
@@ -24,7 +24,7 @@
                 </div>
                 <div class="pt-6 ms:pl-6">
                     <Multiselect
-                        class="w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="All specialities"
@@ -46,7 +46,7 @@
                         @created="init">
                     </card>
                     <div v-if="!show" class="rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
-                        <div class="rounded-lg text-xl h-full space-y-6 py-5 md:py-10 xl:py-16 px-6">
+                        <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 md:py-10 xl:py-16 px-6">
                             <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
                             <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
                             <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>

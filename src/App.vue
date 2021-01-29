@@ -15,7 +15,7 @@
     </div>
     <h1 class="font-bold text-center mt-10 ms:mt-20 mb-16 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"><router-link to="/">Asia Exchange Finder</router-link></h1>
     <h2 class="text-center mb-5 ms:mb-0 text-xl 2xl:text-2xl">Find your exchange to an Asian country.</h2>
-    <router-view/>
+    <router-view class="mb-16"/>
     <Login @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto flex flex-col"/>
     <Signup @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto flex flex-col"/>
     <Contact :actualUser="actualUser" @created="setVisibleContact" v-if="contactPopup" class="mx-auto flex flex-col"/>
@@ -52,7 +52,7 @@
     },
 
     async beforeCreate(){
-      await firebase.auth().onAuthStateChanged((user) => {
+      await apps.auth().onAuthStateChanged((user) => {
         if(user != undefined) {
           db.ref('users/' + user.uid).once('value').then((snapshot) => {
               this.userAuthenticated = true
