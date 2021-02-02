@@ -518,6 +518,9 @@
                     apps.database().ref('/universitysEdited/' + this.universitySend[index].universitySourceId).set(null)
                     //Update 'Your Creation' page
                     this.filterCreation('Creation')
+                    this.$router.replace('/Dashboard')
+                    this.$toast.error('University successfully deleted')
+                    setTimeout(this.$toast.clear, 10000)
                 }
             },
 
@@ -545,7 +548,7 @@
                     () => {
                         this.$router.replace('/Dashboard')
                         this.$toast.success(`Your changes has been sent successfully.`);
-                        this.$toast.info(`All changes will have to be validated to appear.`);
+                        this.$toast.info(`Thank you for your help in improving our database.`);
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
@@ -669,7 +672,14 @@
                     up['/universitysEdited/' + this.editedForm[index].universitySourceId] = this.editedForm[index]
                 }
 
-                return db.ref().update(up);
+                return db.ref().update(up).then(
+                    () => {
+                        this.$router.replace('/Dashboard')
+                        this.$toast.success(`Your changes has been sent successfully.`);
+                        this.$toast.info(`Thank you for your help in improving our database.`);
+                        setTimeout(this.$toast.clear, 10000)
+                    }
+                )
             },
 
             moveDataToInProgressToOfficialSpecific(dex){

@@ -29,12 +29,13 @@
       <!-- Filters -->
       <div class="px-4 py-2 w-full place-items-center">
         <p class="font-bold text-3xl text-center">Partner</p>
+        <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
       </div>
       <!-- University Card -->
       <UniversityCardInfo class="xl:mx-40 dark:text-white"
-                    v-for="university in this.university.universitySourcerPartner"
-                    :key="university.universityPartnerName"
-                    :university="university">
+          v-for="university in this.partner"
+          :key="university.universityPartnerName"
+          :university="university">
       </UniversityCardInfo>
       <!-- Leave -->
       <div class="container mb-5 flex justify-center">
@@ -49,10 +50,12 @@
 
 <script>
   import UniversityCardInfo from './UniversityCardInfo.vue'
+  import Tag from './Tag.vue'
 
   export default {
     components:{
-        UniversityCardInfo
+        UniversityCardInfo,
+        Tag,
     },
 
     name: 'university',
@@ -61,12 +64,44 @@
     data() {
       return {
         isOpen: false,
+        hello: false,
+        partner: [],
+        countryPartner:[''],
+        actualFilter: 'All',
       }
     },
 
     methods: {
+
       drawer() {
         this.isOpen = !this.isOpen;
+      },
+
+      initPartner(){
+        var country = [];
+        country.push('All')
+        console.log(this.actualFilter)
+        if(this.university.universitySourcerPartner.length > 0){
+          this.partner = this.university.universitySourcerPartner
+          this.partner.forEach(el2 => {
+              country.push(el2.universityPartnerCountry)                    
+          })
+          this.countryPartner = [...new Set(country)]
+          console.log(this.countryPartner)
+        }
+      },
+
+      countryFilter(country){
+        this.partner = this.university.universitySourcerPartner.filter(
+            (el) => {
+                if(el.universityPartnerCountry == country || country == 'All'){
+                  this.actualFilter = country
+                  return true
+                } else {
+                  return false
+                }
+            }
+        )
       },
     },
 
@@ -78,6 +113,8 @@
             if (isOpen) document.body.style.setProperty("overflow", "hidden");
             else document.body.style.removeProperty("overflow");
           }
+          console.log(this.university)
+          this.initPartner()
         }
       }
     },

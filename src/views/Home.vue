@@ -90,11 +90,8 @@
     import {name} from '../main.js'
     import Multiselect from '@vueform/multiselect'
     import Notifications from "vt-notifications"
-    import { SmartTagz } from "smart-tagz";
-    import "smart-tagz/dist/smart-tagz.css";
-    import { defineComponent } from "vue";
 
-    export default defineComponent ({
+    export default {
         name: "Basic",
 
         components:{
@@ -103,16 +100,6 @@
             PulseLoader,
             Multiselect,
             Notifications,
-            SmartTagz,
-        },
-
-        setup() {
-            const logResult = (result) =>{
-                console.log(result)
-            };
-            return {
-                logResult,
-            };
         },
 
         data () {
@@ -173,15 +160,6 @@
                     universitySourcerPartner: []
                 },
             }
-        },
-
-        setup() {
-            const logResult = (result) =>{
-                console.log(result)
-            };
-            return {
-                logResult,
-            };
         },
 
         async beforeCreate(){
@@ -355,7 +333,7 @@
                 this.visible = !this.visible
             }
         },
-    });
+    }
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
