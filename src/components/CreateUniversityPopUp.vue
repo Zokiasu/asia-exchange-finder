@@ -188,7 +188,6 @@
             },
 
             callNewUniversity(){
-                console.log(this.university[0])
                 this.$emit("addNewUniversity", this.university[0])
                 this.$emit('created');
             },

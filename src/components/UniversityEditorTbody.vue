@@ -167,7 +167,6 @@
         methods: {
 
             callDeleteOfficialUniversity(){
-                console.log("callDeleteOfficialUniversity")
                 this.openingUniversityForm = !this.openingUniversityForm
 
                 setTimeout(()=>{
@@ -176,7 +175,6 @@
             },
 
             callDeleteUniversity(){
-                console.log("callDeleteUniversity")
                 this.openingUniversityForm = !this.openingUniversityForm
 
                 setTimeout(()=>{
@@ -185,7 +183,6 @@
             },
 
             callAddPartner(){
-                console.log("callAddPartner into UET")
                 this.$emit("addPartner")
             },
 

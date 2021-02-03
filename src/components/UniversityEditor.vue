@@ -277,21 +277,17 @@
 
             tmpForm.forEach(el => {
                 el.universitySourcerPartner.forEach(el2 => {
-                    el2.universityPartnerSpeciality.forEach(el3 => {
-                        if(el3 != "" && el3 != "N/A") {
-                            specialityPartener.push(el3)
-                        }
-                    })
+                    for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                        specialityPartener.push(el2.universityPartnerSpeciality[index])
+                    }
                 })
             })
 
             tmpEditedForm.forEach(el => {
                 el.universitySourcerPartner.forEach(el2 => {
-                    el2.universityPartnerSpeciality.forEach(el3 => {
-                        if(el3 != "" && el3 != "N/A") {
-                            specialityPartener.push(el3)
-                        }
-                    })
+                    for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                        specialityPartener.push(el2.universityPartnerSpeciality[index])
+                    }
                 })
             })
 
@@ -339,7 +335,6 @@
             },
 
             filterCreation: function(callFilter){
-                console.log("filtreCreators")
                 this.universitySend = [];
                 var tmpUniversitySend = [];
                 if(callFilter == "General") {
@@ -378,7 +373,6 @@
             //General function
 
             addUniversityInProcess() {
-                console.log("addUniversityInProcess")
                 //added a new University into evaluation process
                 this.editedForm.push(
                     {
@@ -426,7 +420,6 @@
             },
 
             addNewUniversityInProcess(newUniversity) {
-                console.log("addUniversityInProcess")
                 //added a new University into evaluation process
                 this.editedForm.push(
                     {
@@ -460,14 +453,12 @@
             },
 
             writeUpdateData(datasource, uid, element){
-                console.log("writeUpdateData")
                 var up = {};
                 up[datasource + uid] = element
                 return db.ref().update(up);
             },
 
             writeUpdateDataHistory(datasource, uid, element){
-                console.log("writeUpdateDataHistory")
                 var up = {};
                 up[datasource + uid + '/' + element.universitySourceLastUpdate] = element
                 return db.ref().update(up);
@@ -476,7 +467,6 @@
             //User function
 
             addPartnerByUser(index) {
-                console.log("addPartnerByUser")
                 //added a new partner in university into user list
                 this.universitySend[index].universitySourcerPartner.push(
                     {
@@ -504,7 +494,6 @@
             },
 
             removeUniversityByUser(index) {
-                console.log("removeUniversityByUser")
                 //Check if user is on 'Your Creation' page
                 if(this.yourCreationsFilter) {
                     for (let i = 0; i < this.editedForm.length; i++) {
@@ -525,8 +514,6 @@
             },
 
             updateEditedSpecificDataByUser(index){
-                console.log("updateEditedSpecificDataByUser")
-
                 var testA = "";
                 var up = {};
 
@@ -557,7 +544,6 @@
             //Admin function
 
             addPartnerInProcess(index) {
-                console.log("addPartnerInProcess")
                 //added a new partner in university into evaluation process
                 this.editedForm[index].universitySourcerPartner.push(
                     {
@@ -577,7 +563,6 @@
             },
 
             removeOfficialUniversityByAdmin(index) {
-                console.log("removeOfficialUniversityByAdmin")
                 for (let i = 0; i < this.form.length; i++) {
                     if(this.universitySend[index].universitySourceId == this.form[i].universitySourceId){
                         //Remove university in firebase for In Process list
@@ -593,15 +578,12 @@
             },
 
             removeUniversityInProcess(index) {
-                console.log("removeUniversityInProcess")
                 //Remove university in firebase for In Process list
                 apps.database().ref('/universitysEdited/' + this.editedForm[index].universitySourceId).set(null)
                 this.editedForm.splice(index, 1);
             },
 
             addAllDataInOfficialBase(){
-                console.log("addAllDataInOfficialBase")
-
                 var testA = "";
                 var up = {};
 
@@ -628,8 +610,6 @@
             },
 
             addAllDataInInProcessBase(){
-                console.log("addAllDataInInProcessBase")
-
                 var testA = "";
                 var up = {};
 
@@ -653,8 +633,6 @@
             },
 
             updateSpecificDataInProcess(index){
-                console.log("updateEditedSpecificData")
-
                 var testA = "";
                 var up = {};
 
@@ -683,7 +661,6 @@
             },
 
             moveDataToInProgressToOfficialSpecific(dex){
-                console.log("moveDataToInProgressToOfficialSpecific")
                 let count = 0;
 
                 for (let index2 = 0; index2 < this.form.length; index2++) {
@@ -710,7 +687,6 @@
 
             //Under consideration
             updateOfficialSpecificData(index){
-                console.log("updateOfficialSpecificData")
                 var testA = "";
                 var up = {};
 

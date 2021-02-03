@@ -152,7 +152,6 @@
             },
 
             openPartner: function() {
-                console.log("partnerView")
                 this.partnerView = !this.partnerView
             },
 

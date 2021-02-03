@@ -80,14 +80,12 @@
       initPartner(){
         var country = [];
         country.push('All')
-        console.log(this.actualFilter)
         if(this.university.universitySourcerPartner.length > 0){
           this.partner = this.university.universitySourcerPartner
           this.partner.forEach(el2 => {
               country.push(el2.universityPartnerCountry)                    
           })
           this.countryPartner = [...new Set(country)]
-          console.log(this.countryPartner)
         }
       },
 
@@ -113,7 +111,6 @@
             if (isOpen) document.body.style.setProperty("overflow", "hidden");
             else document.body.style.removeProperty("overflow");
           }
-          console.log(this.university)
           this.initPartner()
         }
       }

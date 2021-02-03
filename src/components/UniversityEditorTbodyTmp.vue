@@ -183,7 +183,6 @@
             },
 
             callAddPartner(){
-                console.log("callAddPartner")
                 this.$emit("addPartnerEdited")
             },
 

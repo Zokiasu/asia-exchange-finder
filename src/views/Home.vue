@@ -9,7 +9,7 @@
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="All Cities"
+                        placeholder="From City"
                         v-model="modelV"
                         :options="option.cityStartOption"/>
                 </div>
@@ -18,7 +18,7 @@
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="All Destinations"
+                        placeholder="To Destinations"
                         v-model="modelD"
                         :options="option.countryOption"/>
                 </div>
@@ -250,9 +250,6 @@
                 this.modelV = this.option.cityStartOption[this.modelV]
                 this.modelD = this.option.countryOption[this.modelD]
                 this.modelS = this.option.specialityOption[this.modelS]
-                console.log(this.modelV)
-                console.log(this.modelD)
-                console.log(this.modelS)
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {
@@ -269,16 +266,6 @@
                 } else {
                     this.show = true
                 }
-            },
-
-            registerStats(){
-                db.ref("stats").once("value", function(snapshot){
-                    snapshot.forEach(function(element){
-                        console.log("Hello1")
-                    })
-                }).catch(
-                    console.log("Hello2")
-                )
             },
 
             booleanByCountry(consultList) {
