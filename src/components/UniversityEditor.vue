@@ -285,8 +285,10 @@
 
             tmpEditedForm.forEach(el => {
                 el.universitySourcerPartner.forEach(el2 => {
-                    for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
-                        specialityPartener.push(el2.universityPartnerSpeciality[index])
+                    if(el2.universityPartnerSpeciality != undefined) {
+                        for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                            specialityPartener.push(el2.universityPartnerSpeciality[index])
+                        }
                     }
                 })
             })
