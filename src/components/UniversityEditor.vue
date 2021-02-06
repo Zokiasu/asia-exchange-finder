@@ -2,7 +2,7 @@
     <div class="mt-14">
         <transition-group name="slide-fade">
             <!-- Waiting Dashboard -->
-            <div v-if="!userConnected" class="w-full flex justify-center">
+            <div v-if="!userConnected" class="flex justify-center">
                 <pulse-loader></pulse-loader>
             </div>
             <!-- Dashboard -->
@@ -725,11 +725,12 @@
     }
 
     .slide-fade-enter-active {
-        transition: all .8s ease-out;
+        transition: all .8s ease-in-out;
     }
 
     .slide-fade-leave-active {
-        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        width: 0;
     }
 
     .slide-fade-enter-from{

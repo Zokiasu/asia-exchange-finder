@@ -53,17 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
-                    <div class="h-72 rounded-xl bg-gray-500 bg-opacity-50 flex">
-                        <pulse-loader class="m-auto"></pulse-loader>
-                    </div>
-                </div>
+                <pulse-loader v-if="!visible" class=" mt-10 m-auto"></pulse-loader>
             </transition-group>
 
             <transition name="slide-fade">
