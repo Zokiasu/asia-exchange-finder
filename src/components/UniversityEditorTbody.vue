@@ -111,7 +111,7 @@
                                                     :universityPartnerElement="universityPartnerElement"
                                                     :admin="admin"
                                                     :listOfSpeciality="listOfSpeciality"
-                                                    @myEvent="removePartner(index)">
+                                                    @deletePartner="removePartner(index)">
                                                 </UEPT>
                                             </table>
                                             <div class="w-full flex justify-between">
