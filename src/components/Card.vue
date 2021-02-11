@@ -17,16 +17,13 @@ export default {
     name: 'university',
     props: ['university'],
 
-    components:{
-        
-    },
     created() {
         this.$emit('created');
     },
     
     methods: {
         openCard(nameUniversity) {
-            analytics.logEvent("showUniversity", nameUniversity)
+            analytics.logEvent("showUniversity", {nameUniversity})
             this.$emit('onClick', nameUniversity)
         }
     }
