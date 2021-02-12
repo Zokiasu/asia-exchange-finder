@@ -24,7 +24,7 @@
                 </button>
             </a>
         </div>
-        <p class="absolute top-0 p-4 pt-2 text-4xl text-white bg-blue-600 bg-opacity-60 rounded-br-xl">{{ university.universitySourceName }}</p>
+        <p class="absolute top-0 p-4 pt-2 text-4xl text-white bg-blue-600 bg-opacity-60 md:rounded-br-xl">{{ university.universitySourceName }}</p>
       </div>
       <!-- Filters -->
       <div class="px-4 py-2 w-full place-items-center">
@@ -32,11 +32,18 @@
         <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
       </div>
       <!-- University Card -->
-      <UniversityCardInfo class="xl:mx-40 dark:text-white"
+      <UniversityCardInfo 
+          class="xl:mx-40 dark:text-white"
           v-for="university in this.partner"
           :key="university.universityPartnerName"
           :university="university">
       </UniversityCardInfo>
+
+      <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
+          <p>Sorry, we don't have informations about this university's partners yet.</p>
+          <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
+      </div>
+      
       <!-- Leave -->
       <div class="container mb-5 flex justify-center">
         <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
@@ -81,12 +88,14 @@
 
       drawer() {
         this.isOpen = !this.isOpen;
+        this.partner = [];
+        this.countryPartner = [];
       },
 
       initPartner(){
         var country = [];
         country.push('All')
-        if(this.university.universitySourcerPartner.length > 0){
+        if(this.university.universitySourcerPartner){
           this.partner = this.university.universitySourcerPartner
           this.partner.forEach(el2 => {
               country.push(el2.universityPartnerCountry)                    

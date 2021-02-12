@@ -178,9 +178,11 @@
                 if(this.universitysSend[index].universitySourceDisplay === "False"){
                     this.universitysSend.splice(index, 1)
                 } else {
-                    for (let index2 = this.universitysSend[index].universitySourcerPartner.length-1; index2 >= 0 ; index2--) {
-                        if(this.universitysSend[index].universitySourcerPartner[index2].universityPartnerDisplay === "False") {
-                            this.universitysSend[index].universitySourcerPartner.splice(index2, 1)
+                    if(this.universitysSend[index].universitySourcerPartner){
+                        for (let index2 = this.universitysSend[index].universitySourcerPartner.length-1; index2 >= 0 ; index2--) {
+                            if(this.universitysSend[index].universitySourcerPartner[index2].universityPartnerDisplay === "False") {
+                                this.universitysSend[index].universitySourcerPartner.splice(index2, 1)
+                            }
                         }
                     }
                 }
@@ -200,14 +202,18 @@
 
                 this.universitysSend.forEach(el => {
                     cityStart.push(el.universitySourceCity)
-                    el.universitySourcerPartner.forEach(el2 => {
-                        el2.universityPartnerSpeciality.forEach(el3 => {
-                            if(el3 != "" && el3 != "N/A") {
-                                specialityPartener.push(el3)
-                            }
-                        })                    
-                        countryPartener.push(el2.universityPartnerCountry)
-                    })
+                    if(el.universitySourcerPartner) {
+                        el.universitySourcerPartner.forEach(el2 => {
+                            if(el2.universityPartnerSpeciality) {
+                                el2.universityPartnerSpeciality.forEach(el3 => {
+                                    if(el3 != "" && el3 != "N/A") {
+                                        specialityPartener.push(el3)
+                                    }
+                                })
+                            }                  
+                            countryPartener.push(el2.universityPartnerCountry)
+                        })
+                    }
                 })
 
                 this.option.countryOption = [...new Set(countryPartener)]

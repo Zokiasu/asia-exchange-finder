@@ -35,7 +35,7 @@
                             <div class="align-middle inline-block w-full">
                                 <div class="shadow border-b border-gray-200 sm:rounded-lg">
                                     <table class="min-w-full divide-y divide-gray-200">
-                                        <thead class="bg-gray-50">
+                                        <thead class="bg-gray-100">
                                             <tr>
                                                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     University Name
@@ -57,7 +57,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <UET class="bg-gray-200" 
+                                        <UET 
                                             v-for="(university, index) in universitySend"
                                             :key="index"
                                             :university="university"
@@ -276,21 +276,28 @@
             var specialityPartener = [];
 
             tmpForm.forEach(el => {
-                el.universitySourcerPartner.forEach(el2 => {
-                    for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
-                        specialityPartener.push(el2.universityPartnerSpeciality[index])
-                    }
-                })
+                if(el.universitySourcerPartner){
+                    el.universitySourcerPartner.forEach(el2 => {
+                        if(el2.universityPartnerSpeciality != undefined){
+                            for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                                specialityPartener.push(el2.universityPartnerSpeciality[index])
+                            }
+                        }
+                    })
+                }
+
             })
 
             tmpEditedForm.forEach(el => {
-                el.universitySourcerPartner.forEach(el2 => {
-                    if(el2.universityPartnerSpeciality != undefined) {
-                        for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
-                            specialityPartener.push(el2.universityPartnerSpeciality[index])
+                if(el.universitySourcerPartner){
+                    el.universitySourcerPartner.forEach(el2 => {
+                        if(el2.universityPartnerSpeciality != undefined) {
+                            for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                                specialityPartener.push(el2.universityPartnerSpeciality[index])
+                            }
                         }
-                    }
-                })
+                    })
+                }
             })
 
             this.listOfSpeciality = [...new Set(specialityPartener)]
@@ -612,9 +619,10 @@
             },
 
             addAllDataInInProcessBase(){
+                console.log("addAllDataInInProcessBase")
                 var testA = "";
                 var up = {};
-
+                console.log(this.editedForm.length)
                 if(this.editedForm.length <= 0){
                     up['/universitysEdited/'] = this.editedForm
                     return db.ref().update(up);
@@ -680,7 +688,7 @@
                     this.form.push(this.editedForm[dex])
                 }
                 //Remove the university from the list in progress
-                this.editedForm.splice(dex, 1)
+                this.removeUniversityInProcess(dex)
                 //Updates the list of the official database
                 this.addAllDataInOfficialBase()
                 //Updated the list of the database under study
