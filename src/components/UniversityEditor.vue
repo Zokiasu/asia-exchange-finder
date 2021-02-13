@@ -148,7 +148,6 @@
     import UETT from './UniversityEditorTbodyTmp.vue'
     import CUP from './CreateUniversityPopUp.vue'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import firebase from 'firebase'
     import db from '../main.js'
     import {apps, name, grade} from '../main.js'
 
@@ -240,7 +239,7 @@
         },
 
         async beforeCreate(){
-            await firebase.auth().onAuthStateChanged((user) => {
+            await apps.auth().onAuthStateChanged((user) => {
                 if(user != undefined) {
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
                         this.userConnected = true

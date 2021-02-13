@@ -41,8 +41,7 @@
     import emailjs from 'emailjs-com';
     import { init } from 'emailjs-com';
     init("user_LjdyAMDHMFXk6Or6Ffd5a");
-    import {apps, name, grade} from '../main.js'
-    import db from '../main.js'
+    import {apps} from '../main.js'
 
     export default {
 

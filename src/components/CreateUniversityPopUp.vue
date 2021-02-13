@@ -103,9 +103,8 @@
 
 <script>
     import UEPT from './UniversityEditorPartnerTbody.vue'
-    import firebase from 'firebase'
     import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
+    import {apps, name} from '../main.js'
 
     export default {
 
@@ -153,7 +152,7 @@
         },
 
         beforeCreate(){
-            firebase.auth().onAuthStateChanged((user) => {
+            apps.auth().onAuthStateChanged((user) => {
                 db.ref('users/' + user.uid).once('value').then((snapshot) => {
                     if(user) {
                         if(this.university[0].universitySourceCreator == snapshot.val().username){
