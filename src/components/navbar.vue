@@ -9,10 +9,6 @@
     </transition>
 
     <aside class="transform top-0 left-0 w-full dark:bg-black bg-white fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
-      <!-- Leave -->
-      <button class="z-10 absolute my-5 mx-5 top-0 right-0" aria-label="Close Menu" @click="drawer">
-        <img class="w-5" src="https://www.flaticon.com/svg/static/icons/svg/109/109602.svg"/>
-      </button>
       <!-- Header -->
       <div>
         <img class="relative h-60 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
@@ -51,7 +47,7 @@
         </button>
       </div>
     </aside>
-
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 text-base text-white font-bold bg-red-500 rounded-full border border-white top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 

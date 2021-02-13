@@ -17,16 +17,21 @@
             <p>N/A</p>
         </div> -->
         <!-- Partner speciality -->
-        <div class="p-2">
+        <div v-if="university.universityPartnerSpeciality" class="p-2">
             <p class="mb-1 font-bold">Partner's Speciality :</p>
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs lowercase text-gray-700"  v-for="(universityPartnerName, index) in university.universityPartnerSpeciality" :key="index">
                     <tag :tags="universityPartnerName"/>
             </div>
         </div> 
         <!-- Exchange -->
-        <div class="p-2">
+        <div v-if="university.universityPartnerCondition" class="p-2">
             <p class="mb-1 font-bold">Requirements :</p>
             <p class="whitespace-pre-line">{{university.universityPartnerCondition}}</p>
+        </div>
+        <!-- Exchange -->
+        <div v-if="!university.universityPartnerSpeciality && !university.universityPartnerCondition" class="p-5 text-center font-semibold text-lg">
+            <p>Sorry, we don't have more information about this partner. </p>
+            <p>If you have any information please edit this partner to help us improve our database.</p>
         </div>
         <!-- universityPartnerWebsiteLink button -->
         <div class="container flex justify-center">
