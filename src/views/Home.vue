@@ -38,22 +38,22 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 lg:grid-cols-3">
+                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
                     <card v-for="university in this.universitysSend"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard"
                         @created="init">
                     </card>
-                    <div v-if="!show" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
-                        <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 md:py-10 xl:py-16 px-6">
-                            <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
-                            <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
-                            <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>
-                        </div>
-                    </div>
                 </div>
                 <pulse-loader v-if="!visible" class=" mt-10 m-auto"></pulse-loader>
+                <div v-if="!show" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
+                    <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
+                        <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
+                        <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
+                        <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>
+                    </div>
+                </div>
             </transition-group>
 
             <transition name="slide-fade">
@@ -79,7 +79,6 @@
     import db from '../main.js'
     import {name} from '../main.js'
     import Multiselect from '@vueform/multiselect'
-    import Notifications from "vt-notifications"
 
     export default {
         name: "Basic",
@@ -89,7 +88,6 @@
             Navbar,
             PulseLoader,
             Multiselect,
-            Notifications,
         },
 
         data () {
@@ -267,7 +265,7 @@
             booleanByCountry(consultList) {
                 var res = false
 
-                if(this.modelD != undefined && this.modelS != undefined) {
+                if(this.modelD != undefined && this.modelS != undefined && consultList) {
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry == this.modelD) {
                             el.universityPartnerSpeciality.forEach(el2=>{
@@ -279,7 +277,7 @@
                     })
                 }
 
-                if(this.modelD == undefined && this.modelS != undefined) {
+                if(this.modelD == undefined && this.modelS != undefined && consultList) {
                      consultList.forEach(el => {
                         el.universityPartnerSpeciality.forEach(el2 =>{
                             if(el2 === this.modelS) {
@@ -289,7 +287,7 @@
                     })
                 }
                 
-                if(this.modelD != undefined && this.modelS == undefined) {
+                if(this.modelD != undefined && this.modelS == undefined && consultList) {
                     consultList.forEach(el => {
                         if(el.universityPartnerCountry === this.modelD) {
                             res = true

@@ -105,14 +105,12 @@
     import { SmartTagz } from "smart-tagz";
     import "smart-tagz/dist/smart-tagz.css";
     import { defineComponent } from "vue";
-    import Multiselect from '@vueform/multiselect'
 
     export default defineComponent ({
         name: "Basic",
 
         components:{
             SmartTagz,
-            Multiselect
         },
 
         universityPartnerElement: 'universityPartnerElement',
@@ -163,7 +161,6 @@
 
 </script>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
 <style>
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s
