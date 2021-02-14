@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import firebase from 'firebase'
 import App from './App.vue'
 import router from './router'
+import LazyLoading from 'vue-lazy-loading'
 import './index.css'
 
 var firebaseConfig = {
@@ -32,7 +33,7 @@ firebase.auth().onAuthStateChanged((user) =>  {
     }
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(LazyLoading).mount('#app')
 
 export default db
 export {apps, name, grade, analytics}

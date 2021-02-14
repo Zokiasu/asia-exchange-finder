@@ -20,6 +20,7 @@
     "sass-loader": "^10.1.1",
     "smart-tagz": "^0.2.0",
     "vue": "^3.0.5",
+    "vue-lazy-loading": "^1.0.3",
     "vue-router": "^4.0.3",
     "vue-spinner": "^1.0.4",
     "xmlhttprequest": "^1.8.0"
