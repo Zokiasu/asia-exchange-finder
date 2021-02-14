@@ -618,10 +618,8 @@
             },
 
             addAllDataInInProcessBase(){
-                console.log("addAllDataInInProcessBase")
                 var testA = "";
                 var up = {};
-                console.log(this.editedForm.length)
                 if(this.editedForm.length <= 0){
                     up['/universitysEdited/'] = this.editedForm
                     return db.ref().update(up);

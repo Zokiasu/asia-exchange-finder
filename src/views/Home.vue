@@ -39,14 +39,14 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
-                    <card v-for="university in this.universitysSend"
+                    <card v-for="university in this.universitysSend.slice(0,maxElement)"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard"
                         @created="init">
                     </card>
                 </div>
-                <pulse-loader v-if="!visible" class=" mt-10 m-auto"></pulse-loader>
+                <pulse-loader v-if="maxElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
                 <div v-if="!show" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                     <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
                         <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
@@ -95,6 +95,7 @@
                 modelV:'',
                 modelD:'',
                 modelS:'',
+                maxElement: 9,
                 show: false,
                 visible: false,
                 userConnected: false,
@@ -191,7 +192,32 @@
             }
         },
 
+        mounted() {
+            this.scroll()
+        },
+
         methods: {
+
+            scroll(){
+                window.onscroll = () => {
+                    let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
+                    /*console.log("window.pageYOffset + window.innerHeight " + Math.round(window.pageYOffset+window.innerHeight))
+                    console.log("document.documentElement.scrollTop + window.innerHeight " + Math.round(document.documentElement.scrollTop+window.innerHeight))
+                    console.log("document.body.scrollTop + window.innerHeight " + Math.round(document.body.scrollTop+window.innerHeight))
+                    console.log("document.documentElement.offsetHeight " + Math.round(document.documentElement.offsetHeight))
+                    
+
+                    console.log("bottomOfWindow " + bottomOfWindow)
+                    console.log("maxElement " + this.maxElement)
+                    console.log("this.universitysSend.length " + this.universitysSend.length)
+                    console.log(this.universitysSend)*/
+                    if (bottomOfWindow) {
+                        //console.log("Bottom page")
+                        this.maxElement = this.maxElement + 9;
+                        bottomOfWindow = false;
+                    }
+                }
+            },
             
             init(){
                 var cityStart = [];
