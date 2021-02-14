@@ -1,7 +1,7 @@
 <template>
     <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
         <div class="mx-auto flex justify-center items-center w-full">
-            <div @submit.prevent="loginRequest" id="login-form" class="bg-white p-10 rounded-2xl">
+            <form @submit.prevent="loginRequest" id="login-form" class="bg-white p-10 rounded-2xl">
                 <div class="grid grid-cols-1 gap-6">
                     <div class="flex flex-wrap mb-2">
                         <div class="relative w-full appearance-none label-floating">
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
         </div>
         <div class="col-sm-12 text-center form-group mt-5">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import firebase from 'firebase'
     import {apps} from '../main.js'
 
     export default {
@@ -81,7 +82,7 @@
                 this.xhrRequest = true;
                 this.errorMessage = "";
                 this.successMessage = "";
-                apps.auth().setPersistence(apps.auth.Auth.Persistence.LOCAL).then(() => {
+                apps.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
                     return apps.auth().signInWithEmailAndPassword(this.email, this.password).then(
                             (authUser) => {
                                 this.$router.replace('/')

@@ -47,7 +47,7 @@
         </button>
       </div>
     </aside>
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 text-base text-white font-bold bg-red-500 rounded-full border border-white top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 text-base text-white font-bold bg-red-700 rounded-full border border-white top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 
