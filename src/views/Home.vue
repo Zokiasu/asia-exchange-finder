@@ -47,7 +47,7 @@
                     </card>
                 </div>
                 <pulse-loader v-if="maxElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
-                <div v-if="!show" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
+                <div v-if="!show && maxElement >= this.universitysSend.length" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                     <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
                         <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
                         <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
@@ -66,7 +66,9 @@
             <navbar ref="navbarComponent" :university="universityObject"></navbar>
 
         </div>
-
+        <back-to-top bottom="50px" right="50px">
+            <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to Top</button>
+        </back-to-top>
     </div>
 </template>
 
@@ -79,6 +81,7 @@
     import db from '../main.js'
     import {name} from '../main.js'
     import Multiselect from '@vueform/multiselect'
+    import BackToTop from 'vue-backtotop'
 
     export default {
         name: "Basic",
@@ -88,6 +91,7 @@
             Navbar,
             PulseLoader,
             Multiselect,
+            BackToTop,
         },
 
         data () {
