@@ -42,8 +42,7 @@
                     <card v-for="university in this.universitysSend.slice(0,maxElement)"
                         :key="university.universitySourceName"
                         :university="university"
-                        @onClick = "getuniqueUniversityNameCard"
-                        @created="init">
+                        @onClick = "getuniqueUniversityNameCard">
                     </card>
                 </div>
                 <pulse-loader v-if="maxElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
@@ -67,7 +66,7 @@
 
         </div>
         <back-to-top bottom="50px" right="50px">
-            <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to Top</button>
+            <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to top</button>
         </back-to-top>
     </div>
 </template>
@@ -193,6 +192,7 @@
 
             if(this.universitysSend.length > 0){
                 this.visible = !this.visible;
+                this.init();
             }
         },
 

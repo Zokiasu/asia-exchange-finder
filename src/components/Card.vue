@@ -16,10 +16,6 @@
 export default {
     name: 'university',
     props: ['university'],
-
-    created() {
-        this.$emit('created');
-    },
     
     methods: {
         openCard(nameUniversity) {
