@@ -12,7 +12,11 @@
                 <div class="text-sm text-gray-900">{{universityPartnerElement.universityPartnerCity}}</div>
                 <div class="text-sm text-gray-500">{{universityPartnerElement.universityPartnerCountry}}</div>
             </td>
-            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerDisplay}}</td>
+            <td class="px-4 py-2 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full text-gray-500">
+                <p v-if="universityPartnerElement.universityPartnerDisplay == 'True'" class="text-green-500 font-bold">Online</p><p v-if="universityPartnerElement.universityPartnerDisplay == 'False'" class="text-red-500 font-bold">In progress</p>
+                </span>
+            </td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerCreator}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">{{universityPartnerElement.universityPartnerLastUpdate}}</td>
             <td class="px-4 py-2 whitespace-nowrap text-center text-sm font-medium">
