@@ -30,6 +30,13 @@
                         </div>
                         <button v-if="yourCreationsFilter" @click="setCreateUniversity" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
                     </div>
+                    <Multiselect
+                        class="bg-white text-black"
+                        mode="single"
+                        :searchable="true"
+                        placeholder="Find a university"
+                        v-model="modelUniversityName"
+                        :options="listOfUniversityName"/>
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
                             <div class="align-middle inline-block w-full">
@@ -164,8 +171,9 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import db from '../main.js'
     import {apps, name, grade} from '../main.js'
-    import VPagination from "vue3-pagination";
-    import "vue3-pagination/dist/vue3-pagination.css";
+    import VPagination from "vue3-pagination"
+    import "vue3-pagination/dist/vue3-pagination.css"
+    import Multiselect from '@vueform/multiselect'
 
     export default {
 
@@ -174,7 +182,8 @@
             UETT,
             CUP,
             PulseLoader,
-            VPagination
+            VPagination,
+            Multiselect
         },
         
         data () {
@@ -188,6 +197,8 @@
                 userConnected: false,
                 createUniversityPopUp: false,
                 listOfSpeciality: [],
+                listOfUniversityName: [],
+                modelUniversityName:'',
                 message:{
                     message0: true,
                     message1: "Any modification must be validated by an administrator before appearing officially.",
@@ -293,8 +304,10 @@
             })
 
             var specialityPartener = [];
+            var listUniversityNameTmp = [];
 
             tmpForm.forEach(el => {
+                listUniversityNameTmp.push(el.universitySourceName)
                 if(el.universitySourcerPartner){
                     el.universitySourcerPartner.forEach(el2 => {
                         if(el2.universityPartnerSpeciality != undefined){
@@ -308,6 +321,7 @@
             })
 
             tmpEditedForm.forEach(el => {
+                listUniversityNameTmp.push(el.universitySourceName)
                 if(el.universitySourcerPartner){
                     el.universitySourcerPartner.forEach(el2 => {
                         if(el2.universityPartnerSpeciality != undefined) {
@@ -320,6 +334,8 @@
             })
 
             this.listOfSpeciality = [...new Set(specialityPartener)]
+            this.listOfUniversityName = [...new Set(listUniversityNameTmp)]
+            this.listOfUniversityName.splice(0,1)
             
             this.form = tmpForm
             this.editedForm = tmpEditedForm
@@ -338,6 +354,24 @@
                     },6000);
                 })
             }
+        },
+
+        watch: {
+            modelUniversityName: function(val){
+                var tmp = '';
+                tmp = this.listOfUniversityName[val]
+                if(tmp == null) {
+                    this.universitySend = this.form
+                    this.numberPage = Math.round(this.universitySend.length/9)
+                } else {
+                    this.universitySend = this.form.filter(
+                        (el) => {
+                            return (el.universitySourceName.toLowerCase() === tmp.toLowerCase())
+                        }
+                    )
+                    this.numberPage = 1
+                }
+            },
         },
         
         methods: {
@@ -367,6 +401,8 @@
             filterCreation: function(callFilter){
                 this.universitySend = [];
                 var tmpUniversitySend = [];
+                var listUniversityNameTmp = [];
+
                 if(callFilter == "General") {
                     tmpUniversitySend = this.form
                     this.yourCreationsFilter = false
@@ -380,14 +416,18 @@
                     })
 
                     this.editedForm.forEach((el)=>{
-                        el
                         if(el.universitySourceCreator == name){
                             tmpUniversitySend.push(el)
                         }
                     })
                 }
 
+                tmpUniversitySend.forEach(el => {
+                    listUniversityNameTmp.push(el.universitySourceName)
+                })
+
                 this.universitySend = [...new Set(tmpUniversitySend)]
+                this.listOfUniversityName = [...new Set(listUniversityNameTmp)]
                 this.numberPage = Math.round(this.universitySend.length/9)
             },
 

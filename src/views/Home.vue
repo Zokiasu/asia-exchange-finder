@@ -8,9 +8,11 @@
                     <Multiselect
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
+                        :clearOnSearch="false"
+                        :clearOnSelect="false"
                         :searchable="true"
-                        placeholder="From City"
-                        v-model="modelV"
+                        placeholder="From All Cities"
+                        v-model="CityFilter"
                         :options="option.cityStartOption"/>
                 </div>
                 <div class="pt-6 ms:pl-6">
@@ -18,8 +20,8 @@
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="To Destinations"
-                        v-model="modelD"
+                        placeholder="To All Destinations"
+                        v-model="DestinationFilter"
                         :options="option.countryOption"/>
                 </div>
                 <div class="pt-6 ms:pl-6">
@@ -27,8 +29,8 @@
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="All specialities"
-                        v-model="modelS"
+                        placeholder="For All Specialities"
+                        v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
                 </div>
             </div>
@@ -98,6 +100,9 @@
                 modelV:'',
                 modelD:'',
                 modelS:'',
+                CityFilter:'',
+                DestinationFilter:'',
+                SpecialityFilter:'',
                 maxElement: 9,
                 show: false,
                 visible: false,
@@ -271,9 +276,9 @@
             },
 
             searchByFilter() {
-                this.modelV = this.option.cityStartOption[this.modelV]
-                this.modelD = this.option.countryOption[this.modelD]
-                this.modelS = this.option.specialityOption[this.modelS]
+                this.modelV = this.option.cityStartOption[this.CityFilter]
+                this.modelD = this.option.countryOption[this.DestinationFilter]
+                this.modelS = this.option.specialityOption[this.SpecialityFilter]
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {
@@ -309,11 +314,13 @@
 
                 if(this.modelD == undefined && this.modelS != undefined && consultList) {
                      consultList.forEach(el => {
-                        el.universityPartnerSpeciality.forEach(el2 =>{
-                            if(el2 === this.modelS) {
-                                res = true
+                        if(el.universityPartnerSpeciality != undefined) {
+                            for (let index = 0; index < el.universityPartnerSpeciality.length; index++) {
+                                if(el.universityPartnerSpeciality[index] === this.modelS) {
+                                    res = true
+                                }
                             }
-                        })
+                        }
                     })
                 }
                 
