@@ -29,7 +29,7 @@
             <p class="whitespace-pre-line">{{university.universityPartnerCondition}}</p>
         </div>
         <!-- Exchange -->
-        <div v-if="!university.universityPartnerSpeciality && !university.universityPartnerCondition" class="p-5 text-center font-semibold text-lg">
+        <div v-if="!university.universityPartnerSpeciality || !university.universityPartnerCondition" class="p-5 text-center font-semibold text-lg">
             <p>Sorry, we don't have more information about this partner. </p>
             <p>If you have any information please edit this partner to help us improve our database.</p>
         </div>

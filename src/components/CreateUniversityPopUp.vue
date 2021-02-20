@@ -86,7 +86,7 @@
                                         <button @click="callAddPartner()" class="text-white bg-blue-500 rounded-xl px-5 py-1 mt-5 mr-2">Add Partner</button>
                                     </div>
                                     <div>
-                                        <button @click="close" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Annuler</button>
+                                        <button @click="close" class="text-white bg-red-500 rounded-xl px-5 py-1 mt-5 mr-2">Cancel</button>
                                     </div>
                                     <div>
                                         <button type="button" @click="callNewUniversity()" class="text-white bg-green-500 rounded-xl px-5 py-1 mt-5 mr-2">Send University</button>
