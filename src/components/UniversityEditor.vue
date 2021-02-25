@@ -165,15 +165,17 @@
 </template>
 
 <script>
-    import UET from './UniversityEditorTbody.vue'
-    import UETT from './UniversityEditorTbodyTmp.vue'
-    import CUP from './CreateUniversityPopUp.vue'
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import db from '../main.js'
     import {apps, name, grade} from '../main.js'
+    
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import VPagination from "vue3-pagination"
     import "vue3-pagination/dist/vue3-pagination.css"
     import Multiselect from '@vueform/multiselect'
+
+    import UET from './UniversityEditorTbody.vue'
+    import UETT from './UniversityEditorTbodyTmp.vue'
+    import CUP from './UniversityEditorComponent/CreateUniversityPopUp.vue'
 
     export default {
 
@@ -540,22 +542,41 @@
             //User function
 
             addPartnerByUser(index) {
-                //added a new partner in university into user list
-                this.universitySend[index].universitySourcerPartner.push(
-                    {
-                        "universityPartnerName": "University Partner",
-                        "universitySourceId": "",
-                        "universityPartnerCountry": "",
-                        "universityPartnerCity": "",
-                        "universityPartnerAddress": "",
-                        "universityPartnerWebsiteLink": "",
-                        "universityPartnerCondition": "",
-                        "universityPartnerDisplay": "True",
-                        "universityPartnerCreator": name,
-                        "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                        "universityPartnerSpeciality": [],
-                    }
-                )
+                //added a new partner in university into user list                
+                if(!this.universitySend[index].universitySourcerPartner) {
+                    this.universitySend[index].universitySourcerPartner = 
+                        [
+                            {
+                                "universityPartnerName": "University Partner",
+                                "universitySourceId": "",
+                                "universityPartnerCountry": "",
+                                "universityPartnerCity": "",
+                                "universityPartnerAddress": "",
+                                "universityPartnerWebsiteLink": "",
+                                "universityPartnerCondition": "",
+                                "universityPartnerDisplay": "True",
+                                "universityPartnerCreator": name,
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                                "universityPartnerSpeciality": [],
+                            }
+                        ]
+                } else {
+                    this.universitySend[index].universitySourcerPartner.push(
+                        {
+                            "universityPartnerName": "University Partner",
+                            "universitySourceId": "",
+                            "universityPartnerCountry": "",
+                            "universityPartnerCity": "",
+                            "universityPartnerAddress": "",
+                            "universityPartnerWebsiteLink": "",
+                            "universityPartnerCondition": "",
+                            "universityPartnerDisplay": "True",
+                            "universityPartnerCreator": name,
+                            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                            "universityPartnerSpeciality": [],
+                        }
+                    )
+                }
                 //Check actual filter used
                 if(this.yourCreationsFilter) {
                     //Update 'Your Creation' page
@@ -785,6 +806,7 @@
                 return db.ref().update(up);
             },
         },
+        
     }
 </script>
 

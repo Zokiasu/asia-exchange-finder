@@ -31,14 +31,14 @@
                             <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">City</label>
                         </div>
                     </div>
-                    <div class="flex flex-wrap col-start-1 col-span-3">
+                    <div class="flex flex-wrap col-span-4">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="universitySourceImageLink" v-model="university[0].universitySourceImageLink" type="url" placeholder="Photo link of the university">
                             <label for="universitySourceImageLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Photo link of the university</label>
                         </div>
                     </div>
-                    <div class="flex flex-wrap col-end-7 col-span-3">
+                    <div class="flex flex-wrap col-span-2">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="universitySourceWebsiteLink" v-model="university[0].universitySourceWebsiteLink" type="url" placeholder="Website Link">
@@ -99,12 +99,19 @@
             </div>
         </div>
     </div>
+    <CPP 
+        @created="setCreateUniversity" 
+        @addNewUniversity="addNewUniversityInProcess"
+        :listOfSpeciality="listOfSpeciality"
+        v-if="createUniversityPopUp" 
+        class="mx-auto flex flex-col">
+    </CPP>
 </template>
 
 <script>
-    import UEPT from './UniversityEditorPartnerTbody.vue'
-    import db from '../main.js'
-    import {apps, name} from '../main.js'
+    import UEPT from '../UniversityEditorPartnerTbody.vue'
+    import db from '../../main.js'
+    import {apps, name} from '../../main.js'
 
     export default {
 
@@ -122,30 +129,16 @@
                 "university": [ 
                     {
                         "universitySourceId": "",
-                        "universitySourceName": "University Name",
-                        "universitySourceCountry": "France",
-                        "universitySourceCity": "Paris",
+                        "universitySourceName": "",
+                        "universitySourceCountry": "",
+                        "universitySourceCity": "",
                         "universitySourceAddress": "",
-                        "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
+                        "universitySourceImageLink": "",
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
-                        "universitySourcerPartner": [
-                            {
-                                "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
-                                "universityPartnerCountry": "",
-                                "universityPartnerCity": "",
-                                "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "",
-                                "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "True",
-                                "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [],
-                            }
-                        ], 
+                        "universitySourcerPartner": [], 
                     }
                 ],
             }
@@ -169,21 +162,41 @@
             },
 
             callAddPartner(){
-                this.university[0].universitySourcerPartner.push(
-                    {
-                        "universityPartnerName": "University Partner",
-                        "universitySourceId": "",
-                        "universityPartnerCountry": "",
-                        "universityPartnerCity": "",
-                        "universityPartnerAddress": "",
-                        "universityPartnerWebsiteLink": "",
-                        "universityPartnerCondition": "",
-                        "universityPartnerDisplay": "True",
-                        "universityPartnerCreator": name,
-                        "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                        "universityPartnerSpeciality": [],
-                    }
-                )
+                if(!this.university[0].universitySourcerPartner) {
+                    this.university[0].universitySourcerPartner = 
+                        [
+                            {
+                                "universityPartnerName": "University Partner",
+                                "universitySourceId": "",
+                                "universityPartnerCountry": "",
+                                "universityPartnerCity": "",
+                                "universityPartnerAddress": "",
+                                "universityPartnerWebsiteLink": "",
+                                "universityPartnerCondition": "",
+                                "universityPartnerDisplay": "True",
+                                "universityPartnerCreator": name,
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                                "universityPartnerSpeciality": [],
+                            }
+                        ]
+                } else {
+                    this.university[0].universitySourcerPartner.push(
+                        {
+                            "universityPartnerName": "University Partner",
+                            "universitySourceId": "",
+                            "universityPartnerCountry": "",
+                            "universityPartnerCity": "",
+                            "universityPartnerAddress": "",
+                            "universityPartnerWebsiteLink": "",
+                            "universityPartnerCondition": "",
+                            "universityPartnerDisplay": "True",
+                            "universityPartnerCreator": name,
+                            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                            "universityPartnerSpeciality": [],
+                        }
+                    )
+                }
+
             },
 
             callNewUniversity(){

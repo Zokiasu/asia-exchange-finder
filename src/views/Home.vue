@@ -2,7 +2,7 @@
     <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full h-full">
 
         <div class="grid grid-cols-1 w-full">
-            <!-- Filter -->
+            <!-- Filter City/Destination/Speciality -->
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="pt-6 ms:pl-6">
                     <Multiselect
@@ -57,6 +57,7 @@
                 </div>
             </transition-group>
 
+            <!-- Error Search -->
             <transition name="slide-fade">
                 <div v-if="show" class="container mb-10 justify-center bg-gray-500 w-full bg-opacity-75 p-10">
                     <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
@@ -64,9 +65,11 @@
                 </div>
             </transition>
 
+            <!-- Component University Card -->
             <navbar ref="navbarComponent" :university="universityObject"></navbar>
 
         </div>
+
         <back-to-top bottom="50px" right="50px">
             <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to top</button>
         </back-to-top>
@@ -194,6 +197,12 @@
                     }
                 }
             }
+            
+            this.universitysSend.sort(function(a,b){
+                if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return -1;}
+                if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return 1;}
+                return 0;
+            })
 
             if(this.universitysSend.length > 0){
                 this.visible = !this.visible;

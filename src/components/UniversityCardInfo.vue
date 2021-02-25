@@ -1,10 +1,10 @@
 <template>
 
-    <div class="mb-6 m-3 pb-2 bg-gray-500 bg-opacity-20 rounded shadow-lg">
+    <div class="mb-6 m-3 pb-2 bg-gray-200 rounded shadow-lg">
         <!-- Université + Ville + Pays-->
-        <div class="relative w-full bg-blue-500 rounded-sm pb-1">
-            <p class="px-2 font-bold text-2xl text-white">{{university.universityPartnerName}}</p>
-            <p class="font-bold text-2xl text-white pl-2 md:pl-0 md:absolute md:top-0 md:right-2">{{university.universityPartnerCity}}, {{university.universityPartnerCountry}}</p>
+        <div class="relative w-full bg-blue-500 rounded-sm pb-1 text-2xl xl:text-xl 2xl:text-2xl">
+            <p class="px-2 font-bold text-white">{{university.universityPartnerName}}</p>
+            <p class="font-bold text-white pl-2 xl:pl-0 xl:absolute xl:top-0 xl:right-2">{{university.universityPartnerCity}}, {{university.universityPartnerCountry}}</p>
         </div>
         <!-- University program
         <div class="p-2">
