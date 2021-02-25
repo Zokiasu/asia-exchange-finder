@@ -61,7 +61,7 @@
 
         <!-- Header -->
         <div class="relative">
-          <img class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
+          <img class="relative h-60 w-full object-cover object-center border-white border shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
           <div class="absolute top-48 w-full justify-center flex">
               <a :href="university.universitySourceWebsiteLink" target="_blank">
                   <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Partner -->
-        <div class="col-span-4 ml-5 bg-white bg-opacity-90">
+        <div class="col-span-4 ml-5 bg-gray-200 bg-opacity-70">
           <!-- Filters -->
           <div class="px-4 py-2 w-full place-items-center">
             <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
@@ -104,7 +104,7 @@
       </div>
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-800 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 

@@ -32,12 +32,12 @@
           <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
         </div>
         <!-- University Card -->
-        <UniversityCardInfo 
+        <UniversityCardInfoEditor 
             class="xl:mx-40 dark:text-white"
             v-for="university in this.partner"
             :key="university.universityPartnerName"
             :university="university">
-        </UniversityCardInfo>
+        </UniversityCardInfoEditor>
       </div>
       <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
           <p>Sorry, we don't have informations about this university's partners yet.</p>
@@ -54,11 +54,9 @@
 
     <!-- Computer Screen -->
     <aside v-else-if="width > 1280" style="background-repeat: no-repeat; background-attachment: fixed; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" 
-    v-bind:style="{ backgroundImage: 'url(' + university.universitySourceImageLink + ')' }" 
-    class="p-10 transform top-0 left-0 w-full bg-gray-200 fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
+    v-bind:style="{ backgroundImage: 'url(' + university.universitySourceImageLink + ')' }" class="p-10 transform top-0 left-0 w-full bg-gray-200 fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
       
       <div class="grid grid-cols-5">
-
         <!-- Header -->
         <div class="relative">
           <img class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
@@ -74,7 +72,6 @@
           <div class="bg-white my-5 h-72"></div>
           <div class="bg-white my-5 h-72"></div>
         </div>
-
         <!-- Partner -->
         <div class="col-span-4 ml-5 bg-white bg-opacity-90">
           <!-- Filters -->
@@ -82,18 +79,17 @@
             <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
           </div>
           <!-- University Card -->
-          <UniversityCardInfo 
+          <UniversityCardInfoEditor 
               class="xl:mx-10 dark:text-white"
               v-for="university in this.partner"
               :key="university.universityPartnerName"
               :university="university">
-          </UniversityCardInfo>
+          </UniversityCardInfoEditor>
           <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
               <p>Sorry, we don't have informations about this university's partners yet.</p>
               <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
           </div>
         </div>
-
       </div>
       
       <!-- Leave -->
@@ -104,18 +100,19 @@
       </div>
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-800 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 
 <script>
   import {analytics} from '../main.js'
-  import UniversityCardInfo from './UniversityCardInfo.vue'
+
+  import UniversityCardInfoEditor from './UniversityCardInfoEditor.vue'
   import Tag from './Tag.vue'
 
   export default {
     components:{
-        UniversityCardInfo,
+        UniversityCardInfoEditor,
         Tag,
     },
 
@@ -137,6 +134,7 @@
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
+    
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
     },

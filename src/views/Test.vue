@@ -41,20 +41,22 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
-                    <card v-for="university in this.universitysSend.slice(0,minElement)"
+                    <button class="bg-white opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
+                        <img class="w-full object-cover object-center" v-lazy="imgTmp" alt="">
+                        <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
+                        <p class="absolute w-full bg-white bg-opacity-80 p-5 bottom-0 block text-black font-semibold text-lg">
+                            Add New University
+                        </p>
+                    </button>
+                    <card 
+                        class="Card"
+                        v-for="university in this.universitysSend.slice(0,minElement)"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard">
                     </card>
                 </div>
                 <pulse-loader v-if="minElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
-                <div v-if="!show && minElement >= this.universitysSend.length" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
-                    <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
-                        <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
-                        <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
-                        <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>
-                    </div>
-                </div>
             </transition-group>
 
             <!-- Error Search -->
@@ -78,10 +80,10 @@
 
 <script>
     import db from '../main.js'
-    import {name} from '../main.js'
+    import {apps, name, grade} from '../main.js'
+    import imgs from '../assets/plus-symbol.png'
 
     import $ from 'jQuery'
-    import firebase from 'firebase'
     import Multiselect from '@vueform/multiselect'
     import BackToTop from 'vue-backtotop'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
@@ -102,6 +104,9 @@
 
         data () {
             return {
+                imgTmp: 'https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80',
+                imgTmp2: imgs,
+
                 modelV:'',
                 modelD:'',
                 modelS:'',
@@ -187,14 +192,16 @@
             this.universitysSend = testuni
             this.universitysSend.splice(0,1)
 
-            for (let index = this.universitysSend.length-1; index >= 0; index--) {
-                if(this.universitysSend[index].universitySourceCreator !== name){
-                    this.universitysSend.splice(index, 1)
-                } else {
-                    if(this.universitysSend[index].universitySourcerPartner){
-                        for (let index2 = this.universitysSend[index].universitySourcerPartner.length-1; index2 >= 0 ; index2--) {
-                            if(this.universitysSend[index].universitySourcerPartner[index2].universityPartnerCreator !== name) {
-                                this.universitysSend[index].universitySourcerPartner.splice(index2, 1)
+            if(grade != "Admin") {
+                for (let index = this.universitysSend.length-1; index >= 0; index--) {
+                    if(this.universitysSend[index].universitySourceCreator !== name){
+                        this.universitysSend.splice(index, 1)
+                    } else {
+                        if(this.universitysSend[index].universitySourcerPartner){
+                            for (let index2 = this.universitysSend[index].universitySourcerPartner.length-1; index2 >= 0 ; index2--) {
+                                if(this.universitysSend[index].universitySourcerPartner[index2].universityPartnerCreator !== name) {
+                                    this.universitysSend[index].universitySourcerPartner.splice(index2, 1)
+                                }
                             }
                         }
                     }
@@ -258,8 +265,11 @@
                 })
 
                 this.option.countryOption = [...new Set(countryPartener)]
+                this.option.countryOption.sort()
                 this.option.specialityOption = [...new Set(specialityPartener)]
+                this.option.specialityOption.sort()
                 this.option.cityStartOption = [...new Set(cityStart)]
+                this.option.cityStartOption.sort()
             },
 
             getuniqueUniversityNameCard (val) {

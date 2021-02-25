@@ -41,7 +41,8 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
-                    <card v-for="university in this.universitysSend.slice(0,maxElement)"
+                    <card class="Card"
+                        v-for="university in this.universitysSend.slice(0,maxElement)"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard">
@@ -259,8 +260,11 @@
                 })
 
                 this.option.countryOption = [...new Set(countryPartener)]
+                this.option.countryOption.sort()
                 this.option.specialityOption = [...new Set(specialityPartener)]
+                this.option.specialityOption.sort()
                 this.option.cityStartOption = [...new Set(cityStart)]
+                this.option.cityStartOption.sort()
             },
 
             getuniqueUniversityNameCard (val) {
