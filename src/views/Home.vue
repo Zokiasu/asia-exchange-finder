@@ -40,7 +40,7 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
+                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     <card class="Card"
                         v-for="university in this.universitysSend.slice(0,maxElement)"
                         :key="university.universitySourceName"
@@ -68,11 +68,11 @@
 
             <!-- Component University Card -->
             <navbar ref="navbarComponent" :university="universityObject"></navbar>
-
+    
         </div>
 
         <back-to-top bottom="50px" right="50px">
-            <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to top</button>
+            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 4xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
 </template>
