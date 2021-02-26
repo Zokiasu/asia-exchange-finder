@@ -62,13 +62,13 @@
           <img class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
           <div class="absolute top-48 w-full justify-center flex">
               <a :href="university.universitySourceWebsiteLink" target="_blank">
-                  <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
-                      rounded-full shadow ripple waves-light focus:outline-none hover:bg-gray-700">
+                  <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-sm 4xl:text-xl font-medium leading-8 text-center text-white transition bg-black 
+                      rounded-full shadow focus:outline-none hover:bg-gray-700">
                       Website
                   </button>
               </a>
           </div>
-          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-3xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
+          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-3xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
           <div class="bg-white my-5 h-72"></div>
           <div class="bg-white my-5 h-72"></div>
         </div>
@@ -85,22 +85,15 @@
               :key="university.universityPartnerName"
               :university="university">
           </UniversityCardInfoEditor>
-          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
+          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have informations about this university's partners yet.</p>
               <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
           </div>
         </div>
       </div>
-      
-      <!-- Leave -->
-      <div class="container my-5 flex justify-center">
-        <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
-          Back to site
-        </button>
-      </div>
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm text-sm 4xl:text-xl text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 

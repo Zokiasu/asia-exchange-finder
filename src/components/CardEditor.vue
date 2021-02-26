@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="bg-transparent rounded-lg overflow-hidden shadow-2xl relative h-full">
-            <div class="absolute space-x-1.5 right-2 flex">
+            <div class="absolute space-x-1.5 right-2 flex text-sm 4xl:text-base">
                 <button @click="test()" class="Button bg-red-500 rounded-3xl my-2 px-2 right-28 block">Delete</button>
                 <button @click="test()" class="Button bg-green-700 rounded-3xl my-2 px-2 right-52 block">Edit</button>
                 <button @click="openCard(university.universitySourceName)" class="Button bg-blue-500 rounded-3xl my-2 px-2 right-0 block shadow-2xl">More Info</button>

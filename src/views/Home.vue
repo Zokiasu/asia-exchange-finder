@@ -42,14 +42,14 @@
             <transition-group name="slide-fade">
                 <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     <card class="Card"
-                        v-for="university in this.universitysSend.slice(0,maxElement)"
+                        v-for="university in this.universitysSend.slice(0,minElement)"
                         :key="university.universitySourceName"
                         :university="university"
                         @onClick = "getuniqueUniversityNameCard">
                     </card>
                 </div>
-                <pulse-loader v-if="maxElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
-                <div v-if="!show && maxElement >= this.universitysSend.length" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
+                <pulse-loader v-if="minElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
+                <div v-if="!show && minElement >= this.universitysSend.length && visible" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                     <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
                         <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
                         <p v-if="userConnected" class="text-center">Send us your informations with your dashboard!</p>
@@ -68,11 +68,11 @@
 
             <!-- Component University Card -->
             <navbar ref="navbarComponent" :university="universityObject"></navbar>
-    
+
         </div>
 
         <back-to-top bottom="50px" right="50px">
-            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 4xl:text-xl">Back to top</button>
+            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 2xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
 </template>
@@ -107,7 +107,7 @@
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
-                maxElement: 9,
+                minElement: 12,
                 show: false,
                 visible: false,
                 userConnected: false,
@@ -227,12 +227,12 @@
                     
 
                     console.log("bottomOfWindow " + bottomOfWindow)
-                    console.log("maxElement " + this.maxElement)
+                    console.log("minElement " + this.minElement)
                     console.log("this.universitysSend.length " + this.universitysSend.length)
                     console.log(this.universitysSend)*/
                     if (bottomOfWindow) {
                         //console.log("Bottom page")
-                        this.maxElement = this.maxElement + 9;
+                        this.minElement = this.minElement + 9;
                         bottomOfWindow = false;
                     }
                 }

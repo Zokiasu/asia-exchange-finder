@@ -40,7 +40,7 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3">
+                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     <button class="bg-white opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
                         <img class="w-full object-cover object-center" v-lazy="imgTmp" alt="">
                         <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
@@ -73,7 +73,7 @@
         </div>
 
         <back-to-top bottom="50px" right="50px">
-            <button type="button" class="py-1 px-2.5 rounded-xl bg-green-500 text-white">Back to top</button>
+            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 2xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
 </template>
@@ -114,7 +114,7 @@
                 DestinationFilter:'',
                 SpecialityFilter:'',
 
-                minElement: 9,
+                minElement: 11,
 
                 show: false,
                 visible: false,
@@ -224,17 +224,8 @@
 
             scroll(){
                 window.onscroll = () => {
-                    let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
-                    /*console.log("window.pageYOffset + window.innerHeight " + Math.round(window.pageYOffset+window.innerHeight))
-                    console.log("document.documentElement.scrollTop + window.innerHeight " + Math.round(document.documentElement.scrollTop+window.innerHeight))
-                    console.log("document.body.scrollTop + window.innerHeight " + Math.round(document.body.scrollTop+window.innerHeight))
-                    console.log("document.documentElement.offsetHeight " + Math.round(document.documentElement.offsetHeight))
-                    
-
-                    console.log("bottomOfWindow " + bottomOfWindow)
-                    console.log("minElement " + this.minElement)
-                    console.log("this.universitysSend.length " + this.universitysSend.length)
-                    console.log(this.universitysSend)*/
+                    let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) 
+                                        || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
                     if (bottomOfWindow) {
                         //console.log("Bottom page")
                         this.minElement = this.minElement + 9;

@@ -58,7 +58,6 @@
     class="p-10 transform top-0 left-0 w-full bg-gray-200 fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
       
       <div class="grid grid-cols-5">
-
         <!-- Header -->
         <div class="relative">
           <img class="relative h-60 w-full object-cover object-center border-white border shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
@@ -93,14 +92,6 @@
               <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
           </div>
         </div>
-
-      </div>
-      
-      <!-- Leave -->
-      <div class="container my-5 flex justify-center">
-        <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
-          Back to site
-        </button>
       </div>
     </aside>
 
