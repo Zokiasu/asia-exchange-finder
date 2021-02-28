@@ -34,21 +34,15 @@
         <!-- University Card -->
         <UniversityCardInfoEditor 
             class="xl:mx-40 dark:text-white"
-            v-for="university in this.partner"
-            :key="university.universityPartnerName"
-            :university="university">
+            v-for="universityP in this.partner"
+            :key="universityP.universityPartnerName"
+            :university="universityP"
+            :display="university.universitySourceDisplay">
         </UniversityCardInfoEditor>
       </div>
       <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
           <p>Sorry, we don't have informations about this university's partners yet.</p>
           <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
-      </div>
-      
-      <!-- Leave -->
-      <div class="container mb-5 flex justify-center">
-        <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
-          Back to site
-        </button>
       </div>
     </aside>
 
@@ -68,58 +62,99 @@
                   </button>
               </a>
           </div>
-          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-3xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
+          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
           <div class="bg-white my-5 h-72"></div>
           <div class="bg-white my-5 h-72"></div>
         </div>
         <!-- Partner -->
         <div class="col-span-4 ml-5 bg-white bg-opacity-90">
-          <!-- Filters -->
-          <div class="px-4 py-2 w-full place-items-center">
-            <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+          <div class="flex justify-between">
+            <!-- Filters -->
+            <div class="px-4 py-2 place-items-center">
+              <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+            </div>
+            <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">         
+                <div class="space-x-1 bottom-0.5 right-3">
+                    <button @click="setCreatePartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
+                        rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
+                        Add New Partner
+                    </button>
+                </div>
+            </div>
           </div>
           <!-- University Card -->
           <UniversityCardInfoEditor 
               class="xl:mx-10 dark:text-white"
-              v-for="university in this.partner"
-              :key="university.universityPartnerName"
-              :university="university">
+              v-for="universityP in this.partner"
+              :key="universityP.universityPartnerName"
+              :university="universityP"
+              :display="university.universitySourceDisplay"
+              @editPartner="function(a){editPartenaire(a)}"
+              @deletePartner="function(a){removePartenaire(a)}">
           </UniversityCardInfoEditor>
           <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have informations about this university's partners yet.</p>
               <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
           </div>
         </div>
+        <AddUPartnerPopup
+            @close="setCreatePartner" 
+            @addNewPartnerToUniversity="addNewPartnerToUniversity"
+            :universitysPartner="universitysPartner"
+            :listOfSpeciality="listOfSpeciality"
+            v-if="addUniversityPartnerPopUp" 
+            class="mx-auto flex flex-col mt-auto">
+        </AddUPartnerPopup>
       </div>
+
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm text-sm 4xl:text-xl text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm text-xs text-white font-semibold bottom-0 right-1/3 ms:right-1/2 fixed" style="padding-top: 4px !important;">Back to site</button>
+
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm ms:text-md 4xl:text-2xl text-white font-semibold top-5 right-5 fixed align-bottom" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 
 <script>
-  import {analytics} from '../main.js'
+  import db from '../main.js'
+  import {apps, name, grade, analytics} from '../main.js'
 
   import UniversityCardInfoEditor from './UniversityCardInfoEditor.vue'
+  import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
   import Tag from './Tag.vue'
 
   export default {
     components:{
         UniversityCardInfoEditor,
         Tag,
+        AddUPartnerPopup,
     },
 
-    name: 'university',
     props: ['university'],
 
     data() {
       return {
         isOpen: false,
         hello: false,
+        addUniversityPartnerPopUp: false,
         partner: [],
         width: 0,
         countryPartner:[''],
         actualFilter: 'All',
+
+        universitysPartner: {
+            "universityPartnerName": "",
+            "universitySourceId": "",
+            "universityPartnerCountry": "",
+            "universityPartnerCity": "",
+            "universityPartnerAddress": "",
+            "universityPartnerWebsiteLink": "",
+            "universityPartnerCondition": "",
+            "universityPartnerDisplay": "True",
+            "universityPartnerCreator": name,
+            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+            "universityPartnerSpeciality": [],
+        },
       }
     },
 
@@ -127,12 +162,103 @@
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
+
+    mounted() {
+      document.addEventListener("keydown", e => {
+        if (e.keyCode == 27 && this.isOpen) this.isOpen = false;
+      });
+    },
     
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
     },
 
+    watch: {
+      isOpen: {
+        immediate: true,
+        handler(isOpen) {
+          if (process.client) {
+            if (isOpen) document.body.style.setProperty("overflow", "hidden");
+            else document.body.style.removeProperty("overflow");
+          }
+          this.initPartner()
+        }
+      }
+    },
+
     methods: {
+
+      resetPartnerInfo(){
+        this.universitysPartner.universityPartnerName = ""
+        this.universitysPartner.universitySourceId = ""
+        this.universitysPartner.universityPartnerCountry = ""
+        this.universitysPartner.universityPartnerCity = ""
+        this.universitysPartner.universityPartnerAddress = ""
+        this.universitysPartner.universityPartnerWebsiteLink = ""
+        this.universitysPartner.universityPartnerCondition = ""
+        this.universitysPartner.universityPartnerDisplay = "True"
+        this.universitysPartner.universityPartnerCreator = name
+        this.universitysPartner.universityPartnerLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+        this.universitysPartner.universityPartnerSpeciality = []
+      },
+
+      addNewPartnerToUniversity(){
+
+        var universityEdited = {
+            "universitySourceId": "",
+            "universitySourceName": "University Name",
+            "universitySourceCountry": "France",
+            "universitySourceCity": "Paris",
+            "universitySourceAddress": "",
+            "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
+            "universitySourceWebsiteLink": "",
+            "universitySourceDisplay": "False",
+            "universitySourceCreator": name,
+            "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
+            "universitySourcerPartner": [], 
+        }
+
+        universityEdited = JSON.parse(JSON.stringify(this.university))
+        
+        if(universityEdited.universitySourcerPartner == undefined) {
+          universityEdited.universitySourcerPartner = [{
+            "universityPartnerName": this.universitysPartner.universityPartnerName,
+            "universitySourceId":  this.universitysPartner.universitySourceId,
+            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
+            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
+            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
+            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
+            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
+            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
+            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
+            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
+
+          }]
+        } else {
+          universityEdited.universitySourcerPartner.push(this.universitysPartner)
+        }
+        this.updateUniversity(universityEdited)
+        this.drawer()
+      },
+
+      updateUniversity(universityEdited){
+        this.$emit('updateUniv', universityEdited)
+      },
+
+      editPartenaire(universityPartnerS){
+        this.$emit('editPartner', universityPartnerS)
+      },
+
+      removePartenaire(universityPartnerS){
+        this.$emit('removePartner', universityPartnerS)
+        this.drawer()
+      },
+
+      setCreatePartner: function() {
+          this.addUniversityPartnerPopUp = !this.addUniversityPartnerPopUp
+      },
+
       handleResize() {
           this.width = window.innerWidth;
       },
@@ -143,9 +269,10 @@
       },
 
       drawer() {
+        if(!this.isOpen) {this.resetPartnerInfo()}
         this.isOpen = !this.isOpen;
         this.partner = [];
-        this.countryPartner = [];
+        this.countryPartner = [];        
       },
 
       initPartner(){
@@ -155,6 +282,11 @@
           this.partner = this.university.universitySourcerPartner
           this.partner.forEach(el2 => {
               country.push(el2.universityPartnerCountry)                    
+          })
+          this.partner.sort(function(a,b){
+              if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1;}
+              if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1;}
+              return 0;
           })
           this.countryPartner = [...new Set(country)]
         }
@@ -173,24 +305,5 @@
         )
       },
     },
-
-    watch: {
-      isOpen: {
-        immediate: true,
-        handler(isOpen) {
-          if (process.client) {
-            if (isOpen) document.body.style.setProperty("overflow", "hidden");
-            else document.body.style.removeProperty("overflow");
-          }
-          this.initPartner()
-        }
-      }
-    },
-
-    mounted() {
-      document.addEventListener("keydown", e => {
-        if (e.keyCode == 27 && this.isOpen) this.isOpen = false;
-      });
-    }
   };
 </script>

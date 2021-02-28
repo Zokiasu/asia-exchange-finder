@@ -67,7 +67,7 @@
             </transition>
 
             <!-- Component University Card -->
-            <navbar ref="navbarComponent" :university="universityObject"></navbar>
+            <navbar class="z-40" ref="navbarComponent" :university="universityObject"></navbar>
 
         </div>
 

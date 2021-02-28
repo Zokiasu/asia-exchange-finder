@@ -43,42 +43,33 @@
           <p>Sorry, we don't have informations about this university's partners yet.</p>
           <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
       </div>
-      
-      <!-- Leave -->
-      <div class="container mb-5 flex justify-center">
-        <button aria-label="Close Menu" @click="drawer" class="text-white text-base border-white bg-red-500 font-bold rounded-full border bottom-0 left-0 align-bottom px-3 py-1" style="padding-top: 4px !important;">
-          Back to site
-        </button>
-      </div>
     </aside>
 
     <!-- Computer Screen -->
     <aside v-else-if="width > 1280" style="background-repeat: no-repeat; background-attachment: fixed; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;" 
-    v-bind:style="{ backgroundImage: 'url(' + university.universitySourceImageLink + ')' }" 
-    class="p-10 transform top-0 left-0 w-full bg-gray-200 fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
+    v-bind:style="{ backgroundImage: 'url(' + university.universitySourceImageLink + ')' }" class="p-10 transform top-0 left-0 w-full bg-gray-200 fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
       
       <div class="grid grid-cols-5">
         <!-- Header -->
         <div class="relative">
-          <img class="relative h-60 w-full object-cover object-center border-white border shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
+          <img class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
           <div class="absolute top-48 w-full justify-center flex">
               <a :href="university.universitySourceWebsiteLink" target="_blank">
-                  <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
-                      rounded-full shadow ripple waves-light focus:outline-none hover:bg-gray-700">
+                  <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-sm 4xl:text-xl font-medium leading-8 text-center text-white transition bg-black 
+                      rounded-full shadow focus:outline-none hover:bg-gray-700">
                       Website
                   </button>
               </a>
           </div>
-          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-3xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
+          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
           <div class="bg-white my-5 h-72"></div>
           <div class="bg-white my-5 h-72"></div>
         </div>
-
         <!-- Partner -->
-        <div class="col-span-4 ml-5 bg-gray-200 bg-opacity-70">
+        <div class="col-span-4 ml-5 bg-white bg-opacity-90">
           <!-- Filters -->
           <div class="px-4 py-2 w-full place-items-center">
-            <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+            <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
           </div>
           <!-- University Card -->
           <UniversityCardInfo 
@@ -87,7 +78,7 @@
               :key="university.universityPartnerName"
               :university="university">
           </UniversityCardInfo>
-          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
+          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have informations about this university's partners yet.</p>
               <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
           </div>
@@ -95,7 +86,9 @@
       </div>
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 rounded-sm ms:text-md text-white font-semibold top-5 right-5 fixed align-bottom px-3 py-1" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm text-xs text-white font-semibold bottom-0 right-1/3 ms:right-1/2 fixed" style="padding-top: 4px !important;">Back to site</button>
+
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm ms:text-md 4xl:text-2xl text-white font-semibold top-5 right-5 fixed align-bottom" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 

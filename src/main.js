@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import App from './App.vue'
 import router from './router'
 import LazyLoading from 'vue-lazy-loading'
+import Toaster from '@meforma/vue-toaster'
 import './index.css'
 
 var firebaseConfig = {
@@ -33,7 +34,7 @@ firebase.auth().onAuthStateChanged((user) =>  {
     }
 })
 
-createApp(App).use(router).use(LazyLoading).mount('#app')
+createApp(App).use(router).use(LazyLoading).use(Toaster).mount('#app')
 
 export default db
 export {apps, name, grade, analytics}
