@@ -57,7 +57,7 @@
                         :key="index"
                         :universitySource="universitySource"
                         @removeUniversitySource="removeUniversity(index)"
-                        @openUniversity="function(a){getuniqueUniversityNameCard(index, a)}"
+                        @openUniversity="getuniqueUniversityNameCard(index)"
                         @updateUniv="function(a){editUniversity(index, a)}">
                     </card>
                 </div>
@@ -73,11 +73,13 @@
             </transition>
 
             <!-- Component University Card -->
-            <navbar class="z-40" ref="navbarComponent" 
-            :university="universityObject" 
-            @updateUniv="function(a){addNewUniversityPartner(a)}"
-            @removePartner="function(a){removeUniversityPartner(universityObject, a)}"
-            @editPartner="function(a){editUniversityPartner(universityObject, a)}"></navbar>
+            <NavbarEditor 
+                class="z-40" ref="navbarComponent" 
+                :university="universityObject" 
+                @updateUniv="function(a){addNewUniversityPartner(a)}"
+                @removePartner="function(a){removeUniversityPartner(universityObject, a)}"
+                @editPartner="function(a){editUniversityPartner(universityObject, a)}">
+            </NavbarEditor>
 
         </div>
 
@@ -85,7 +87,7 @@
             <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 4xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
-    <AddUSoucePopup 
+    <AddUSoucePopup
         @close="setCreateUniversity" 
         @addNewUniversity="addNewUniversity"
         :listOfSpeciality="listOfSpeciality"
@@ -105,7 +107,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     import Card from '../components/CardEditor.vue'
-    import Navbar from '../components/NavbarEditor.vue'
+    import NavbarEditor from '../components/NavbarEditor.vue'
     import AddUSoucePopup from '../components/CreateUniversityPopUp.vue'    
 
     export default {
@@ -113,7 +115,7 @@
 
         components:{
             Card,
-            Navbar,
+            NavbarEditor,
             PulseLoader,
             Multiselect,
             BackToTop,
@@ -286,7 +288,8 @@
                 this.option.cityStartOption.sort()
             },
 
-            getuniqueUniversityNameCard (index, val) {
+            getuniqueUniversityNameCard (index) {
+                
                 this.universityObject.universitySourceId = this.universitysSend[index].universitySourceId,
                 this.universityObject.universitySourceName = this.universitysSend[index].universitySourceName,
                 this.universityObject.universitySourceCountry = this.universitysSend[index].universitySourceCountry,
@@ -417,7 +420,6 @@
             addNewUniversity(newUniversitys){
                 var testA = "";
                 var up = {};
-                console.log(newUniversitys)
                 
                 if(newUniversitys.universitySourceId == "" || newUniversitys.universitySourceId == undefined) {
                     testA = db.ref().child('universitys').push().key;
@@ -447,9 +449,8 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.success(`Your university has been added successfully.`);
-                        this.$toast.info(`Thank you for your help in improving our database.`);
-                        this.$toast.info(`Sorting has been changed for descending creation date parameter.`);
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
+                        this.$toast.success(`Your university has been added successfully.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
@@ -494,8 +495,7 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.info(`Please if you want modify your recent changes edit the university with state "In Progress".`, {position:"top", max:3});
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"top", max:3});
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
                         this.$toast.success(`Your changes has been sent successfully.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
@@ -574,14 +574,12 @@
 
                         var result = [...maparr.values()];//converting back to array from mapobject
 
-                        console.log(result)
                         element.universitySourcerPartner = result
                         universityNotCurrentEdit = false
                     }
                 })
 
                 if(universityNotCurrentEdit) {
-                    console.log("L'université n'est pas en cours d'édition")
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
                         this.universitysSend.push(universityEdit)
@@ -595,28 +593,97 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.info(`Please if you want modify your recent changes edit the university with state "In Progress".`, {position:"top", max:3});
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"top", max:3});
-                        this.$toast.success(`Your changes has been sent successfully.`, {position:"top", max:3});
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
+                        this.$toast.success(`Your university partner has been successfully added.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
             },
 
             editUniversityPartner(universityEdit, newPartnerVersion){
-                console.log("Edit Partner")
-                console.log(universityEdit)
-                console.log(newPartnerVersion)
-                this.$toast.error(`Sorry, this feature doesn't work yet.`, {position:"top", max:3});
-                setTimeout(this.$toast.clear, 10000)
+                var up = {}
+
+                if(universityEdit.universitySourceDisplay == "False") { //University display statut is in progress
+                    for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
+                        if (universityEdit.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
+                        && universityEdit.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
+                        && universityEdit.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
+                            universityEdit.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
+                        }
+                    }
+
+                    universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+
+                    up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
+                } else {//University display statut is online
+                    var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
+                    tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+
+                    for (let m = 0; m < tmpUEdit.universitySourcerPartner.length; m++) {
+                        if (tmpUEdit.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
+                        && tmpUEdit.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
+                        && tmpUEdit.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
+                            tmpUEdit.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
+                        }
+                    }
+
+                    tmpUEdit.universitySourceDisplay = "False"
+                    this.universitysSend.push(tmpUEdit)
+                    up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
+                }
+
+                this.sortingParam("Creation Date Desc.")
+
+                return db.ref().update(up).then(
+                    () => {
+                        this.$router.replace('/editorview')
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
+                        this.$toast.success(`Your changes has been sent successfully.`, {position:"top", max:3});
+                        setTimeout(this.$toast.clear, 10000)
+                    }
+                )
             },
 
-            removeUniversityPartner(sourceUniv, partnerToRemove){
-                console.log("Delete Partner")
-                console.log(sourceUniv)
+            removeUniversityPartner(universityEdit, partnerToRemove){
+                var up = {}
+                console.log(universityEdit)
                 console.log(partnerToRemove)
-                this.$toast.error(`Sorry, this feature doesn't work yet.`, {position:"top", max:3});
-                setTimeout(this.$toast.clear, 10000)
+
+                if(universityEdit.universitySourceDisplay == "False") { //University display statut is in progress
+                    for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
+                        if (universityEdit.universitySourcerPartner[m].universityPartnerName == partnerToRemove.universityPartnerName){
+                            universityEdit.universitySourcerPartner.splice(m, 1)
+                        }
+                    }
+
+                    universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+
+                    up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
+                } else {//University display statut is online
+                    var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
+                    tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+
+                    for (let m = 0; m < tmpUEdit.universitySourcerPartner.length; m++) {
+                        if (tmpUEdit.universitySourcerPartner[m].universityPartnerName == partnerToRemove.universityPartnerName){
+                            tmpUEdit.universitySourcerPartner.splice(m, 1)
+                        }
+                    }
+
+                    tmpUEdit.universitySourceDisplay = "False"
+                    this.universitysSend.push(tmpUEdit)
+                    up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
+                    
+                }
+
+                this.sortingParam("Creation Date Desc.")
+
+                return db.ref().update(up).then(
+                    () => {
+                        this.$router.replace('/editorview')
+                        this.$toast.error(`The partner has been successfully deleted`, {position:"top", max:3});
+                        setTimeout(this.$toast.clear, 10000)
+                    }
+                )
             },
 
         },

@@ -84,10 +84,10 @@
           </div>
           <!-- University Card -->
           <UniversityCardInfoEditor 
-              class="xl:mx-10 dark:text-white"
-              v-for="universityP in this.partner"
+              class="lg:mx-10 dark:text-white"
+              v-for="universityP in partner"
               :key="universityP.universityPartnerName"
-              :university="universityP"
+              :universityP="universityP"
               :display="university.universitySourceDisplay"
               @editPartner="function(a){editPartenaire(a)}"
               @deletePartner="function(a){removePartenaire(a)}">
@@ -181,7 +181,6 @@
             if (isOpen) document.body.style.setProperty("overflow", "hidden");
             else document.body.style.removeProperty("overflow");
           }
-          this.initPartner()
         }
       }
     },
@@ -248,6 +247,7 @@
 
       editPartenaire(universityPartnerS){
         this.$emit('editPartner', universityPartnerS)
+        this.drawer()
       },
 
       removePartenaire(universityPartnerS){
@@ -270,9 +270,10 @@
 
       drawer() {
         if(!this.isOpen) {this.resetPartnerInfo()}
-        this.isOpen = !this.isOpen;
-        this.partner = [];
-        this.countryPartner = [];        
+        this.isOpen = !this.isOpen
+        this.partner = []
+        this.countryPartner = []
+        this.initPartner()   
       },
 
       initPartner(){
@@ -280,12 +281,13 @@
         country.push('All')
         if(this.university.universitySourcerPartner){
           this.partner = this.university.universitySourcerPartner
+          //this.partner = JSON.parse(JSON.stringify(this.university.universitySourcerPartner))
           this.partner.forEach(el2 => {
               country.push(el2.universityPartnerCountry)                    
           })
           this.partner.sort(function(a,b){
-              if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1;}
-              if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1;}
+              if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
+              if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
               return 0;
           })
           this.countryPartner = [...new Set(country)]
@@ -304,6 +306,7 @@
             }
         )
       },
+
     },
   };
 </script>

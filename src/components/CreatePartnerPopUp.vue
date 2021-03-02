@@ -100,12 +100,6 @@
             };
         },
 
-        watch: {
-            logResult: function(val){
-                console.log("G: " + val)
-            },
-        },
-
         methods: {
             close(){
                 this.$emit('close');

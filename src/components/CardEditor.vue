@@ -4,7 +4,7 @@
         <div class="absolute space-x-1.5 right-2 flex  text-xs xl:text-sm 4xl:text-base">
             <button v-if="(grade === 'Admin') || (username === universitySource.universitySourceCreator && universitySource.universitySourceDisplay === 'False')"  @click="openRemove" class="Button bg-red-500 rounded-3xl my-2 px-2 right-28 block">Delete</button>
             <button @click="openEditor()" class="Button bg-green-700 rounded-3xl my-2 px-2 right-52 block">Edit</button>
-            <button @click="openCard(universitySource.universitySourceName)" class="Button bg-blue-500 rounded-3xl my-2 px-2 right-0 block shadow-2xl">More Info</button>
+            <button @click="openCard()" class="Button bg-blue-500 rounded-3xl my-2 px-2 right-0 block shadow-2xl">More Info</button>
         </div>
         <p v-if="universitySource.universitySourceDisplay == 'True'" class="bg-green-500 p-2 px-3 font-semibold text-lg text-white absolute left-0 rounded-br-md">Online</p>
         <p v-if="universitySource.universitySourceDisplay == 'False'" class="bg-red-500 p-2 px-3 font-semibold text-lg text-white absolute left-0 rounded-br-md">In progress</p>
@@ -125,8 +125,8 @@
         },
         
         methods: {
-            openCard(nameUniversity) {
-                this.$emit('openUniversity', nameUniversity)
+            openCard() {
+                this.$emit('openUniversity')
             },
 
             resetUniversityInfo() {

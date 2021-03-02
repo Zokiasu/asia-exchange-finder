@@ -220,18 +220,8 @@
             scroll(){
                 window.onscroll = () => {
                     let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
-                    /*console.log("window.pageYOffset + window.innerHeight " + Math.round(window.pageYOffset+window.innerHeight))
-                    console.log("document.documentElement.scrollTop + window.innerHeight " + Math.round(document.documentElement.scrollTop+window.innerHeight))
-                    console.log("document.body.scrollTop + window.innerHeight " + Math.round(document.body.scrollTop+window.innerHeight))
-                    console.log("document.documentElement.offsetHeight " + Math.round(document.documentElement.offsetHeight))
-                    
 
-                    console.log("bottomOfWindow " + bottomOfWindow)
-                    console.log("minElement " + this.minElement)
-                    console.log("this.universitysSend.length " + this.universitysSend.length)
-                    console.log(this.universitysSend)*/
                     if (bottomOfWindow) {
-                        //console.log("Bottom page")
                         this.minElement = this.minElement + 9;
                         bottomOfWindow = false;
                     }
