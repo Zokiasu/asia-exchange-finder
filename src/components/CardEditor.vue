@@ -20,15 +20,10 @@
     </div>
     <!-- Edition -->
     <div v-else-if="editorView" class="bg-white rounded-lg overflow-hidden shadow-2xl relative flex flex-wrap content-center justify-center">
-        <div class="z-50 absolute space-x-1.5 right-5 flex text-xs xl:text-sm 4xl:text-base">
-            <button @click="resetUniversityInfo()" class="Button bg-blue-500 rounded-3xl my-3 px-2 block">Reset</button>
-            <button @click="openEditor()" class="Button bg-red-500 rounded-3xl my-3 px-2 block">Cancel</button>
-            <button @click="updateUniversity()" class="Button bg-green-500 rounded-3xl my-3 px-2 block">Send</button>
-        </div>
-        <div class="z-40 my-5 mx-6 absolute space-x-1.5 left-0 flex text-base xl:text-xl">
+        <div class="z-40 w-full px-5 py-1 text-base xl:text-xl justify-start">
             <p class="text-black font-semibold">{{universitySource.universitySourceName}}</p>
         </div>
-        <div class="font-bold grid grid-cols-1 gap-1 text-xs 4xl:text-base text-black w-full pt-10 px-5">
+        <div class="font-bold grid grid-cols-1 gap-1 text-xs 4xl:text-base text-black w-full px-5">
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating">
                     <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -72,6 +67,11 @@
                 </div>
             </div>
         </div>
+        <div class="z-50 space-x-1.5 right-5 flex text-xs xl:text-sm 4xl:text-base">
+            <button @click="resetUniversityInfo()" class="Button bg-blue-500 rounded-3xl my-3 px-2 block">Reset</button>
+            <button @click="openEditor()" class="Button bg-red-500 rounded-3xl my-3 px-2 block">Cancel</button>
+            <button @click="updateUniversity()" class="Button bg-green-500 rounded-3xl my-3 px-2 block">Send</button>
+        </div>
     </div>
     <!-- Edition -->
     <div v-else-if="removeView" class="bg-white border-red-500 border-4 rounded-lg overflow-hidden shadow-2xl relative flex flex-wrap content-center justify-center">
@@ -88,7 +88,6 @@
     import db from '../main.js'
 
     export default {
-        universitySource: 'universitySource',
         props: ['universitySource'],
 
         data() {
@@ -105,9 +104,9 @@
                     "universitySourceAddress": "",
                     "universitySourceImageLink": "",
                     "universitySourceWebsiteLink": "",
-                    "universitySourceDisplay": "False",
-                    "universitySourceCreator": name,
-                    "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
+                    "universitySourceDisplay": "",
+                    "universitySourceCreator": "",
+                    "universitySourceLastUpdate": "",   
                     "universitySourcerPartner": [], 
                 },
             }
@@ -122,6 +121,10 @@
                     })
                 }
             })
+        },
+
+        mounted(){
+            this.university = JSON.parse(JSON.stringify(this.universitySource))
         },
         
         methods: {
@@ -163,7 +166,6 @@
             },
 
             openEditor(){
-                if(!this.editorView) this.resetUniversityInfo()
                 this.editorView = !this.editorView
             },
 
