@@ -275,11 +275,15 @@
             await apps.auth().onAuthStateChanged((user) => {
                 if(user != undefined) {
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                        this.userConnected = true
                         this.actualUser.username = snapshot.val().username
                         this.actualUser.userGrade = snapshot.val().grade
                         if(this.actualUser.userGrade == "Admin") {
+                            this.userConnected = true
                             this.checkAdmin = true
+                        } else {
+                            /*this.$toast.error(`You are not authorized to access the dashboard page.`, {position:"top", max:3});
+                            setTimeout(this.$toast.clear, 10000)
+                            this.$router.replace('/')*/
                         }
                     })
                 }

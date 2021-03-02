@@ -61,6 +61,8 @@
 
 <script>
     import {name} from '../main.js'
+    import db from '../main.js'
+    import {apps} from '../main.js'
 
     export default {
         data() {
@@ -79,6 +81,20 @@
                     "universitySourcerPartner": [], 
                 }
             }
+        },
+
+        async beforeCreate(){
+            await apps.auth().onAuthStateChanged((user) => {
+                if(user != undefined) {
+                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
+                        if(snapshot.val().grade != "Admin") {
+                            this.$toast.error(`You are not authorized to access the dashboard page.`, {position:"top", max:3});
+                            setTimeout(this.$toast.clear, 10000)
+                            this.$router.replace('/')
+                        }
+                    })
+                }
+            })
         },
 
         methods: {
