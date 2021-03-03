@@ -51,8 +51,8 @@
         <!-- University Card -->
         <UniversityCardInfoEditor 
             class="xl:mx-40 dark:text-white"
-            v-for="universityP in partner"
-            :key="universityP.universityPartnerName"
+            v-for="(universityP, index) in partner"
+            :key="index"
             :universityP="universityP"
             :display="university.universitySourceDisplay"
             @editPartner="function(a){editPartenaire(a)}"
@@ -140,6 +140,7 @@
   import UniversityCardInfoEditor from './UniversityCardInfoEditor.vue'
   import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
   import Tag from '../Tag.vue'
+import { init } from 'emailjs-com'
 
   export default {
     components:{
@@ -256,7 +257,24 @@
           universityEdited.universitySourcerPartner.push(this.universitysPartner)
         }
         this.updateUniversity(universityEdited)
-        this.drawer()
+
+        if(this.university.universitySourceDisplay == "True") {
+          this.drawer()
+        } else {
+          console.log("False")
+          var country = [];
+          country.push('All')
+          this.partner.push(this.universitysPartner)
+          this.partner.forEach(el2 => {
+              country.push(el2.universityPartnerCountry)                    
+          })
+          this.partner.sort(function(a,b){
+              if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
+              if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
+              return 0;
+          })
+          this.countryPartner = [...new Set(country)]
+        }
       },
 
       updateUniversity(universityEdited){
@@ -265,7 +283,9 @@
 
       editPartenaire(universityPartnerS){
         this.$emit('editPartner', universityPartnerS)
-        this.drawer()
+        if(this.university.universitySourceDisplay == "True") {
+          this.drawer()
+        }
       },
 
       removePartenaire(universityPartnerS){
@@ -299,7 +319,6 @@
         country.push('All')
         if(this.university.universitySourcerPartner){
           this.partner = this.university.universitySourcerPartner
-          //this.partner = JSON.parse(JSON.stringify(this.university.universitySourcerPartner))
           this.partner.forEach(el2 => {
               country.push(el2.universityPartnerCountry)                    
           })

@@ -71,7 +71,7 @@
                     "universitySourceCountry": "",
                     "universitySourceCity": "",
                     "universitySourceAddress": "",
-                    "universitySourceImageLink": "",
+                    "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
                     "universitySourceWebsiteLink": "",
                     "universitySourceDisplay": "False",
                     "universitySourceCreator": name,

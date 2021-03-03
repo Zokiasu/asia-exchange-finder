@@ -73,7 +73,7 @@
             <button @click="updateUniversity()" class="Button bg-green-500 rounded-3xl my-3 px-2 block">Send</button>
         </div>
     </div>
-    <!-- Edition -->
+    <!-- Delete -->
     <div v-else-if="removeView" class="bg-white border-red-500 border-4 rounded-lg overflow-hidden shadow-2xl relative flex flex-wrap content-center justify-center">
         <div class="z-50 absolute space-x-1.5 right-5 flex text-xs xl:text-sm 4xl:text-base">
             <button @click="openRemove()" class="Button bg-red-500 rounded-3xl my-3 px-2 block">Cancel</button>
