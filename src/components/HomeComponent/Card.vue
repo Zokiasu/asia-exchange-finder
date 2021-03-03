@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import {analytics} from '../main.js'
+    import {analytics} from '../../main.js'
 
 export default {
     name: 'university',

@@ -93,9 +93,9 @@
 </template>
 
 <script>
-  import {analytics} from '../main.js'
+  import {analytics} from '../../main.js'
   import UniversityCardInfo from './UniversityCardInfo.vue'
-  import Tag from './Tag.vue'
+  import Tag from '../Tag.vue'
 
   export default {
     components:{

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import Tag from './Tag.vue'
+    import Tag from '../Tag.vue'
 
   export default {
 
@@ -52,6 +52,10 @@
         return{
             link: this.university.universityPartnerWebsiteLink,
         }
+    },
+
+    beforeCreate(){
+        console.log(this.university)
     },
 
     methods: {

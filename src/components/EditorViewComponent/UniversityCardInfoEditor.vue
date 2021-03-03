@@ -156,9 +156,10 @@
     import { SmartTagz } from "smart-tagz";
     import "smart-tagz/dist/smart-tagz.css";
     import { defineComponent } from "vue";
-    import Tag from './Tag.vue'
-    import {apps, name} from '../main.js'
-    import db from '../main.js'
+
+    import Tag from '../Tag.vue'
+    import {apps, name} from '../../main.js'
+    import db from '../../main.js'
 
   export default defineComponent ({
     name: "Basic",
@@ -177,7 +178,7 @@
             grade:'',
             editPartnerView: false,
             deletePartnerView: false,
-            link: this.universityP.universityPartnerWebsiteLink,
+            link: '#',
             "universityPartner": {
                 "universityPartnerName": "",
                 "universitySourceId": "",
@@ -207,6 +208,7 @@
 
     mounted(){
         this.universityPartner = JSON.parse(JSON.stringify(this.universityP))
+        this.link = JSON.parse(JSON.stringify(this.universityP.universityPartnerWebsiteLink))
     },
 
     setup(props) {

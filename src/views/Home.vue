@@ -78,15 +78,17 @@
 </template>
 
 <script>
-    import $ from 'jQuery'
-    import Card from '../components/Card.vue'
-    import Navbar from '../components/navbar.vue'
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import firebase from 'firebase'
     import db from '../main.js'
     import {name} from '../main.js'
+    
+    import $ from 'jQuery'
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+    import firebase from 'firebase'
     import Multiselect from '@vueform/multiselect'
     import BackToTop from 'vue-backtotop'
+    
+    import Card from '../components/HomeComponent/Card.vue'
+    import Navbar from '../components/HomeComponent/navbar.vue'
 
     export default {
         name: "Basic",

@@ -109,9 +109,10 @@
 </template>
 
 <script>
-    import UEPT from '../UniversityEditorPartnerTbody.vue'
     import db from '../../main.js'
     import {apps, name} from '../../main.js'
+    
+    import UEPT from '../UniversityEditorPartnerTbody.vue'
 
     export default {
 

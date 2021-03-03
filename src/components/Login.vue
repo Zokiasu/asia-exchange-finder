@@ -43,8 +43,9 @@
 </template>
 
 <script>
-    import firebase from 'firebase'
     import {apps} from '../main.js'
+    
+    import firebase from 'firebase'
 
     export default {
         data() {

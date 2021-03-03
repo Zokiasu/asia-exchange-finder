@@ -145,9 +145,11 @@
 </template>
 
 <script>
-    import UEPT from './UniversityEditorPartnerTbody.vue'
-    import firebase from 'firebase'
     import db from '../main.js'
+    
+    import firebase from 'firebase'
+
+    import UEPT from './UniversityEditorPartnerTbody.vue'
 
     export default {
 

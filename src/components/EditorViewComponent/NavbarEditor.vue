@@ -26,23 +26,42 @@
 
       <!-- Partner -->
       <div>
-        <!-- Filters -->
-        <div class="px-4 py-2 w-full place-items-center">
-          <p class="font-bold text-3xl text-center">Partner</p>
-          <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+        <AddUPartnerPopup
+            @close="setCreatePartner" 
+            @addNewPartnerToUniversity="addNewPartnerToUniversity"
+            :universitysPartner="universitysPartner"
+            :listOfSpeciality="listOfSpeciality"
+            v-if="addUniversityPartnerPopUp" 
+            class="z-50 mx-auto flex flex-col mt-auto">
+        </AddUPartnerPopup>
+        <div class="flex justify-between">
+          <!-- Filters -->
+          <div class="px-4 py-2 place-items-center">
+            <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+          </div>
+          <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">
+              <div class="space-x-1 bottom-0.5 right-3">
+                  <button @click="setCreatePartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
+                      rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
+                      Add New Partner
+                  </button>
+              </div>
+          </div>
         </div>
         <!-- University Card -->
         <UniversityCardInfoEditor 
             class="xl:mx-40 dark:text-white"
-            v-for="universityP in this.partner"
+            v-for="universityP in partner"
             :key="universityP.universityPartnerName"
-            :university="universityP"
-            :display="university.universitySourceDisplay">
+            :universityP="universityP"
+            :display="university.universitySourceDisplay"
+            @editPartner="function(a){editPartenaire(a)}"
+            @deletePartner="function(a){removePartenaire(a)}">
         </UniversityCardInfoEditor>
-      </div>
-      <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
-          <p>Sorry, we don't have informations about this university's partners yet.</p>
-          <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
+        <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
+            <p>Sorry, we don't have informations about this university's partners yet.</p>
+            <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
+        </div>
       </div>
     </aside>
 
@@ -103,25 +122,25 @@
             :universitysPartner="universitysPartner"
             :listOfSpeciality="listOfSpeciality"
             v-if="addUniversityPartnerPopUp" 
-            class="mx-auto flex flex-col mt-auto">
+            class="z-50 mx-auto flex flex-col mt-auto">
         </AddUPartnerPopup>
       </div>
 
     </aside>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm text-xs text-white font-semibold bottom-0 right-1/3 ms:right-1/2 fixed" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="md:invisible z-50 bg-red-500 px-3 py-1 rounded-sm ms:text-md 4xl:text-2xl text-white font-semibold bottom-0 right-1/3 ms:right-1/2 fixed" style="padding-top: 4px !important;">Back to site</button>
 
-    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="z-50 bg-red-500 px-3 py-1 rounded-sm ms:text-md 4xl:text-2xl text-white font-semibold top-5 right-5 fixed align-bottom" style="padding-top: 4px !important;">Back to site</button>
+    <button v-show="isOpen" aria-label="Close Menu" @click="drawer" class="invisible md:visible z-50 bg-red-500 px-3 py-1 rounded-sm ms:text-md 4xl:text-2xl text-white font-semibold top-5 right-5 fixed align-bottom" style="padding-top: 4px !important;">Back to site</button>
   </nav>
 </template>
 
 <script>
-  import db from '../main.js'
-  import {apps, name, grade, analytics} from '../main.js'
+  import db from '../../main.js'
+  import {apps, name, grade, analytics} from '../../main.js'
 
   import UniversityCardInfoEditor from './UniversityCardInfoEditor.vue'
   import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
-  import Tag from './Tag.vue'
+  import Tag from '../Tag.vue'
 
   export default {
     components:{

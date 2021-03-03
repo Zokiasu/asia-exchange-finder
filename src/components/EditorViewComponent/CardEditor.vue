@@ -84,8 +84,8 @@
 </template>
 
 <script>
-    import {apps, name} from '../main.js'
-    import db from '../main.js'
+    import {apps, name} from '../../main.js'
+    import db from '../../main.js'
 
     export default {
         props: ['universitySource'],

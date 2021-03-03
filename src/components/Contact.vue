@@ -38,10 +38,12 @@
 </template>
 
 <script>
+    import {apps} from '../main.js'
+
     import emailjs from 'emailjs-com';
     import { init } from 'emailjs-com';
+    
     init("user_LjdyAMDHMFXk6Or6Ffd5a");
-    import {apps} from '../main.js'
 
     export default {
 

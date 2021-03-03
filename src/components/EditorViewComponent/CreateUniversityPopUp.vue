@@ -60,7 +60,7 @@
 </template>
 
 <script>
-    import {name} from '../main.js'
+    import {name} from '../../main.js'
 
     export default {
         data() {
