@@ -75,6 +75,8 @@
                     .auth()
                     .createUserWithEmailAndPassword(this.email, this.password).then(
                         (authUser) => {
+                            this.$toast.success(`Welcome to our website!.`, {position:"top", max:3});
+                            setTimeout(this.$toast.clear, 5000)
                             db.ref(`users/${authUser.user.uid}`).set({
                                 username:this.username,
                                 grade:this.grade,

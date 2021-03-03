@@ -41,7 +41,7 @@
       </div>
       <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
           <p>Sorry, we don't have informations about this university's partners yet.</p>
-          <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
+          <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in editor view.</p>
       </div>
     </aside>
 
@@ -80,7 +80,7 @@
           </UniversityCardInfo>
           <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have informations about this university's partners yet.</p>
-              <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in your dashboard.</p>
+              <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in editor view.</p>
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
       countryFilter(country){
         this.partner = this.university.universitySourcerPartner.filter(
             (el) => {
-                if(el.universityPartnerCountry == country || country == 'All'){
+                if(el.universityPartnerCountry == country || country == 'All') {
                   this.actualFilter = country
                   return true
                 } else {

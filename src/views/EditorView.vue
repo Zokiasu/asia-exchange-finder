@@ -34,8 +34,9 @@
                         :options="option.specialityOption"/>
                 </div>
             </div>
-            <div class="container flex justify-center">
-                <button @click="searchByFilter" class="mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
+            <div class="container flex flex-col justify-center">
+                <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
+                <button v-if="filterActive" @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
             </div>
             <div class="px-8 md:px-10 lg:px-20 2xl:px-32 py-2 mb-5 w-full place-items-center">
                 <p class="font-semibold">Sort By : </p>
@@ -44,7 +45,7 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible && userConnected" class="px-8 md:px-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
+                <div v-if="visible && userConnected" class="px-8 md:px-10 lg:px-20 2xl:px-32 mb-10 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
                     <button @click="setCreateUniversity" class="bg-white opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
                         <img class="h-full w-full object-cover object-center" v-lazy="imgTmp" alt="">
                         <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
@@ -60,17 +61,15 @@
                         @openUniversity="getuniqueUniversityNameCard(index)"
                         @updateUniv="function(a){editUniversity(index, a)}">
                     </card>
+                    <transition name="slide-fade">
+                        <div v-if="show" class="container bg-gray-500 bg-opacity-75 w-full h-full p-10 rounded-lg overflow-hidden shadow-2xl relative justify-center items-center grid grid-cols-1 ">
+                            <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
+                            <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/editorview">Editor View</router-link> page.</p>
+                        </div>
+                    </transition>
                 </div>
                 <pulse-loader v-if="minElement <= this.universitysSend.length || !visible && !userConnected" class=" mt-10 m-auto"></pulse-loader>
             </transition-group>
-
-            <!-- Error Search -->
-            <transition name="slide-fade">
-                <div v-if="show" class="container mb-10 justify-center bg-gray-500 w-full bg-opacity-75 p-10">
-                    <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
-                    <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/dashboard">Dashboard</router-link> page.</p>
-                </div>
-            </transition>
 
             <!-- Component University Card -->
             <NavbarEditor 
@@ -83,7 +82,7 @@
 
         </div>
 
-        <back-to-top class=" z-30" bottom="50px" right="50px">
+        <back-to-top class="z-30" bottom="50px" right="50px">
             <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 4xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
@@ -133,6 +132,7 @@
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
+                filterActive: false,
 
                 minElement: 11,
 
@@ -304,6 +304,13 @@
                 this.$refs.navbarComponent.drawer();
             },
 
+            resetFilter(){
+                this.CityFilter = undefined
+                this.DestinationFilter = undefined
+                this.SpecialityFilter = undefined
+                this.searchByFilter()
+            },
+
             searchByFilter() {
                 this.modelCity = this.option.cityStartOption[this.CityFilter]
                 this.modelDestination = this.option.countryOption[this.DestinationFilter]
@@ -458,9 +465,13 @@
 
             editUniversity(index, universityEdit){
                 var up = {};
+                var newEdit = false;
                 
                 if((this.universitysSend[index].universitySourceId == universityEdit.universitySourceId) 
                 && (this.universitysSend[index].universitySourceDisplay != universityEdit.universitySourceDisplay)) {
+                    if (this.universitysSend[index].universitySourceDisplay == "True") {
+                        newEdit = true;
+                    }
                     this.universitysSend.push({
                         "universitySourceId": universityEdit.universitySourceId,
                         "universitySourceName": universityEdit.universitySourceName,
@@ -489,14 +500,16 @@
                 }
 
                 this.sortingParam("Creation Date Desc.")
-                
                 up['/universitysEdited/' + this.universitysSend[index].universitySourceId] = universityEdit
 
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your changes has been sent successfully.`, {position:"top", max:3});
+                    if (newEdit) {
+                        this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", max:3});
+                    }
+                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
@@ -550,22 +563,24 @@
                                 "universityPartnerSpeciality": element2.universityPartnerSpeciality,
                             })
                         })
-
-                        element.universitySourcerPartner.forEach(function(element2){
-                            tmpPartner.push({
-                                "universityPartnerName": element2.universityPartnerName,
-                                "universitySourceId": element2.universitySourceId,
-                                "universityPartnerCountry": element2.universityPartnerCountry,
-                                "universityPartnerCity": element2.universityPartnerCity,
-                                "universityPartnerAddress": element2.universityPartnerAddress,
-                                "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
-                                "universityPartnerCondition": element2.universityPartnerCondition,
-                                "universityPartnerDisplay": element2.universityPartnerDisplay,
-                                "universityPartnerCreator": element2.universityPartnerCreator,
-                                "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
-                                "universityPartnerSpeciality": element2.universityPartnerSpeciality,
+                        
+                        if(element.universitySourcerPartner != undefined) {
+                            element.universitySourcerPartner.forEach(function(element2){
+                                tmpPartner.push({
+                                    "universityPartnerName": element2.universityPartnerName,
+                                    "universitySourceId": element2.universitySourceId,
+                                    "universityPartnerCountry": element2.universityPartnerCountry,
+                                    "universityPartnerCity": element2.universityPartnerCity,
+                                    "universityPartnerAddress": element2.universityPartnerAddress,
+                                    "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
+                                    "universityPartnerCondition": element2.universityPartnerCondition,
+                                    "universityPartnerDisplay": element2.universityPartnerDisplay,
+                                    "universityPartnerCreator": element2.universityPartnerCreator,
+                                    "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
+                                    "universityPartnerSpeciality": element2.universityPartnerSpeciality,
+                                })
                             })
-                        })
+                        }
 
                         var dataArr = tmpPartner.map(item=>{
                             return [item.universityPartnerName,item]
@@ -638,7 +653,7 @@
                     () => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your changes has been sent successfully.`, {position:"top", max:3});
+                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )

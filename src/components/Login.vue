@@ -88,6 +88,8 @@
                             (authUser) => {
                                 this.$router.replace('/')
                                 this.xhrRequest = false;
+                                this.$toast.success(`You have been logged.`, {position:"top", max:3});
+                                setTimeout(this.$toast.clear, 5000)
                                 this.userlog();
                                 this.close();
                             }

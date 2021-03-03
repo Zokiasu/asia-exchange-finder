@@ -122,10 +122,6 @@
                 }
             })
         },
-
-        mounted(){
-            this.university = JSON.parse(JSON.stringify(this.universitySource))
-        },
         
         methods: {
             openCard() {
@@ -154,8 +150,14 @@
                 if (this.university.universitySourceAddress == "") {this.university.universitySourceAddress = this.universitySource.universitySourceAddress}
                 if (this.university.universitySourceImageLink == "") {this.university.universitySourceImageLink = this.universitySource.universitySourceImageLink}
                 if (this.university.universitySourceWebsiteLink == "") {this.university.universitySourceWebsiteLink = this.universitySource.universitySourceWebsiteLink}
-                this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
-                this.university.universitySourcerPartner = this.universitySource.universitySourcerPartner
+                this.university.universitySourceDisplay = "False"
+                this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                
+                if(this.universitySource.universitySourcerPartner != undefined) {
+                    this.university.universitySourcerPartner = this.universitySource.universitySourcerPartner
+                } else {
+                    this.university.universitySourcerPartner = []
+                }
                 this.$emit('updateUniv', this.university)
                 this.openEditor()
             },
@@ -166,6 +168,7 @@
             },
 
             openEditor(){
+                this.university = JSON.parse(JSON.stringify(this.universitySource))
                 this.editorView = !this.editorView
             },
 

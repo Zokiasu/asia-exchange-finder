@@ -2,12 +2,12 @@
   <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 p-0 min-h-screen">
     <!-- invisible lg:visible -->
     <div class="space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
-      <div class="space-x-2 absolute left-0 ml-6 flex justify-between">
-        <router-link v-show="$route.name !=='AboutUs'" to="/aboutus" class="text-xl 2xl:text-2xl">About Us</router-link>
-        <p class="invisible md:visible 2xl:text-xl" v-show="$route.name !=='AboutUs'" v-if="userAuthenticated">|</p>
-        <router-link v-show="$route.name ==='EditorView' || $route.name ==='AboutUs'" to="/" class="text-xl 2xl:text-2xl">Home</router-link>
-        <p class="invisible md:visible 2xl:text-xl" v-if="userAuthenticated" v-show="$route.name ==='AboutUs'">|</p>
-        <router-link v-if="userAuthenticated" v-show="$route.name!=='EditorView' || $route.name ==='AboutUs'" to="/editorview" class="invisible md:visible text-xl 2xl:text-2xl">Editor View</router-link>
+      <div class="h-0 md:h-auto space-x-2 absolute left-8 md:left-10 lg:left-20 2xl:left-32 ml-6 flex justify-between">
+        <router-link to="/" class="invisible md:visible text-xl 2xl:text-2xl">Home</router-link>
+        <p class="invisible md:visible text-xl">|</p>
+        <router-link to="/aboutus" class="invisible md:visible text-xl 2xl:text-2xl">About Us</router-link>
+        <p class="invisible md:visible text-xl" v-if="userAuthenticated">|</p>
+        <router-link to="/editorview" class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Editor View</router-link>
       </div>
       <p class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="invisible md:visible bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>
@@ -70,6 +70,8 @@
 
       signOut: function() {
         apps.auth().signOut().then(() => {
+          this.$toast.success(`You have been disconnected.`, {position:"top", max:3});
+          setTimeout(this.$toast.clear, 5000)
           this.user = null
           if(this.$route.name === 'Home') {
             this.$router.go()

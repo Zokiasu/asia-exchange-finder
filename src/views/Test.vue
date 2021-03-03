@@ -93,6 +93,10 @@
                             this.$router.replace('/')
                         }
                     })
+                } else {
+                    this.$toast.error(`You are not authorized to access the dashboard page.`, {position:"top", max:3});
+                    setTimeout(this.$toast.clear, 10000)
+                    this.$router.replace('/')
                 }
             })
         },
