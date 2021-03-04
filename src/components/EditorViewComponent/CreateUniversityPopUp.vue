@@ -1,5 +1,5 @@
 <template>
-    <div class="absolute mx-auto justify-center items-center min-h-screen w-full flex flex-wrap content-center">
+    <div class="absolute m-auto justify-center items-center min-h-screen w-full flex flex-wrap content-center">
         <div class="mx-auto flex justify-center items-center w-full ">
             <div class="p-5 bg-white text-black rounded-xl">
                 <div class="font-bold grid grid-cols-2 gap-2">

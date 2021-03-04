@@ -2,14 +2,14 @@
   <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 p-0 min-h-screen">
     <!-- invisible lg:visible -->
     <div class="space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
-      <div class="h-0 md:h-auto space-x-2 absolute left-8 md:left-10 lg:left-20 ml-6 flex justify-between">
-        <router-link to="/" class="invisible md:visible text-xl 2xl:text-2xl">Home</router-link>
+      <div class="h-0 md:h-auto space-x-2 absolute left-8 md:left-10 lg:left-20 ml-6 flex justify-between text-xl">
+        <router-link to="/" class="invisible md:visible">Home</router-link>
         <p class="invisible md:visible text-xl">|</p>
-        <router-link to="/aboutus" class="invisible md:visible text-xl 2xl:text-2xl">About</router-link>
+        <router-link to="/aboutus" class="invisible md:visible">About</router-link>
         <p class="invisible md:visible text-xl" v-if="userAuthenticated">|</p>
-        <router-link to="/editorview" class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Editor View</router-link>
+        <router-link to="/editorview" class="invisible md:visible" v-if="userAuthenticated">Editor View</router-link>
         <p class="invisible md:visible text-xl" v-if="userAdmin">|</p>
-        <router-link to="/dashboard" class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAdmin">Dashboard</router-link>
+        <router-link to="/dashboard" class="invisible md:visible" v-if="userAdmin">Dashboard</router-link>
       </div>
       <p class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="invisible md:visible bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>

@@ -275,6 +275,7 @@ import { init } from 'emailjs-com'
           })
           this.countryPartner = [...new Set(country)]
         }
+        this.resetPartnerInfo()
       },
 
       updateUniversity(universityEdited){

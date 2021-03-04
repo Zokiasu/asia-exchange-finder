@@ -61,7 +61,7 @@
                   </button>
               </a>
           </div>
-          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
+          <p class="absolute top-1 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
           <!--<div class="bg-white my-5 h-72"></div>
           <div class="bg-white my-5 h-72"></div>-->
         </div>

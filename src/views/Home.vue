@@ -71,7 +71,7 @@
         </div>
 
         <back-to-top class="z-30" bottom="50px" right="50px">
-            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 2xl:text-xl">Back to top</button>
+            <button type="button" class="py-1 2xl:py-2 px-2.5 2xl:px-3.5 rounded-xl 2xl:rounded-3xl bg-green-500 text-white 4xl:text-xl">Back to top</button>
         </back-to-top>
     </div>
 </template>
