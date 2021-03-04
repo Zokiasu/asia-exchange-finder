@@ -221,7 +221,7 @@ import { init } from 'emailjs-com'
       },
 
       addNewPartnerToUniversity(){
-
+        
         var universityEdited = {
             "universitySourceId": "",
             "universitySourceName": "University Name",
@@ -251,35 +251,99 @@ import { init } from 'emailjs-com'
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
             "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-
           }]
         } else {
-          universityEdited.universitySourcerPartner.push(this.universitysPartner)
+          universityEdited.universitySourcerPartner.push({
+            "universityPartnerName": this.universitysPartner.universityPartnerName,
+            "universitySourceId":  this.universitysPartner.universitySourceId,
+            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
+            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
+            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
+            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
+            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
+            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
+            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
+            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
+
+          })
         }
         this.updateUniversity(universityEdited)
 
         if(this.university.universitySourceDisplay == "True") {
           this.drawer()
         } else {
-          console.log("False")
-          var country = [];
-          country.push('All')
-          this.partner.push(this.universitysPartner)
-          this.partner.forEach(el2 => {
-              country.push(el2.universityPartnerCountry)                    
-          })
-          this.partner.sort(function(a,b){
-              if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
-              if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
-              return 0;
-          })
-          this.countryPartner = [...new Set(country)]
+          this.updateCountry()
         }
-        this.resetPartnerInfo()
       },
 
       updateUniversity(universityEdited){
         this.$emit('updateUniv', universityEdited)
+      },
+
+      updateCountry(){
+        var country = [];
+        country.push('All')
+        
+        if(this.universitysPartner.universityPartnerName != "") {
+          this.partner.push({
+            "universityPartnerName": this.universitysPartner.universityPartnerName,
+            "universitySourceId":  this.universitysPartner.universitySourceId,
+            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
+            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
+            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
+            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
+            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
+            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
+            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
+            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
+
+          })
+        }
+        this.partner.forEach(el2 => {
+            country.push(el2.universityPartnerCountry)                    
+        })
+        this.partner.sort(function(a,b){
+            if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
+            if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
+            return 0;
+        })
+        this.countryPartner = [...new Set(country)]
+      },
+
+      updateRCountry(universityPartnerS){
+        var country = [];
+        country.push('All')
+        
+        if(this.universitysPartner.universityPartnerName != "") {
+          console.log("Go partner")
+          console.log(this.partner)
+          this.partner.push({
+            "universityPartnerName": this.universitysPartner.universityPartnerName,
+            "universitySourceId":  this.universitysPartner.universitySourceId,
+            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
+            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
+            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
+            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
+            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
+            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
+            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
+            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
+
+          })
+          this.removePDisplay(universityPartnerS)
+        }
+        this.partner.forEach(el2 => {
+            country.push(el2.universityPartnerCountry)                    
+        })
+        this.partner.sort(function(a,b){
+            if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
+            if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
+            return 0;
+        })
+        this.countryPartner = [...new Set(country)]
       },
 
       editPartenaire(universityPartnerS){
@@ -289,8 +353,21 @@ import { init } from 'emailjs-com'
         }
       },
 
+      removePDisplay(universityPartnerS){
+        console.log("removePDisplay")
+        console.log(universityPartnerS)        
+        for (let g = 0; g < this.partner.length; g++) {
+            console.log(this.partner.universityPartnerName)
+            console.log(universityPartnerS.universityPartnerName)
+            if(this.partner.universityPartnerName == universityPartnerS.universityPartnerName){
+              this.partner.splice(g,1)
+            }
+        }
+      },
+
       removePartenaire(universityPartnerS){
         this.$emit('removePartner', universityPartnerS)
+        this.updateRCountry(universityPartnerS)
         this.drawer()
       },
 

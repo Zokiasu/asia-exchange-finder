@@ -588,7 +588,19 @@
                 if(universityNotCurrentEdit) {
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
-                        this.universitysSend.push(universityEdit)
+                        this.universitysSend.push({
+                            "universityPartnerName": universityEdit.universityPartnerName,
+                            "universitySourceId": universityEdit.universitySourceId,
+                            "universityPartnerCountry": universityEdit.universityPartnerCountry,
+                            "universityPartnerCity": universityEdit.universityPartnerCity,
+                            "universityPartnerAddress": universityEdit.universityPartnerAddress,
+                            "universityPartnerWebsiteLink": universityEdit.universityPartnerWebsiteLink,
+                            "universityPartnerCondition": universityEdit.universityPartnerCondition,
+                            "universityPartnerDisplay": universityEdit.universityPartnerDisplay,
+                            "universityPartnerCreator": universityEdit.universityPartnerCreator,
+                            "universityPartnerLastUpdate": universityEdit.universityPartnerLastUpdate,  
+                            "universityPartnerSpeciality": universityEdit.universityPartnerSpeciality,
+                        })
                     }
                 }
                 
@@ -599,9 +611,8 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
+                        this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
                     }
                 )
             },
@@ -652,8 +663,6 @@
 
             removeUniversityPartner(universityEdit, partnerToRemove){
                 var up = {}
-                console.log(universityEdit)
-                console.log(partnerToRemove)
 
                 if(universityEdit.universitySourceDisplay == "False") { //University display statut is in progress
                     for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
@@ -683,13 +692,11 @@
 
                 this.sortingParam("Creation Date Desc.")
 
-                return db.ref().update(up).then(
-                    () => {
-                        this.$router.replace('/editorview')
-                        this.$toast.error(`The partner has been successfully deleted`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
-                    }
-                )
+                return db.ref().update(up).then(() => {
+                    this.$router.replace('/editorview')
+                    this.$toast.error(`The partner has been successfully deleted`, {position:"top", max:3});
+                    setTimeout(this.$toast.clear, 10000)
+                })
             },
 
         },

@@ -54,10 +54,6 @@
         }
     },
 
-    beforeCreate(){
-        console.log(this.university)
-    },
-
     methods: {
         
     },
