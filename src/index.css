@@ -5,6 +5,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */

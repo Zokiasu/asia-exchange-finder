@@ -8,8 +8,6 @@
                     <Multiselect
                         class="md:w-48 bg-white rounded text-black"
                         mode="single"
-                        :clearOnSearch="false"
-                        :clearOnSelect="false"
                         :searchable="true"
                         placeholder="From All Cities"
                         v-model="CityFilter"
@@ -36,7 +34,7 @@
             </div>
             <div class="container flex flex-col justify-center">
                 <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
-                <button v-if="filterActive" @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
+                <button @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
             </div>
 
             <!-- University Card -->
@@ -53,8 +51,8 @@
                 <div v-if="!show && minElement >= this.universitysSend.length && visible" class="invisible md:visible rounded-lg relative text-white bg-gray-500 bg-opacity-50 p-5">
                     <div class="rounded-lg text-sm md:text-xl h-full space-y-6 py-2 px-6">
                         <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
-                        <p v-if="userConnected" class="text-center">Send us your informations with editor view page!</p>
-                        <p v-if="!userConnected" class="text-center">Go to register and propose them to us!</p>
+                        <p v-if="userConnected" class="text-center">Send us your informations with <router-link to="/editorview" class="font-bold">editor view</router-link> page!</p>
+                        <p v-if="!userConnected" class="text-center">Go to <router-link to="/signup" class="font-bold">register</router-link> and propose them to us!</p>
                     </div>
                 </div>
             </transition-group>
@@ -63,7 +61,7 @@
             <transition name="slide-fade">
                 <div v-if="show" class="container mb-10 justify-center bg-gray-500 w-full bg-opacity-75 p-10">
                     <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
-                    <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/editorview">Editor View</router-link> page.</p>
+                    <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by <router-link to="/login" class="font-bold">logging</router-link> on to our site and consulting the <router-link class="font-bold" to="/editorview">Editor View</router-link> page.</p>
                 </div>
             </transition>
 
@@ -110,7 +108,6 @@
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
-                filterActive: false,
                 minElement: 12,
                 show: false,
                 visible: false,
@@ -293,7 +290,6 @@
                 this.modelV = this.option.cityStartOption[this.CityFilter]
                 this.modelD = this.option.countryOption[this.DestinationFilter]
                 this.modelS = this.option.specialityOption[this.SpecialityFilter]
-                this.filterActive = !this.filterActive
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {

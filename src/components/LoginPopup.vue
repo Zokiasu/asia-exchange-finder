@@ -88,13 +88,13 @@
                             (authUser) => {
                                 this.$router.replace('/')
                                 this.xhrRequest = false;
-                                this.$toast.success(`You have been logged.`, {position:"top", max:3});
-                                setTimeout(this.$toast.clear, 5000)
+                                this.$toast.info("You can help us to improve our database with Editor View page", {position:"top-left", duration: 7000, max: 1})
+                                this.$toast.success(`You have been logged.`, {position:"top", duration: 1000, max:1});
                                 this.userlog();
                                 this.close();
                             }
                     ).catch((error) => {
-                            this.errorMessage = error.message;
+                            this.$toast.error(error.message, {position:"top", duration: 3000, max:1});
                             this.xhrRequest = false;
                         }
                     )
@@ -102,7 +102,7 @@
                 .catch((error) => {
                     // Handle Errors here.
                     var errorCode = error.code;
-                    var errorMessage = error.message;
+                    this.$toast.error(error.message, {position:"top", duration: 3000, max:1});
                 });
 
             }

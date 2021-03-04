@@ -36,7 +36,10 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm-12 text-center form-group mt-5">
+        <div class="col-sm-12 text-center form-group mt-2">
+            <p>Don't have an account? <router-link to="/signup" class="font-bold text-blue-700">Sign Up</router-link></p>
+        </div>
+        <div class="col-sm-12 text-center form-group mt-2">
             <button @click="resetPassword()" class="font-bold text-red-700">Reset Password</button>
         </div>
     </div>

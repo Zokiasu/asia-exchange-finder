@@ -7,101 +7,8 @@
             </div>
             <!-- Dashboard -->
             <div v-if="userConnected" class="w-full">
-                <!-- Navigation -->
-                <div class="w-full relative space-x-2 flex justify-center mb-10 font-bold text-xl">
-                    
-                    <button v-if="!generalUniversity && checkAdmin" @click="setGeneral">General</button>
-                    <button v-if="checkAdmin && generalUniversity" @click="setGeneral">In Process</button>
-
-                    <button v-if="!checkAdmin" @click="filterCreation('General')" :class="[ !yourCreationsFilter ? 'text-red-500 font-semibold' : 'text-white' ]">General</button>
-                    <p v-if="!checkAdmin">|</p>
-                    <button v-if="!checkAdmin" @click="filterCreation('Creation')" :class="[ !yourCreationsFilter ? 'text-white' : 'text-red-500 font-semibold' ]">Your Creations</button>
-                </div>
-
-                <!-- General/Your Creation -->
-                <div v-if="!generalUniversity">
-                    <notifications group="foo"/>
-                    <div class="w-full relative py-2 px-3 flex justify-between">
-                        <div class="flex">
-                            <p v-if="message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
-                            <transition name="slide-fade" mode="out-in">
-                                <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
-                            </transition>
-                        </div>
-                        <button v-if="yourCreationsFilter" @click="setCreateUniversity" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
-                    </div>
-                    <Multiselect
-                        class="bg-white text-black"
-                        mode="single"
-                        :searchable="true"
-                        placeholder="Find a university"
-                        v-model="modelUniversityName"
-                        :options="listOfUniversityName"/>
-                    <div class="flex flex-col mb-20">
-                        <div class="overflow-x-auto">
-                            <div class="align-middle inline-block w-full">
-                                <div class="shadow border-b border-gray-200 sm:rounded-lg">
-                                    <table class="min-w-full divide-y divide-gray-200">
-                                        <thead class="bg-gray-100">
-                                            <tr>
-                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    University Name
-                                                </th>
-                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Localisation
-                                                </th>
-                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Display
-                                                </th>
-                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    By
-                                                </th>
-                                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Last Update
-                                                </th>
-                                                <th scope="col" class="relative px-4 py-3">
-                                                    <span class="sr-only">Edit</span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <UET 
-                                            v-for="(university, index) in universitySend.slice((page-1)*10, ((page-1)*10)+9)"
-                                            :key="index"
-                                            :university="university"
-                                            :admin="checkAdmin"
-                                            :herCreation="yourCreationsFilter"
-                                            :listOfSpeciality="listOfSpeciality"
-                                            ref="form"
-                                            @deleteUniversity="removeUniversityByUser(index)"
-                                            @deleteOfficialUniversity="removeOfficialUniversityByAdmin(index)"
-                                            @addPartner="addPartnerByUser(index)"
-                                            @sendData="updateEditedSpecificDataByUser(index)">
-                                        </UET>
-                                    </table>
-                                </div>
-                                <v-pagination v-if="numberPage > 0" class="bg-white flex justify-center"
-                                    v-model="page"
-                                    :pages="numberPage"
-                                    :range-size="1"
-                                    active-color="#DCEDFF"
-                                />
-                                <p v-if="numberPage <= 0" class="bg-white flex justify-center text-black py-2">No university has been edited or created by you.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- In Process -->
-                <div v-if="generalUniversity && checkAdmin">
-                    <div class="w-full relative py-2 px-3 flex justify-between">
-                        <div class="flex">
-                            <p v-if="message.message0" class=" rounded-full bg-transparent w-6 h-6 pb-1 text-center text-white border-white border-2">i</p>
-                            <transition name="slide-fade" mode="out-in">
-                                <p v-if="message.message0" class="text-white pl-2 pt-0.5">{{message.message1}}</p>
-                            </transition>
-                        </div>
-                        <button @click="setCreateUniversity" class="Button text-white font-bold bg-red-500 rounded-3xl py-2 px-5">Add University</button>
-                    </div>
+                <div v-if="checkAdmin">
                     <div class="flex flex-col mb-20">
                         <div class="overflow-x-auto">
                             <div class="align-middle inline-block w-full">
@@ -141,13 +48,13 @@
                                         </UETT>
                                     </table>
                                 </div>
-                                <v-pagination v-if="numberPageTmp > 0" class="bg-white flex justify-center"
+                                <v-pagination v-if="numberPageTmp => 0" class="bg-white flex justify-center"
                                     v-model="page"
                                     :pages="numberPageTmp"
                                     :range-size="1"
-                                    active-color="#DCEDFF"
-                                />
-                                <p v-if="numberPageTmp <= 0" class="bg-white flex justify-center text-black py-2">No university has been edited for the moment.</p>
+                                    active-color="#DCEDFF">
+                                </v-pagination>
+                                <p v-if="numberPageTmp < 0" class="bg-white flex justify-center text-black py-2">No university has been edited for the moment.</p>
                             </div>
                         </div>
                     </div>
@@ -155,13 +62,6 @@
             </div>
         </transition-group>
     </div>
-    <CUP 
-        @created="setCreateUniversity" 
-        @addNewUniversity="addNewUniversityInProcess"
-        :listOfSpeciality="listOfSpeciality"
-        v-if="createUniversityPopUp" 
-        class="mx-auto flex flex-col">
-    </CUP>
 </template>
 
 <script>
@@ -173,16 +73,12 @@
     import "vue3-pagination/dist/vue3-pagination.css"
     import Multiselect from '@vueform/multiselect'
 
-    import UET from './UniversityEditorTbody.vue'
     import UETT from './UniversityEditorTbodyTmp.vue'
-    import CUP from './UniversityEditorComponent/CreateUniversityPopUp.vue'
 
     export default {
 
         components:{
-            UET,
             UETT,
-            CUP,
             PulseLoader,
             VPagination,
             Multiselect
@@ -280,10 +176,6 @@
                         if(this.actualUser.userGrade == "Admin") {
                             this.userConnected = true
                             this.checkAdmin = true
-                        } else {
-                            /*this.$toast.error(`You are not authorized to access the dashboard page.`, {position:"top", max:3});
-                            setTimeout(this.$toast.clear, 10000)
-                            this.$router.replace('/')*/
                         }
                     })
                 }
@@ -633,7 +525,7 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/Dashboard')
-                        this.$toast.success(`Your changes has been sent successfully.`);
+                        this.$toast.success(`Your changes has been successfully added in "In Progress" list for a validation.`);
                         this.$toast.info(`Thank you for your help in improving our database.`);
                         setTimeout(this.$toast.clear, 10000)
                     }

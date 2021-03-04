@@ -76,8 +76,7 @@
                 emailjs.sendForm('service_2i8qxun', 'template_jyrc5ge', e.target, 'user_LjdyAMDHMFXk6Or6Ffd5a')
                 .then((result) => {
                     console.log('SUCCESS!', result.status, result.text);
-                    this.$toast.success(`Your message has been sent successfully.`, {position:"top", max:3});
-                    setTimeout(this.$toast.clear, 5000)
+                    this.$toast.success(`Your message has been sent successfully.`, {position:"top", duration: 5000, max:1});
                     this.close()
                 }, (error) => {
                     console.log('FAILED...', error);

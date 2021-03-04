@@ -36,7 +36,7 @@
             </div>
             <div class="container flex flex-col justify-center">
                 <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
-                <button v-if="filterActive" @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
+                <button @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
             </div>
             <div class="px-8 md:px-10 lg:px-20 2xl:px-32 py-2 mb-5 w-full place-items-center">
                 <p class="font-semibold">Sort By : </p>
@@ -132,7 +132,6 @@
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
-                filterActive: false,
 
                 minElement: 11,
 
@@ -457,7 +456,7 @@
                     () => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your university has been added successfully.`, {position:"top", max:3});
+                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
@@ -506,9 +505,9 @@
                     () => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                    if (newEdit) {
-                        this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", max:3});
-                    }
+                        if (newEdit) {
+                            this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", max:3});
+                        }
                         this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
@@ -526,14 +525,6 @@
                 this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", max:3});
                 setTimeout(this.$toast.clear, 10000)
                 this.universitysSend.splice(index,1)
-            },
-
-            try(data, key) {
-                return [
-                    ...new Map(
-                        data.map(x => [key(x), x])
-                    ).value()
-                ]
             },
 
             addNewUniversityPartner(universityEdit){
@@ -609,7 +600,7 @@
                     () => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your university partner has been successfully added.`, {position:"top", max:3});
+                        this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", max:3});
                         setTimeout(this.$toast.clear, 10000)
                     }
                 )
