@@ -1,8 +1,41 @@
 <template>
-    <div class="m-10 mb-24  md:mb-10 p-6 py-20 text-xl 2xl:text-2xl xl:mx-52 bg-gray-500 bg-opacity-70">
-        <p>Asia Exchange Finder is a search tool for academic exchanges to Asia. This tool was created as part of the Asia Studeler project to simplify the search for exchanges to Asian countries.<br><br>
-        It is a project made by students for students, we chose to offer the possibility for users to edit the information in order to cover a maximum of possible exchanges whatever the country of the proposed university, the only condition is that it offers exchanges to Asian countries.<br><br>
-        </p>
-        <p class="text-left">Asia Studeler.</p>
+    <div class="m-10 mb-24  md:mb-10 p-10 xl:mx-52 bg-gray-500 bg-opacity-90">
+        <div class="space-x-3 mb-5">
+            <router-link to="/about" class="text-black font-semibold">About Us</router-link>
+            <router-link to="/contact">Contact</router-link>
+            <router-link to="/privacy">Privacy Policy</router-link>
+            <router-link to="/terms">Terms of Use</router-link>
+        </div>
+        <div class="mb-5 font-bold text-4xl">
+            <h1>About Us</h1>
+        </div>
+        <div class="row-auto">
+            <div>
+                <ul class="space-y-5">
+                    <li>
+                        <h6 class="mb-1">
+                            <a class="font-semibold">Our Goal</a>
+                        </h6>
+                        <p>
+                            AsiaStudeler's goals is to promote culture and travel to Asian countries among the student community. AsiaStudeler wants to be a platform for anyone who wants to learn more about Asian countries, highlighting the work of creators who have themselves been to or live in Asian countries. AsiaStudeler also wishes to develop tools to help students to get the best information on the same platform on the different specificities of Asian countries.
+                        </p>
+                    </li>
+                    <li>
+                        <h6 class="mb-1">
+                            <a class="font-semibold">About Us</a>
+                        </h6>
+                        <div>
+                            AsiaStudeler.com is initially a student project for students, the site as you know it is still under construction. Many other projects are planned for this project which is meant to be a community project. In order to help as many people as possible who would like to go to Asia one day or simply discover more. Your opinion and comments are and will always be essential to improve our site. Please do not hesitate to contact us to pass them on to us.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="space-x-3 mt-5">
+                <router-link to="/about" class="text-black font-semibold">About Us</router-link>
+                <router-link to="/contact">Contact</router-link>
+                <router-link to="/privacy">Privacy Policy</router-link>
+                <router-link to="/terms">Terms of Use</router-link>
+            </div>
+        </div>
     </div>
 </template>

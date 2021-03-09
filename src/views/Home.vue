@@ -40,10 +40,11 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-                    <card class="Card"
-                        v-for="university in this.universitysSend.slice(0,minElement)"
+                    <card
+                        v-for="(university, index) in this.universitysSend.slice(0,minElement)"
                         :key="university.universitySourceName"
                         :university="university"
+                        :index="index"
                         @onClick = "getuniqueUniversityNameCard">
                     </card>
                 </div>

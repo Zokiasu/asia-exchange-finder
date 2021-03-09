@@ -5,7 +5,7 @@
       <div class="h-0 md:h-auto space-x-2 absolute left-8 md:left-10 lg:left-20 ml-6 flex justify-between text-xl">
         <router-link to="/" class="invisible md:visible">Home</router-link>
         <p class="invisible md:visible text-xl">|</p>
-        <router-link to="/aboutus" class="invisible md:visible">About</router-link>
+        <router-link to="/about" class="invisible md:visible">About</router-link>
         <p class="invisible md:visible text-xl" v-if="userAuthenticated">|</p>
         <router-link to="/editorview" class="invisible md:visible" v-if="userAuthenticated">Editor View</router-link>
         <p class="invisible md:visible text-xl" v-if="userAdmin">|</p>
