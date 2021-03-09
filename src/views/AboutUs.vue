@@ -30,12 +30,6 @@
                     </li>
                 </ul>
             </div>
-            <div class="space-x-3 mt-5">
-                <router-link to="/about" class="text-black font-semibold">About Us</router-link>
-                <router-link to="/contact">Contact</router-link>
-                <router-link to="/privacy">Privacy Policy</router-link>
-                <router-link to="/terms">Terms of Use</router-link>
-            </div>
         </div>
     </div>
 </template>
