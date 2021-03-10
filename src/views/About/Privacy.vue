@@ -60,37 +60,43 @@
                         </p>
                     </li>
                     <li class="space-y-2">
-                        <h6 class="mb-1">
+                        <h6 class="mb-5">
                             <a class="font-semibold text-lg">How And Why We Use Information</a>
                         </h6>
-                        <h7 class="mb-1">
+                        <h7 class="mb-3">
                             <a class="font-semibold">Purposes for Using Information</a>
                         </h7>
                         <p>
                             We use information :
                         </p>
-                        <ul>
+                        <ul class="list-disc ml-10">
                             <li class="space-y-2">
                                 <p>
                                     To provide our Services–for example, to set up and maintain your account
                                 </p>
+                            </li>
+                            <li class="space-y-2">
                                 <p>
                                     To further develop and improve our Services–for example by adding new features that we think our users will enjoy
                                 </p>
+                            </li>
+                            <li class="space-y-2">
                                 <p>
                                     To monitor and analyze trends and better understand how users interact with our Services, which helps us improve our Services and make them easier to use.
                                 </p>
+                            </li>
+                            <li class="space-y-2">
                                 <p>
                                     To monitor and prevent any problems with our Services, protect the security of our Services, fight spam, and protect the rights and property of AsiaStudeler and others.
                                 </p>
                             </li>
                         </ul>
                     </li>
-                    <li class="space-y-2">
-                        <h6 class="mb-1">
+                    <li class="space-y-3">
+                        <h6 class="mb-5">
                             <a class="font-semibold text-lg">Sharing Information</a>
                         </h6>
-                        <h7 class="mb-1">
+                        <h7 class="mb-3">
                             <a class="font-semibold">How We Share Information</a>
                         </h7>
                         <p>
@@ -166,20 +172,28 @@
                         <p>
                             The European General Data Protection Regulation (AKA the “GDPR”), data protection laws give you rights with respect to your personal data, subject to any exemptions provided by the law, including the rights to:
                         </p>
-                        <ul>
-                            <li class="space-y-2">
+                        <ul class="list-disc ml-10 space-y-2">
+                            <li>
                                 <p>
                                     Request access to your personal data.
                                 </p>
+                            </li>
+                            <li>
                                 <p>
                                     Request correction or deletion of your personal data.
                                 </p>
+                            </li>
+                            <li>
                                 <p>
                                     Object to our use and processing of your personal data.
                                 </p>
+                            </li>
+                            <li>
                                 <p>
                                     Request that we limit our use and processing of your personal data.
                                 </p>
+                            </li>
+                            <li>
                                 <p>
                                     Request portability of your personal data.
                                 </p>
@@ -220,7 +234,9 @@
                         <p>
                             Although most changes are likely to be minor, AsiaStudeler may change its Privacy Policy from time to time. AsiaStudeler encourages visitors to frequently check this page for any changes to its Privacy Policy. If we make changes, we will notify you by updating the date, and, in some cases, we may provide additional notice (such as adding a statement to our homepage AsiaStudeler.com), or sending you a notification through email). Your further use of the Services after a change to our Privacy Policy will be subject to the updated policy. That’s it! Thanks for reading.
                         </p>
-                        <p>
+                    </li>
+                    <li>
+                        <p class="font-bold">
                             Last Update : March 09, 2021
                         </p>
                     </li>

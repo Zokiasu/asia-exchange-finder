@@ -52,25 +52,25 @@
                         <p>
                             Asia Studeler hereby grants you permission to use the Website as set forth in these Terms of Service, provided that: 
                         </p>
-                        <ul>
+                        <ul class="list-decimal ml-10">
                             <li class="space-y-2">
                                 <p>
-                                    (i) your use of the Website as permitted is solely for your personal, noncommercial use
+                                    Your use of the Website as permitted is solely for your personal, noncommercial use
                                 </p>
                             </li>
                             <li class="space-y-2">
                                 <p>
-                                    (ii) you will not copy, download or distribute any part of the Website in any form or medium without Asia Studeler prior written authorization
+                                   You will not copy, download or distribute any part of the Website in any form or medium without Asia Studeler prior written authorization
                                 </p>
                             </li>
                             <li class="space-y-2">
                                 <p>
-                                    (iii) you will not alter, modify, or make derivative works from any part of the Website other than as may be reasonably necessary to use the Website for its intended purpose
+                                    You will not alter, modify, or make derivative works from any part of the Website other than as may be reasonably necessary to use the Website for its intended purpose
                                 </p>
                             </li>
                             <li class="space-y-2">
                                 <p>
-                                    (iv) you will otherwise comply with the terms and conditions of these Terms of Service.
+                                    You will otherwise comply with the terms and conditions of these Terms of Service.
                                 </p>
                             </li>
                         </ul>
@@ -89,8 +89,20 @@
                             You must be at least 13 to access and use our Service. By using our Service you are warranting that you are 13 or older and agreeing that you will comply with these Terms of Use. If you do not agree or are not in compliance with these Terms of Use, you may not use our Service.
                         </p>
                         <p>
-                            If you are a minor in the jurisdiction in which you reside (e.g. under 18 years of age), you may only use the Service if (a) you either obtain parental or legal guardian consent after review of this Agreement prior to you using any of the Service provided by Company or are an emancipated minor and (b) you are competent and fully able to enter into the representations, and warranties, terms, conditions, obligations, and affirmations, set forth in this Agreement, and to comply and abide by with this Agreement.
+                            If you are a minor in the jurisdiction in which you reside (e.g. under 18 years of age), you may only use the Service if 
                         </p>
+                        <ul class="list-decimal ml-10 space-y-2">
+                            <li class="space-y-2">
+                                <p>
+                                    You either obtain parental or legal guardian consent after review of this Agreement prior to you using any of the Service provided by Company or are an emancipated minor
+                                </p>
+                            </li>
+                            <li class="space-y-2">
+                                <p>
+                                    You are competent and fully able to enter into the representations, and warranties, terms, conditions, obligations, and affirmations, set forth in this Agreement, and to comply and abide by with this Agreement.
+                                </p>
+                            </li>
+                        </ul>
                         <p>
                             The Company may in its sole discretion for any or no reason, with or without notice, including without limitation if it believes that you are under 13, terminate your account or profile, delete or/and anonymise any content or information that you have posted on the Service, and/or prohibit you from using or accessing the Service (or any portion, aspect or feature of the Service).
                         </p>
@@ -105,7 +117,7 @@
                         <p>
                             When you create or make available a Contribution, you represent and warrant that you:
                         </p>
-                        <ul>
+                        <ul class="list-disc ml-10 space-y-2">
                             <li class="space-y-2">
                                 <p>
                                     own or have sufficient rights to post your Contributions on or through this Site
@@ -125,20 +137,20 @@
                                 <p>
                                     will not post or submit Contributions that: 
                                 </p>
-                                <ul>
+                                <ul class="list-decimal ml-7 space-y-2">
                                     <li class="space-y-2">
                                         <p>
-                                            (i) are defamatory, damaging, disruptive, unlawful, inappropriate, offensive, inaccurate, pornographic, vulgar, indecent, profane, hateful, racially or ethnically offensive, obscene, lewd, lascivious, filthy, threatening, excessively violent, harassing, or otherwise objectionable
+                                            Are defamatory, damaging, disruptive, unlawful, inappropriate, offensive, inaccurate, pornographic, vulgar, indecent, profane, hateful, racially or ethnically offensive, obscene, lewd, lascivious, filthy, threatening, excessively violent, harassing, or otherwise objectionable
                                         </p>
                                     </li>
                                     <li class="space-y-2">
                                         <p>
-                                            (ii) incite, encourage or threaten immediate physical harm against another, including but not limited to, Contributions that promote racism, bigotry, sexism, religious intolerance or harm against any group or individual
+                                            Incite, encourage or threaten immediate physical harm against another, including but not limited to, Contributions that promote racism, bigotry, sexism, religious intolerance or harm against any group or individual
                                         </p>
                                     </li>
                                     <li class="space-y-2">
                                         <p>
-                                            (iii) contain material that solicits personal information from anyone under 13 or exploits anyone in a sexual or violent manner
+                                            Contain material that solicits personal information from anyone under 13 or exploits anyone in a sexual or violent manner
                                         </p>
                                     </li>
                                 </ul>
@@ -178,7 +190,7 @@
                             Asia Studeler, the Asia Studeler logo and the Asia Studeler design, may not be used without express written permission from Asia Studeler, other than for attribution. All other trademarks not owned by Asia Studeler that appear on Asia Studeler are the property of their respective owners, who may or may not be affiliated with, connected to, or sponsored by Asia Studeler. Asia Studeler-originated content included on the Site, such as text, graphics, logos, data compilations, APIs, software and the compilation of all content on the Site, is the property of Asia Studeler and its licensors and protected by French and international copyright laws. Except as set out in these Asia Studeler Terms, no reproduction of any Asia Studeler-originated content is permitted without written permission from Asia Studeler. Any use or reproduction of user-posted content must comply with the terms of the respective license(s) and must include a label indicating such license.
                         </p>
                     </li>
-                    <li class="space-y-2">
+                    <li class="space-y-5">
                         <h6 class="mb-1">
                             <a class="font-semibold text-lg">User Reviews, Recommendations, Comments, and other Material</a>
                         </h6>
@@ -188,13 +200,15 @@
                         <p>
                             Please choose carefully the User Material you Post. Please limit yourself to User Material directly relevant to the Asia Studeler Services. Moreover, you must not Post User Material that:
                         </p>
-                        <ul>
+                        <ul class="list-decimal ml-7">
                             <li>
                                 <p>
-                                    (i) contains Unsuitable Material
+                                    Contains Unsuitable Material
                                 </p>
+                            </li>
+                            <li>
                                 <p>
-                                    (ii) improperly claims the identity of another person. You should also be careful if you decide to Post personally identifiable information, such as your full name, email address, telephone number or street address.
+                                    Improperly claims the identity of another person. You should also be careful if you decide to Post personally identifiable information, such as your full name, email address, telephone number or street address.
                                 </p>
                             </li>
                         </ul>

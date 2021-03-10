@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import {apps} from '../main.js'
+    import {apps} from '../../main.js'
 
     import emailjs from 'emailjs-com';
     import { init } from 'emailjs-com';
