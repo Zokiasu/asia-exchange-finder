@@ -1,7 +1,8 @@
 <template>
     <div class="action absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
         <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
-            <form @submit.prevent="signupRequest" id="signup-form" class="bg-white p-10 rounded-2xl">
+            <form @submit.prevent="signupRequest" id="signup-form" class="bg-white px-10 pb-10">
+                <h1 class="text-black my-5 w-full text-center font-bold text-2xl">Sign Up</h1>
                 <div class="grid grid-cols-1 gap-6">
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
@@ -38,7 +39,7 @@
                     </div>
                 </div>
             </form>
-            <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
+            <button @click="close" class="font-bold bg-red-500 text-white -mt-96 ml-1 px-2 rounded-full">X</button>
         </div>
     </div>
 </template>

@@ -82,6 +82,7 @@
           }
         }).catch(err => console.log(error))
         this.setUserAuthenticated()
+        this.userAdmin = !this.userAdmin
       },
 
       setVisibleLogin: function() {

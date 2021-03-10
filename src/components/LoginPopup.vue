@@ -1,8 +1,9 @@
 <template>
     <div class="absolute mx-auto justify-center items-center bg-black bg-opacity-70 h-screen w-full">
         <div class="mx-auto flex justify-center items-center w-full">
-            <form @submit.prevent="loginRequest" id="login-form" class="bg-white p-10 rounded-2xl">
-                <div class="grid grid-cols-1 gap-6">
+            <form @submit.prevent="loginRequest" id="login-form" class="bg-white px-10 pb-10">
+                <h1 class="text-black my-5 w-full text-center font-bold text-2xl">Login</h1>
+                <div class="grid grid-cols-1 gap-2">
                     <div class="flex flex-wrap mb-2">
                         <div class="relative w-full appearance-none label-floating">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -33,11 +34,9 @@
                         </div>
                     </div>
                 </div>
+                <button @click="resetPassword()" class="font-bold text-red-500">Reset Password</button>
             </form>
-            <button @click="close" class="font-bold bg-red-500 text-white -mt-72 ml-1 px-2 rounded-full">X</button>
-        </div>
-        <div class="col-sm-12 text-center form-group mt-5">
-            <button @click="resetPassword()" class="font-bold text-red-500">Reset Password</button>
+            <button @click="close" class="font-bold bg-red-500 text-white -mt-80 ml-1 px-2 rounded-full">X</button>
         </div>
     </div>
 </template>
