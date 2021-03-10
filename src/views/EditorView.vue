@@ -75,6 +75,7 @@
             <NavbarEditor 
                 class="z-40" ref="navbarComponent" 
                 :university="universityObject" 
+                :listOfSpeciality="listOfSpeciality"
                 @updateUniv="function(a){addNewUniversityPartner(a)}"
                 @removePartner="function(a){removeUniversityPartner(universityObject, a)}"
                 @editPartner="function(a){editUniversityPartner(universityObject, a)}">
@@ -144,6 +145,7 @@
                 
                 userName: '',
                 universitysSend: [],
+                listOfSpeciality: [],
                 sortBy: ['A-Z', 'Z-A', 'Creation Date Asc.', 'Creation Date Desc.'],
                 actualSorting: 'A-Z',
 
@@ -213,6 +215,7 @@
             this.scroll()
 
             var testuni = this.universitys
+            var specialityPartener = []
 
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
@@ -225,7 +228,21 @@
                     testuni.push(element.val())
                 })
             })
-            
+
+            testuni.forEach(el => {
+                if(el.universitySourcerPartner){
+                    el.universitySourcerPartner.forEach(el2 => {
+                        if(el2.universityPartnerSpeciality != undefined){
+                            for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                                specialityPartener.push(el2.universityPartnerSpeciality[index])
+                            }
+                        }
+                    })
+                }
+
+            })
+
+            this.listOfSpeciality = [...new Set(specialityPartener)]
             this.universitysSend = testuni
             this.universitysSend.splice(0,1)
             

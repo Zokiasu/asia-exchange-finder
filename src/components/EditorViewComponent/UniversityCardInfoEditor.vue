@@ -169,7 +169,7 @@
         Tag
     },
     
-    props: ['universityP', 'display'],
+    props: ['universityP', 'display', 'listOfSpeciality'],
     test: [],
 
     data() {
@@ -230,6 +230,10 @@
         },
 
         editPartner(){
+            console.log(this.universityP.universityPartnerSpeciality)
+            if(this.universityP.universityPartnerSpeciality) {
+                this.universityPartner.universityPartnerSpeciality = JSON.parse(JSON.stringify(this.universityP.universityPartnerSpeciality))
+            }
             this.$emit('editPartner', this.universityPartner)
             this.callEditPartner()
         },

@@ -107,6 +107,7 @@
               v-for="universityP in partner"
               :key="universityP.universityPartnerName"
               :universityP="universityP"
+              :listOfSpeciality="listOfSpeciality"
               :display="university.universitySourceDisplay"
               @editPartner="function(a){editPartenaire(a)}"
               @deletePartner="function(a){removePartenaire(a)}">
@@ -149,7 +150,7 @@ import { init } from 'emailjs-com'
         AddUPartnerPopup,
     },
 
-    props: ['university'],
+    props: ['university', 'listOfSpeciality'],
 
     data() {
       return {

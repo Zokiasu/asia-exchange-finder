@@ -86,8 +86,6 @@
             SmartTagz,
         },
 
-        listOfSpeciality: 'listOfSpeciality',
-        universitysPartner: 'universitysPartner',
         props: ['universitysPartner', 'listOfSpeciality'],
 
         setup(props) {
