@@ -106,7 +106,7 @@
     import BackToTop from 'vue-backtotop'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
-    import Card from '../components/EditorViewComponent/CardEditor.vue'
+    import Card from '../components/EditorViewComponent/UniversityCardEditor.vue'
     import NavbarEditor from '../components/EditorViewComponent/NavbarEditor.vue'
     import AddUSoucePopup from '../components/EditorViewComponent/CreateUniversityPopUp.vue'    
 

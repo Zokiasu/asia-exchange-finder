@@ -93,7 +93,7 @@
 
 <script>
   import {analytics} from '../../main.js'
-  import UniversityCardInfo from './UniversityCardInfo.vue'
+  import UniversityCardInfo from './PartnerCard.vue'
   import Tag from '../Tag.vue'
 
   export default {

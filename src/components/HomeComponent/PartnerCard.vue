@@ -19,9 +19,8 @@
             <p class="whitespace-pre-line 4xl:text-lg">{{university.universityPartnerCondition}}</p>
         </div>
         <!-- Exchange Error -->
-        <div v-if="!university.universityPartnerSpeciality || !university.universityPartnerCondition" class="p-5 text-center font-semibold text-xs md:text-lg xl:text-xl 4xl:text-2xl">
-            <p>Sorry, we don't have more information about this partner. </p>
-            <p>If you have any information please edit this partner to help us improve our database.</p>
+        <div v-if="!university.universityPartnerSpeciality || !university.universityPartnerCondition" class="p-5 text-center font-semibold xl:text-lg 4xl:text-xl">
+            <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
         </div>
         <!-- universityPartnerWebsiteLink button -->
         <div class="container flex justify-center">

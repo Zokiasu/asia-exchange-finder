@@ -87,7 +87,7 @@
     import Multiselect from '@vueform/multiselect'
     import BackToTop from 'vue-backtotop'
     
-    import Card from '../components/HomeComponent/Card.vue'
+    import Card from '../components/HomeComponent/UniversityCard.vue'
     import Navbar from '../components/HomeComponent/navbar.vue'
 
     export default {

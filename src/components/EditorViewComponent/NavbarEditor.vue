@@ -50,10 +50,11 @@
         </div>
         <!-- University Card -->
         <UniversityCardInfoEditor 
-            class="xl:mx-40 dark:text-white"
-            v-for="(universityP, index) in partner"
-            :key="index"
+            class="lg:mx-10 dark:text-white"
+            v-for="universityP in partner"
+            :key="universityP.universityPartnerName"
             :universityP="universityP"
+            :listOfSpeciality="listOfSpeciality"
             :display="university.universitySourceDisplay"
             @editPartner="function(a){editPartenaire(a)}"
             @deletePartner="function(a){removePartenaire(a)}">
@@ -138,7 +139,7 @@
   import db from '../../main.js'
   import {apps, name, grade, analytics} from '../../main.js'
 
-  import UniversityCardInfoEditor from './UniversityCardInfoEditor.vue'
+  import UniversityCardInfoEditor from './PartnerCardEditor.vue'
   import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
   import Tag from '../Tag.vue'
 import { init } from 'emailjs-com'
