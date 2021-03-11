@@ -8,11 +8,6 @@
             <img class="h-full w-full object-cover object-center" v-lazy="university.universitySourceImageLink" alt="">
         </div>
     </div>
-    <div v-if="index%12==0" class="rounded-lg text-white bg-white p-5 flex flex-wrap content-center justify-center">
-        <span class="rounded-lg text-sm text-black text-center md:text-xl">
-            Ads
-        </span>
-    </div>
 </template>
 
 <script>
