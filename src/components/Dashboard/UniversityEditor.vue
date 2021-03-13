@@ -65,15 +65,15 @@
 </template>
 
 <script>
-    import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
+    import db from '../../main.js'
+    import {apps, name, grade} from '../../main.js'
     
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import VPagination from "vue3-pagination"
     import "vue3-pagination/dist/vue3-pagination.css"
     import Multiselect from '@vueform/multiselect'
 
-    import UETT from './UniversityEditorTbodyTmp.vue'
+    import UETT from '../Dashboard/UniversityEditorTbodyTmp.vue'
 
     export default {
 
@@ -121,7 +121,6 @@
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
@@ -150,7 +149,6 @@
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
@@ -358,7 +356,6 @@
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
@@ -444,7 +441,6 @@
                         [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",

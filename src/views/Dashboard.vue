@@ -7,7 +7,7 @@
     import db from '../main.js'
     import {apps} from '../main.js'
 
-    import UniversityEditor from '../components/UniversityEditor.vue'
+    import UniversityEditor from '../components/Dashboard/UniversityEditor.vue'
 
     export default {
         components: {

@@ -7,22 +7,27 @@
             <p class="font-bold text-white pl-2 xl:pl-0 xl:absolute xl:top-0 xl:right-2">{{universityP.universityPartnerCity}}, {{universityP.universityPartnerCountry}}</p>
         </div>
         <!-- Partner speciality -->
-        <div v-if="universityP.universityPartnerSpeciality" class="p-2">
+        <div class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Partner's Speciality :</p>
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(universityPartnerName, index) in universityP.universityPartnerSpeciality" :key="index">
                 <tag :tags="universityPartnerName"/>
             </div>
+            <div v-if="!universityP.universityPartnerSpeciality" class="4xl:text-xl">
+                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+            </div>
         </div> 
         <!-- Exchange -->
-        <div v-if="universityP.universityPartnerCondition" class="p-2">
+        <div class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Requirements :</p>
             <p class="whitespace-pre-line text-sm 4xl:text-base">{{universityP.universityPartnerCondition}}</p>
+            <div v-if="!universityP.universityPartnerCondition" class="font-semibold xl:text-lg 4xl:text-xl">
+                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+            </div>
         </div>
-        <!-- Exchange Error -->
-        <div v-if="!universityP.universityPartnerSpeciality || !universityP.universityPartnerCondition" class="p-5 text-center font-semibold text-xs md:text-lg xl:text-xl 4xl:text-2xl">
-            <p>Sorry, we don't have more information about this partner. </p>
-            <p>If you have any information please edit this partner to help us improve our database.</p>
-        </div>
+        <!-- Exchange Error
+        <div v-if="!university.universityPartnerSpeciality || !university.universityPartnerCondition" class="p-5 text-center font-semibold xl:text-lg 4xl:text-xl">
+            <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+        </div> -->
         <!-- universityPartnerWebsiteLink button -->
         <div class="relative text-sm 4xl:text-xl">
             <div class="container flex justify-center">

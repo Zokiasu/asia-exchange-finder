@@ -170,7 +170,6 @@
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",

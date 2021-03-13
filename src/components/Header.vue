@@ -14,13 +14,22 @@
       <button v-if="!userAuthenticated" @click="setVisibleLogin" class="invisible md:visible bg-blue-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log In</button>
       <button v-if="!userAuthenticated" @click="setVisibleSignUp" class="invisible md:visible bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</button>
     </div>
+    <LoginPopup @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto flex flex-col"/>
+    <SignupPopUp @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto flex flex-col"/>
 </template>
 
 <script>
   import db from '../main.js'
   import {apps} from '../main.js'
 
+  import LoginPopup from '../components/Popup/LoginPopup.vue'
+  import SignupPopUp from '../components/Popup/SignupPopUp.vue'
+
   export default {
+    components:{
+        LoginPopup,
+        SignupPopUp,
+    },
 
     data(){
       return {

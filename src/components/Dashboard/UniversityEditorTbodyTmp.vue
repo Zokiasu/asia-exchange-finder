@@ -145,7 +145,7 @@
 </template>
 
 <script>
-    import db from '../main.js'
+    import db from '../../main.js'
     
     import firebase from 'firebase'
 

@@ -136,14 +136,12 @@
                         "universitySourcerPartner": [
                             {
                                 "universityPartnerName": "University Partner",
-                                "universitySourceId": "",
                                 "universityPartnerCountry": "",
                                 "universityPartnerCity": "",
                                 "universityPartnerAddress": "",
                                 "universityPartnerWebsiteLink": "",
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "True",
-                                "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [],
                             }
@@ -222,7 +220,7 @@
             scroll(){
                 window.onscroll = () => {
                     let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
-
+                    
                     if (bottomOfWindow) {
                         this.minElement = this.minElement + 9;
                         bottomOfWindow = false;

@@ -3,7 +3,7 @@
         <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full">
             <form @submit.prevent="signupRequest" id="signup-form" class="bg-white px-10 pb-10">
                 <h1 class="text-black my-5 w-full text-center font-bold text-2xl">Sign Up</h1>
-                <div class="grid grid-cols-1 gap-6">
+                <div class="grid grid-cols-1 gap-2">
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -28,6 +28,12 @@
                             id="password" v-model="passwordConfirm" type="password" placeholder="Password Confirm">
                         </div>
                     </div>
+                    <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
+                        <div class="relative w-full appearance-none">
+                            <input type="checkbox" id="checkbox" v-model="checked" />
+                            <label class="text-black" for="checkbox"> I agree to the <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/terms" target="_blank">Terms of Service</a> and <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/privacy" target="_blank">Privacy Policy</a></label>
+                        </div>
+                    </div>
                     <div class="col-start-1 col-end-7">
                         <button v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="Button bg-blue-500 container">
                             <span v-if="!xhrRequest">Sign Up</span>
@@ -45,8 +51,8 @@
 </template>
 
 <script>
-    import {apps} from '../main.js'
-    import db from '../main.js'
+    import {apps} from '../../main.js'
+    import db from '../../main.js'
 
     export default {
         data() {
@@ -55,6 +61,7 @@
                 email: "",
                 password: "",
                 passwordConfirm: "",
+                checked: false,
                 grade: "Member",
                 created: new Date().toISOString().slice(0, 10),
                 xhrRequest: false,
@@ -73,7 +80,7 @@
                 this.errorMessage = "";
                 this.successMessage = "";
 
-                if(this.password == this.passwordConfirm && this.username != "") {
+                if(this.password == this.passwordConfirm && this.username != "" && this.checked) {
                     apps.auth().createUserWithEmailAndPassword(this.email, this.password).then(
                             (authUser) => {
                                 db.ref(`users/${authUser.user.uid}`).set({
@@ -92,7 +99,10 @@
                             this.xhrRequest = false;
                         }
                     );
-                } else if (this.username == "") {
+                } else if (!this.checked) {
+                    this.xhrRequest = false;
+                    this.$toast.error(`Please accept Terms of Service and Privacy Policy`, {position:"top", duration: 5000, max:1});
+                }  else if (this.username == "") {
                     this.xhrRequest = false;
                     this.$toast.error(`Username is missing`, {position:"top", duration: 5000, max:1});
                 } else if (this.password != this.passwordConfirm) {
