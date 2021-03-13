@@ -12,7 +12,7 @@
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(universityPartnerName, index) in university.universityPartnerSpeciality" :key="index">
                     <tag :tags="universityPartnerName"/>
             </div>
-            <div v-if="!university.universityPartnerSpeciality" class="xl:text-lg 4xl:text-xl">
+            <div v-if="!university.universityPartnerSpeciality" class="4xl:text-lg">
                 <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div> 
@@ -20,7 +20,7 @@
         <div class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Requirements :</p>
             <p class="whitespace-pre-line 4xl:text-lg">{{university.universityPartnerCondition}}</p>
-            <div v-if="!university.universityPartnerCondition" class="font-semibold xl:text-lg 4xl:text-xl">
+            <div v-if="!university.universityPartnerCondition" class="font-semibold 4xl:text-lg">
                 <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div>

@@ -75,6 +75,13 @@
                     "universitySourceWebsiteLink": "",
                     "universitySourceDisplay": "False",
                     "universitySourceCreator": name,
+                    "universitySourceMoreInfo": "",
+                    "universitySourceContributors": [
+                        {
+                            "contributorSourceName": name,
+                            "contributorSourceEditNumber": 1
+                        }
+                    ],
                     "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                     "universitySourcerPartner": [], 
                 }

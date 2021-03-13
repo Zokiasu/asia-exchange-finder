@@ -4,34 +4,45 @@
         <div class="grid grid-cols-1 w-full">
             <!-- Filter City/Destination/Speciality -->
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200 text-black"
                         mode="single"
-                        :clearOnSearch="false"
-                        :clearOnSelect="false"
                         :searchable="true"
                         placeholder="From All Cities"
                         v-model="CityFilter"
                         :options="option.cityStartOption"/>
+                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200 text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="To All Destinations"
                         v-model="DestinationFilter"
                         :options="option.countryOption"/>
+                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200 text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="For All Specialities"
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
+                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                </div>
+                <div class="pt-6 ms:pl-1 flex">
+                    <Multiselect
+                        class="md:w-48 bg-gray-200 text-black"
+                        mode="single"
+                        :searchable="true"
+                        placeholder="Display Statut"
+                        v-model="displayFilter"
+                        :options="option.displayOption"/>
+                    <button @click="resetDisplay" class="px-1 rounded-none" :class="(displayFilter === '' || displayFilter === null || displayFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
             </div>
             <div class="container flex flex-col justify-center">
@@ -46,10 +57,10 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible && userConnected" class="px-8 md:px-10 lg:px-20 2xl:px-32 mb-10 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
-                    <button @click="setCreateUniversity" class="bg-white opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
+                    <button @click="setCreateUniversity" class="bg-gray-200 opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
                         <img class="h-full w-full object-cover object-center" v-lazy="imgTmp" alt="">
                         <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
-                        <p class="absolute w-full bg-white bg-opacity-80 p-5 bottom-0 block text-black font-semibold text-lg">
+                        <p class="absolute w-full bg-gray-200 bg-opacity-80 p-5 bottom-0 block text-black font-semibold text-lg">
                             Add New University
                         </p>
                     </button>
@@ -130,9 +141,12 @@
                 modelCity:'',
                 modelDestination:'',
                 modelSpeciality:'',
+                modelDisplay:'',
+
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
+                displayFilter:'',
 
                 minElement: 11,
 
@@ -153,6 +167,7 @@
                     cityStartOption: [],
                     countryOption: [],
                     specialityOption: [],
+                    displayOption: ['Online', 'In Progress'],
                 },
 
                 universitys: [
@@ -166,6 +181,13 @@
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
+                        "universitySourceMoreInfo": "",
+                        "universitySourceContributors": [
+                            {
+                                "contributorSourceName": name,
+                                "contributorSourceEditNumber": 1
+                            }
+                        ],
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
@@ -194,6 +216,8 @@
                     universitySourceWebsiteLink: '',
                     universitySourceDisplay: '',
                     universitySourceCreator: '',
+                    universitySourceMoreInfo: '',
+                    universitySourceContributors: [],
                     universitySourceLastUpdate: '',
                     universitySourcerPartner: []
                 },
@@ -238,7 +262,6 @@
                         }
                     })
                 }
-
             })
 
             this.listOfSpeciality = [...new Set(specialityPartener)]
@@ -314,6 +337,8 @@
                 this.universityObject.universitySourceWebsiteLink = this.universitysSend[index].universitySourceWebsiteLink,
                 this.universityObject.universitySourceDisplay = this.universitysSend[index].universitySourceDisplay,
                 this.universityObject.universitySourceCreator = this.universitysSend[index].universitySourceCreator,
+                this.universityObject.universitySourceMoreInfo = this.universitysSend[index].universitySourceMoreInfo,
+                this.universityObject.universitySourceContributors = this.universitysSend[index].universitySourceContributors,                
                 this.universityObject.universitySourceLastUpdate = this.universitysSend[index].universitySourceLastUpdate,
                 this.universityObject.universitySourcerPartner = this.universitysSend[index].universitySourcerPartner
                 this.$refs.navbarComponent.drawer();
@@ -323,6 +348,27 @@
                 this.CityFilter = undefined
                 this.DestinationFilter = undefined
                 this.SpecialityFilter = undefined
+                this.displayFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetCity(){
+                this.CityFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetDestination(){
+                this.DestinationFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetSpeciality(){
+                this.SpecialityFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetDisplay(){
+                this.displayFilter = undefined
                 this.searchByFilter()
             },
 
@@ -330,13 +376,28 @@
                 this.modelCity = this.option.cityStartOption[this.CityFilter]
                 this.modelDestination = this.option.countryOption[this.DestinationFilter]
                 this.modelSpeciality = this.option.specialityOption[this.SpecialityFilter]
+                this.modelDisplay = this.option.displayOption[this.displayFilter]
+
+                if(this.modelDisplay == "Online") {
+                    this.modelDisplay = "true"
+                } else if (this.modelDisplay == "In Progress"){
+                    this.modelDisplay = "false"
+                }
+
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {
-                        if(this.modelCity == "" || this.modelCity == null || this.modelCity == undefined) {
+                        if(this.modelCity == "" && this.modelDisplay == "" || this.modelCity == null && this.modelDisplay == null || this.modelCity == undefined && this.modelDisplay == undefined) {
                             return (this.booleanByCountry(el.universitySourcerPartner))
-                        } else {
+                        } 
+                        else if(this.modelCity == "" && this.modelDisplay != "" || this.modelCity == null && this.modelDisplay != null || this.modelCity == undefined && this.modelDisplay != undefined) {
+                            return (this.booleanByCountry(el.universitySourcerPartner) && el.universitySourceDisplay.toLowerCase() == this.modelDisplay.toLowerCase())
+                        } 
+                        else if(this.modelCity != "" && this.modelDisplay == "" || this.modelCity != null && this.modelDisplay == null || this.modelCity != undefined && this.modelDisplay == undefined) {
                             return (el.universitySourceCity.toLowerCase() == this.modelCity.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner))
+                        } 
+                        else {
+                            return (el.universitySourceCity.toLowerCase() == this.modelCity.toLowerCase() && this.booleanByCountry(el.universitySourcerPartner) && el.universitySourceDisplay.toLowerCase() == this.modelDisplay.toLowerCase())
                         }
                     }
                 )
@@ -446,9 +507,11 @@
                 if(newUniversitys.universitySourceId == "" || newUniversitys.universitySourceId == undefined) {
                     testA = db.ref().child('universitys').push().key;
                     newUniversitys.universitySourceId = testA;
+                    this.updateCreators(newUniversitys)
                     up['/universitysEdited/' + testA] = newUniversitys
                     
                 } else {
+                    this.updateCreators(newUniversitys)
                     up['/universitysEdited/' + newUniversitys.universitySourceId] = newUniversitys
                 }
 
@@ -462,6 +525,8 @@
                     "universitySourceWebsiteLink": newUniversitys.universitySourceWebsiteLink,
                     "universitySourceDisplay": newUniversitys.universitySourceDisplay,
                     "universitySourceCreator": newUniversitys.universitySourceCreator,
+                    "universitySourceMoreInfo": newUniversitys.universitySourceMoreInfo,
+                    "universitySourceContributors": newUniversitys.universitySourceContributors,
                     "universitySourceLastUpdate": newUniversitys.universitySourceLastUpdate,   
                     "universitySourcerPartner": newUniversitys.universitySourcerPartner, 
                 })
@@ -497,6 +562,8 @@
                         "universitySourceWebsiteLink": universityEdit.universitySourceWebsiteLink,
                         "universitySourceDisplay": universityEdit.universitySourceDisplay,
                         "universitySourceCreator": universityEdit.universitySourceCreator,
+                        "universitySourceMoreInfo": universityEdit.universitySourceMoreInfo,
+                        "universitySourceContributors": universityEdit.universitySourceContributors,
                         "universitySourceLastUpdate": universityEdit.universitySourceLastUpdate,   
                         "universitySourcerPartner": universityEdit.universitySourcerPartner, 
                     })
@@ -510,11 +577,14 @@
                     this.universitysSend[index].universitySourceWebsiteLink = universityEdit.universitySourceWebsiteLink,
                     this.universitysSend[index].universitySourceDisplay = universityEdit.universitySourceDisplay,
                     this.universitysSend[index].universitySourceCreator = universityEdit.universitySourceCreator,
+                    this.universitysSend[index].universitySourceMoreInfo = universityEdit.universitySourceMoreInfo,
+                    this.universitysSend[index].universitySourceContributors = universityEdit.universitySourceContributors,
                     this.universitysSend[index].universitySourceLastUpdate = universityEdit.universitySourceLastUpdate,
                     this.universitysSend[index].universitySourcerPartner = universityEdit.universitySourcerPartner
                 }
 
                 this.sortingParam("Creation Date Desc.")
+                this.updateCreators(universityEdit)
                 up['/universitysEdited/' + this.universitysSend[index].universitySourceId] = universityEdit
 
                 return db.ref().update(up).then(
@@ -558,7 +628,6 @@
                         universityEdit.universitySourcerPartner.forEach(function(element2){
                             tmpPartner.push({
                                 "universityPartnerName": element2.universityPartnerName,
-                                "universitySourceId": element2.universitySourceId,
                                 "universityPartnerCountry": element2.universityPartnerCountry,
                                 "universityPartnerCity": element2.universityPartnerCity,
                                 "universityPartnerAddress": element2.universityPartnerAddress,
@@ -575,7 +644,6 @@
                             element.universitySourcerPartner.forEach(function(element2){
                                 tmpPartner.push({
                                     "universityPartnerName": element2.universityPartnerName,
-                                    "universitySourceId": element2.universitySourceId,
                                     "universityPartnerCountry": element2.universityPartnerCountry,
                                     "universityPartnerCity": element2.universityPartnerCity,
                                     "universityPartnerAddress": element2.universityPartnerAddress,
@@ -606,7 +674,6 @@
                         universityEdit.universitySourceDisplay = "False"
                         this.universitysSend.push({
                             "universityPartnerName": universityEdit.universityPartnerName,
-                            "universitySourceId": universityEdit.universitySourceId,
                             "universityPartnerCountry": universityEdit.universityPartnerCountry,
                             "universityPartnerCity": universityEdit.universityPartnerCity,
                             "universityPartnerAddress": universityEdit.universityPartnerAddress,
@@ -619,7 +686,7 @@
                         })
                     }
                 }
-                
+                this.updateCreators(universityEdit)
                 up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
 
                 this.sortingParam("Creation Date Desc.")
@@ -646,7 +713,7 @@
                     }
 
                     universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-
+                    this.updateCreators(universityEdit)
                     up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
                 } else {//University display statut is online
                     var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
@@ -662,6 +729,7 @@
 
                     tmpUEdit.universitySourceDisplay = "False"
                     this.universitysSend.push(tmpUEdit)
+                    this.updateCreators(tmpUEdit)
                     up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
                 }
 
@@ -713,6 +781,25 @@
                     this.$toast.error(`The partner has been successfully deleted`, {position:"top", max:3});
                     setTimeout(this.$toast.clear, 10000)
                 })
+            },
+
+            updateCreators(universityEdit) {
+                var news = true
+
+                universityEdit.universitySourceContributors.forEach(el => {
+                    if(el.contributorSourceName == name) {
+                        el.contributorSourceEditNumber = el.contributorSourceEditNumber + 1
+                        news = false
+                    }
+                })
+                
+                if(news) {
+                    universityEdit.universitySourceContributors.push({
+                        "contributorSourceName": name,
+                        "contributorSourceEditNumber": 1
+                    })
+                }
+
             },
 
         },

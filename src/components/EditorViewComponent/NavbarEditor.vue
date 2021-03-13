@@ -83,8 +83,42 @@
               </a>
           </div>
           <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
-          <!--<div class="bg-white my-5 h-72"></div>
-          <div class="bg-white my-5 h-72"></div>-->
+          <div class="bg-white my-5">
+            <h2 class="font-semibold text-xl py-2 px-5 shadow-lg">About University</h2>
+            <ul class="px-5 py-3 space-y-2">
+              <li>
+                <h3 class="font-semibold">Country:</h3>
+                <p>{{ university.universitySourceCountry }}</p>
+              </li>
+              <li>
+                <h3 class="font-semibold">City:</h3>
+                <p>{{ university.universitySourceCity }}</p>
+              </li>
+              <li>
+                <h3 class="font-semibold">Adress:</h3>
+                <p>{{ university.universitySourceAddress }}</p>
+              </li>
+              <li v-if="university.universitySourceMoreInfo">
+                <h3 class="font-semibold">More Info:</h3>
+                <p>{{ university.universitySourceMoreInfo }}</p>
+              </li>
+              <li>
+                <h3 class="font-semibold">Last Update:</h3>
+                <p>{{ university.universitySourceLastUpdate }} UTC</p>
+              </li>
+            </ul>
+
+            <!--<button class="w-full px-5 pb-1.5 font-semibold text-blue-500 text-right">Edit</button>-->
+          </div>
+          <div class="bg-white my-5">
+            <h2 class="font-semibold text-xl py-2 px-5 shadow-lg">Top Contributors</h2>
+            <ul class="px-5 py-3 space-y-2" v-for="Contributor in university.universitySourceContributors" :key="Contributor.contributorSourceName">
+              <li>
+                <h3 class="text-blue-800 font-semibold">{{ Contributor.contributorSourceName }}</h3>
+                <p>{{ Contributor.contributorSourceEditNumber }} edits</p>
+              </li>
+            </ul>
+          </div>
         </div>
         <!-- Partner -->
         <div class="col-span-4 ml-5 bg-white bg-opacity-90">
@@ -165,7 +199,6 @@ import { init } from 'emailjs-com'
 
         universitysPartner: {
             "universityPartnerName": "",
-            "universitySourceId": "",
             "universityPartnerCountry": "",
             "universityPartnerCity": "",
             "universityPartnerAddress": "",
@@ -210,7 +243,6 @@ import { init } from 'emailjs-com'
 
       resetPartnerInfo(){
         this.universitysPartner.universityPartnerName = ""
-        this.universitysPartner.universitySourceId = ""
         this.universitysPartner.universityPartnerCountry = ""
         this.universitysPartner.universityPartnerCity = ""
         this.universitysPartner.universityPartnerAddress = ""
@@ -234,6 +266,8 @@ import { init } from 'emailjs-com'
             "universitySourceWebsiteLink": "",
             "universitySourceDisplay": "False",
             "universitySourceCreator": name,
+            "universitySourceMoreInfo": "",
+            "universitySourceContributors": [],
             "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
             "universitySourcerPartner": [], 
         }
@@ -243,7 +277,6 @@ import { init } from 'emailjs-com'
         if(universityEdited.universitySourcerPartner == undefined) {
           universityEdited.universitySourcerPartner = [{
             "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universitySourceId":  this.universitysPartner.universitySourceId,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
@@ -257,7 +290,6 @@ import { init } from 'emailjs-com'
         } else {
           universityEdited.universitySourcerPartner.push({
             "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universitySourceId":  this.universitysPartner.universitySourceId,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
@@ -291,7 +323,6 @@ import { init } from 'emailjs-com'
         if(this.universitysPartner.universityPartnerName != "") {
           this.partner.push({
             "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universitySourceId":  this.universitysPartner.universitySourceId,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
@@ -324,7 +355,6 @@ import { init } from 'emailjs-com'
           console.log(this.partner)
           this.partner.push({
             "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universitySourceId":  this.universitysPartner.universitySourceId,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,

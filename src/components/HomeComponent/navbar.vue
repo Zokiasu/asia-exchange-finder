@@ -61,9 +61,41 @@
                   </button>
               </a>
           </div>
-          <p class="absolute top-1 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
-          <!--<div class="bg-white my-5 h-72"></div>
-          <div class="bg-white my-5 h-72"></div>-->
+          <p class="absolute top-0 p-4 pt-2 xl:text-xl 2xl:text-2xl 4xl:text-4xl text-white bg-blue-600 bg-opacity-60">{{ university.universitySourceName }}</p>
+          <div class="bg-white my-5">
+            <h2 class="font-semibold text-xl py-2 px-5 shadow-lg">About University</h2>
+            <ul class="px-5 py-3 space-y-2">
+              <li v-if="university.universitySourceCountry">
+                <h3 class="font-semibold">Country:</h3>
+                <p>{{ university.universitySourceCountry }}</p>
+              </li>
+              <li v-if="university.universitySourceCity">
+                <h3 class="font-semibold">City:</h3>
+                <p>{{ university.universitySourceCity }}</p>
+              </li>
+              <li v-if="university.universitySourceAddress">
+                <h3 class="font-semibold">Adress:</h3>
+                <p>{{ university.universitySourceAddress }}</p>
+              </li>
+              <li v-if="university.universitySourceMoreInfo">
+                <h3 class="font-semibold">More Info:</h3>
+                <p>{{ university.universitySourceMoreInfo }}</p>
+              </li>
+              <li v-if="university.universitySourceLastUpdate">
+                <h3 class="font-semibold">Last Update:</h3>
+                <p>{{ university.universitySourceLastUpdate }} UTC</p>
+              </li>
+            </ul>
+          </div>
+          <div class="bg-white my-5">
+            <h2 class="font-semibold text-xl py-2 px-5 shadow-lg">Top Contributors</h2>
+            <ul class="px-5 py-3 space-y-2" v-for="Contributors in university.universitySourceContributors" :key="Contributors.contributorSourceName">
+              <li>
+                <h3 class="text-blue-800 font-semibold">{{ Contributors.contributorSourceName }}</h3>
+                <p>{{ Contributors.contributorSourceEditNumber }} edits</p>
+              </li>
+            </ul>
+          </div>
         </div>
         <!-- Partner -->
         <div class="col-span-4 ml-5 bg-white bg-opacity-90">

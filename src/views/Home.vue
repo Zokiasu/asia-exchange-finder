@@ -4,37 +4,40 @@
         <div class="grid grid-cols-1 w-full">
             <!-- Filter City/Destination/Speciality -->
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="From All Cities"
                         v-model="CityFilter"
                         :options="option.cityStartOption"/>
+                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="To All Destinations"
                         v-model="DestinationFilter"
                         :options="option.countryOption"/>
+                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-6">
+                <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-white rounded text-black"
+                        class="md:w-48 bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="For All Specialities"
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
+                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
                 </div>
             </div>
             <div class="container flex flex-col justify-center">
                 <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
-                <button @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
+                <button @click="resetAllFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
             </div>
 
             <!-- University Card -->
@@ -109,10 +112,13 @@
                 CityFilter:'',
                 DestinationFilter:'',
                 SpecialityFilter:'',
+
                 minElement: 12,
+
                 show: false,
                 visible: false,
                 userConnected: false,
+                
                 universitysSend: [],
 
                 option: {
@@ -132,6 +138,13 @@
                         "universitySourceWebsiteLink": "",
                         "universitySourceDisplay": "False",
                         "universitySourceCreator": name,
+                        "universitySourceMoreInfo": "",
+                        "universitySourceContributors": [
+                            {
+                                "contributorSourceName": name,
+                                "contributorSourceEditNumber": 1
+                            }
+                        ],
                         "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
                         "universitySourcerPartner": [
                             {
@@ -150,6 +163,7 @@
                 ],
 
                 universityObject: {
+                    universitySourceId: '',
                     universitySourceName: '',
                     universitySourceCountry: '',
                     universitySourceCity: '',
@@ -158,6 +172,9 @@
                     universitySourceWebsiteLink: '',
                     universitySourceDisplay: '',
                     universitySourceCreator: '',
+                    universitySourceMoreInfo: '',
+                    universitySourceContributors: [],
+                    universitySourceLastUpdate: '',
                     universitySourcerPartner: []
                 },
             }
@@ -213,6 +230,10 @@
 
         mounted() {
             this.scroll()
+        },
+
+        updated(){
+            console.log(this.CityFilter)
         },
 
         methods: {
@@ -273,14 +294,32 @@
                         this.universityObject.universitySourceWebsiteLink = this.universitys[i].universitySourceWebsiteLink,
                         this.universityObject.universitySourceDisplay = this.universitys[i].universitySourceDisplay,
                         this.universityObject.universitySourceCreator = this.universitys[i].universitySourceCreator,
+                        this.universityObject.universitySourceMoreInfo = this.universitys[i].universitySourceMoreInfo,
+                        this.universityObject.universitySourceContributors = this.universitys[i].universitySourceContributors,                
+                        this.universityObject.universitySourceLastUpdate = this.universitys[i].universitySourceLastUpdate,
                         this.universityObject.universitySourcerPartner = this.universitys[i].universitySourcerPartner
                     }
                 }
             },
 
-            resetFilter(){
+            resetAllFilter(){
                 this.CityFilter = undefined
                 this.DestinationFilter = undefined
+                this.SpecialityFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetCity(){
+                this.CityFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetDestination(){
+                this.DestinationFilter = undefined
+                this.searchByFilter()
+            },
+
+            resetSpeciality(){
                 this.SpecialityFilter = undefined
                 this.searchByFilter()
             },

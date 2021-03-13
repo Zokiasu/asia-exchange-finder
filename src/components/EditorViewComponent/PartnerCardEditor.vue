@@ -12,7 +12,7 @@
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(universityPartnerName, index) in universityP.universityPartnerSpeciality" :key="index">
                 <tag :tags="universityPartnerName"/>
             </div>
-            <div v-if="!universityP.universityPartnerSpeciality" class="4xl:text-xl">
+            <div v-if="!universityP.universityPartnerSpeciality" class="text-sm 4xl:text-lg">
                 <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div> 
@@ -29,7 +29,7 @@
             <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
         </div> -->
         <!-- universityPartnerWebsiteLink button -->
-        <div class="relative text-sm 4xl:text-xl">
+        <div class="relative text-sm 4xl:text-lg">
             <div class="container flex justify-center">
                 <a v-bind:href="link" target="_blank">
                     <button class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-blue-500 
@@ -61,36 +61,36 @@
         <div class="font-bold grid grid-cols-2 gap-1 text-xs text-black w-full pt-5 pb-10 px-5">
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating">
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceName" v-model="universityPartner.universityPartnerName" type="text" :placeholder="universityP.universityPartnerName">
+                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universitySourceName" v-model="universityPartner.universityPartnerName" :placeholder="universityP.universityPartnerName">
                     <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">universityP Partner Name</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating">
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceAddress" v-model="universityPartner.universityPartnerAddress" type="text" :placeholder="universityP.universityPartnerAddress">
+                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universitySourceAddress" v-model="universityPartner.universityPartnerAddress" :placeholder="universityP.universityPartnerAddress">
                     <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Adress</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-span-3">
                 <div class="relative w-full appearance-none label-floating">
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceCountry" v-model="universityPartner.universityPartnerCountry" type="text" :placeholder="universityP.universityPartnerCountry">
+                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universitySourceCountry" v-model="universityPartner.universityPartnerCountry" :placeholder="universityP.universityPartnerCountry">
                     <label for="universitySourceCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Country</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-span-3">
                 <div class="relative w-full appearance-none label-floating">
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceCity" v-model="universityPartner.universityPartnerCity" type="text" :placeholder="universityP.universityPartnerCity">
+                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universitySourceCity" v-model="universityPartner.universityPartnerCity" :placeholder="universityP.universityPartnerCity">
                     <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner City</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating">
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceWebsiteLink" v-model="universityPartner.universityPartnerWebsiteLink" type="url" :placeholder="universityP.universityPartnerWebsiteLink">
+                    <input type="url" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universitySourceWebsiteLink" v-model="universityPartner.universityPartnerWebsiteLink" :placeholder="universityP.universityPartnerWebsiteLink">
                     <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website</label>
                 </div>
             </div>
@@ -186,7 +186,6 @@
             link: '#',
             "universityPartner": {
                 "universityPartnerName": "",
-                "universitySourceId": "",
                 "universityPartnerCountry": "",
                 "universityPartnerCity": "",
                 "universityPartnerAddress": "",

@@ -106,6 +106,8 @@
                     "universitySourceWebsiteLink": "",
                     "universitySourceDisplay": "",
                     "universitySourceCreator": "",
+                    "universitySourceMoreInfo": "",
+                    "universitySourceContributors": [],
                     "universitySourceLastUpdate": "",   
                     "universitySourcerPartner": [], 
                 },
@@ -138,6 +140,8 @@
                 this.university.universitySourceWebsiteLink = ""
                 this.university.universitySourceDisplay = "False"
                 this.university.universitySourceCreator = name
+                this.university.universitySourceMoreInfo = ""
+                this.university.universitySourceContributors = ""
                 this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                 this.university.universitySourcerPartner = ""
             },
@@ -150,9 +154,16 @@
                 if (this.university.universitySourceAddress == "") {this.university.universitySourceAddress = this.universitySource.universitySourceAddress}
                 if (this.university.universitySourceImageLink == "") {this.university.universitySourceImageLink = this.universitySource.universitySourceImageLink}
                 if (this.university.universitySourceWebsiteLink == "") {this.university.universitySourceWebsiteLink = this.universitySource.universitySourceWebsiteLink}
+                if (this.university.universitySourceMoreInfo == "") {this.university.universitySourceMoreInfo = this.universitySource.universitySourceMoreInfo}
                 this.university.universitySourceDisplay = "False"
                 this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                
+                                
+                if(this.universitySource.universitySourceContributors != undefined) {
+                    this.university.universitySourceContributors = this.universitySource.universitySourceContributors
+                } else {
+                    this.university.universitySourceContributors = []
+                }
+
                 if(this.universitySource.universitySourcerPartner != undefined) {
                     this.university.universitySourcerPartner = this.universitySource.universitySourcerPartner
                 } else {

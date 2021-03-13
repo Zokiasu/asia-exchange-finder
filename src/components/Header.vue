@@ -14,8 +14,8 @@
       <button v-if="!userAuthenticated" @click="setVisibleLogin" class="invisible md:visible bg-blue-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log In</button>
       <button v-if="!userAuthenticated" @click="setVisibleSignUp" class="invisible md:visible bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</button>
     </div>
-    <LoginPopup @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto flex flex-col"/>
-    <SignupPopUp @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto flex flex-col"/>
+    <LoginPopup @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto z-50 flex flex-col"/>
+    <SignupPopUp @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto z-50 flex flex-col"/>
 </template>
 
 <script>
