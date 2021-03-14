@@ -12,7 +12,7 @@
                         placeholder="From All Cities"
                         v-model="CityFilter"
                         :options="option.cityStartOption"/>
-                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
@@ -22,7 +22,7 @@
                         placeholder="To All Destinations"
                         v-model="DestinationFilter"
                         :options="option.countryOption"/>
-                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
@@ -32,7 +32,7 @@
                         placeholder="For All Specialities"
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
-                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
             </div>
             <div class="container flex flex-col justify-center">

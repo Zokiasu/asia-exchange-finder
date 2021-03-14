@@ -12,7 +12,7 @@
                         placeholder="From All Cities"
                         v-model="CityFilter"
                         :options="option.cityStartOption"/>
-                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
@@ -22,7 +22,7 @@
                         placeholder="To All Destinations"
                         v-model="DestinationFilter"
                         :options="option.countryOption"/>
-                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
@@ -32,7 +32,7 @@
                         placeholder="For All Specialities"
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
-                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
@@ -42,7 +42,7 @@
                         placeholder="Display Statut"
                         v-model="displayFilter"
                         :options="option.displayOption"/>
-                    <button @click="resetDisplay" class="px-1 rounded-none" :class="(displayFilter === '' || displayFilter === null || displayFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible'">X</button>
+                    <button @click="resetDisplay" class="px-1 rounded-none" :class="(displayFilter === '' || displayFilter === null || displayFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
             </div>
             <div class="container flex flex-col justify-center">
@@ -170,41 +170,7 @@
                     displayOption: ['Online', 'In Progress'],
                 },
 
-                universitys: [
-                    {
-                        "universitySourceId": "",
-                        "universitySourceName": "University Name",
-                        "universitySourceCountry": "France",
-                        "universitySourceCity": "Paris",
-                        "universitySourceAddress": "",
-                        "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-                        "universitySourceWebsiteLink": "",
-                        "universitySourceDisplay": "False",
-                        "universitySourceCreator": name,
-                        "universitySourceMoreInfo": "",
-                        "universitySourceContributors": [
-                            {
-                                "contributorSourceName": name,
-                                "contributorSourceEditNumber": 1
-                            }
-                        ],
-                        "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
-                        "universitySourcerPartner": [
-                            {
-                                "universityPartnerName": "University Partner",
-                                "universityPartnerCountry": "",
-                                "universityPartnerCity": "",
-                                "universityPartnerAddress": "",
-                                "universityPartnerWebsiteLink": "",
-                                "universityPartnerCondition": "",
-                                "universityPartnerDisplay": "True",
-                                "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [],
-                            }
-                        ], 
-                    }
-                ],
+                universitys: [],
 
                 universityObject: {
                     universitySourceId: '',
@@ -237,22 +203,54 @@
         async mounted() {
             this.scroll()
 
-            var testuni = this.universitys
+            var getUniversityDatabase = this.universitys
             var specialityPartener = []
 
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
-                    testuni.push(element.val())
+                    getUniversityDatabase.push(
+                        {
+                            "universitySourceId": element.val().universitySourceId,
+                            "universitySourceName": element.val().universitySourceName,
+                            "universitySourceCountry": element.val().universitySourceCountry,
+                            "universitySourceCity": element.val().universitySourceCity,
+                            "universitySourceAddress": element.val().universitySourceAddress,
+                            "universitySourceImageLink": element.val().universitySourceImageLink,
+                            "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                            "universitySourceDisplay": element.val().universitySourceDisplay,
+                            "universitySourceCreator":element.val().universitySourceCreator,
+                            "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                            "universitySourceContributors": element.val().universitySourceContributors,
+                            "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                            "universitySourcerPartner": element.val().universitySourcerPartner, 
+                        }
+                    )
                 })
             })
 
             await db.ref("universitysEdited").once("value", function(snapshot){
                 snapshot.forEach(function(element){
-                    testuni.push(element.val())
+                    getUniversityDatabase.push(
+                        {
+                            "universitySourceId": element.val().universitySourceId,
+                            "universitySourceName": element.val().universitySourceName,
+                            "universitySourceCountry": element.val().universitySourceCountry,
+                            "universitySourceCity": element.val().universitySourceCity,
+                            "universitySourceAddress": element.val().universitySourceAddress,
+                            "universitySourceImageLink": element.val().universitySourceImageLink,
+                            "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                            "universitySourceDisplay": element.val().universitySourceDisplay,
+                            "universitySourceCreator":element.val().universitySourceCreator,
+                            "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                            "universitySourceContributors": element.val().universitySourceContributors,
+                            "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                            "universitySourcerPartner": element.val().universitySourcerPartner, 
+                        }
+                    )
                 })
             })
 
-            testuni.forEach(el => {
+            getUniversityDatabase.forEach(el => {
                 if(el.universitySourcerPartner){
                     el.universitySourcerPartner.forEach(el2 => {
                         if(el2.universityPartnerSpeciality != undefined){
@@ -265,14 +263,15 @@
             })
 
             this.listOfSpeciality = [...new Set(specialityPartener)]
-            this.universitysSend = testuni
-            this.universitysSend.splice(0,1)
+            this.universitysSend = getUniversityDatabase
             
             this.universitysSend.sort(function(a,b){
                 if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return -1;}
                 if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return 1;}
                 return 0;
             })
+
+            this.removeDoubleUniversityOnline(this.universitysSend)
 
             if(this.universitysSend.length > 0){
                 this.visible = !this.visible;
@@ -281,6 +280,91 @@
         },
 
         methods: {
+
+            async updateDisplayUniversity(){
+                var getUniversityDatabase = []
+
+                await db.ref("universitys").once("value", function(snapshot){
+                    snapshot.forEach(function(element){
+                        getUniversityDatabase.push(
+                            {
+                                "universitySourceId": element.val().universitySourceId,
+                                "universitySourceName": element.val().universitySourceName,
+                                "universitySourceCountry": element.val().universitySourceCountry,
+                                "universitySourceCity": element.val().universitySourceCity,
+                                "universitySourceAddress": element.val().universitySourceAddress,
+                                "universitySourceImageLink": element.val().universitySourceImageLink,
+                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                                "universitySourceDisplay": element.val().universitySourceDisplay,
+                                "universitySourceCreator":element.val().universitySourceCreator,
+                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                                "universitySourceContributors": element.val().universitySourceContributors,
+                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                                "universitySourcerPartner": element.val().universitySourcerPartner, 
+                            }
+                        )
+                    })
+                })
+
+                await db.ref("universitysEdited").once("value", function(snapshot){
+                    snapshot.forEach(function(element){
+                        getUniversityDatabase.push(
+                            {
+                                "universitySourceId": element.val().universitySourceId,
+                                "universitySourceName": element.val().universitySourceName,
+                                "universitySourceCountry": element.val().universitySourceCountry,
+                                "universitySourceCity": element.val().universitySourceCity,
+                                "universitySourceAddress": element.val().universitySourceAddress,
+                                "universitySourceImageLink": element.val().universitySourceImageLink,
+                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                                "universitySourceDisplay": element.val().universitySourceDisplay,
+                                "universitySourceCreator":element.val().universitySourceCreator,
+                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                                "universitySourceContributors": element.val().universitySourceContributors,
+                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                                "universitySourcerPartner": element.val().universitySourcerPartner, 
+                            }
+                        )
+                    })
+                })
+                this.universitysSend = getUniversityDatabase
+                
+                this.universitysSend.sort(function(a,b){
+                    if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return -1;}
+                    if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return 1;}
+                    return 0;
+                })
+
+                this.removeDoubleUniversityOnline(this.universitysSend)
+
+                var specialityPartener = []
+                
+                getUniversityDatabase.forEach(el => {
+                    if(el.universitySourcerPartner){
+                        el.universitySourcerPartner.forEach(el2 => {
+                            if(el2.universityPartnerSpeciality != undefined){
+                                for (let index = 0; index < el2.universityPartnerSpeciality.length; index++) {
+                                    specialityPartener.push(el2.universityPartnerSpeciality[index])
+                                }
+                            }
+                        })
+                    }
+                })
+
+                this.listOfSpeciality = [...new Set(specialityPartener)]
+            },
+
+            removeDoubleUniversityOnline(universityEdit){
+                for (let j = 0; j < universityEdit.length-1; j++) {
+                    if(universityEdit[j].universitySourceName === universityEdit[j+1].universitySourceName) {
+                        if(universityEdit[j].universitySourceDisplay == "True") {
+                            universityEdit.splice(j,1)
+                        } else if(universityEdit[j+1].universitySourceDisplay == "True") {
+                            universityEdit.splice(j+1,1)
+                        }
+                    }
+                }
+            },
 
             setCreateUniversity: function() {
                 this.addUniversitySourcePopUp = !this.addUniversitySourcePopUp
@@ -383,7 +467,6 @@
                 } else if (this.modelDisplay == "In Progress"){
                     this.modelDisplay = "false"
                 }
-
 
                 this.universitysSend = this.universitys.filter(
                     (el) => {
@@ -500,6 +583,7 @@
                 }
             },
 
+
             addNewUniversity(newUniversitys){
                 var testA = "";
                 var up = {};
@@ -567,6 +651,7 @@
                         "universitySourceLastUpdate": universityEdit.universitySourceLastUpdate,   
                         "universitySourcerPartner": universityEdit.universitySourcerPartner, 
                     })
+                    this.updateDisplayUniversity()
                 } else {
                     this.universitysSend[index].universitySourceId = universityEdit.universitySourceId,
                     this.universitysSend[index].universitySourceName = universityEdit.universitySourceName,
@@ -585,7 +670,7 @@
 
                 this.sortingParam("Creation Date Desc.")
                 this.updateCreators(universityEdit)
-                up['/universitysEdited/' + this.universitysSend[index].universitySourceId] = universityEdit
+                up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
 
                 return db.ref().update(up).then(
                     () => {
@@ -601,17 +686,23 @@
             },
 
             removeUniversity(index){
+                console.log("removeUniversity")
+                console.log(this.universitysSend[index])
                 if(this.universitysSend[index].universitySourceDisplay == "True") {
+                    console.log("Hello1")
                     apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universityHistory/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
                 } else {
+                    console.log("Hello2")
+                    console.log(this.universitysSend[index].universitySourceId)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
                 }
                 this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", max:3});
                 setTimeout(this.$toast.clear, 10000)
                 this.universitysSend.splice(index,1)
             },
+
 
             addNewUniversityPartner(universityEdit){
 
@@ -672,17 +763,21 @@
                 if(universityNotCurrentEdit) {
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
+                        console.log(this.universitysSend)
                         this.universitysSend.push({
-                            "universityPartnerName": universityEdit.universityPartnerName,
-                            "universityPartnerCountry": universityEdit.universityPartnerCountry,
-                            "universityPartnerCity": universityEdit.universityPartnerCity,
-                            "universityPartnerAddress": universityEdit.universityPartnerAddress,
-                            "universityPartnerWebsiteLink": universityEdit.universityPartnerWebsiteLink,
-                            "universityPartnerCondition": universityEdit.universityPartnerCondition,
-                            "universityPartnerDisplay": universityEdit.universityPartnerDisplay,
-                            "universityPartnerCreator": universityEdit.universityPartnerCreator,
-                            "universityPartnerLastUpdate": universityEdit.universityPartnerLastUpdate,  
-                            "universityPartnerSpeciality": universityEdit.universityPartnerSpeciality,
+                            "universitySourceId": universityEdit.universitySourceId,
+                            "universitySourceName": universityEdit.universitySourceName,
+                            "universitySourceCountry": universityEdit.universitySourceCountry,
+                            "universitySourceCity": universityEdit.universitySourceCity,
+                            "universitySourceAddress": universityEdit.universitySourceAddress,
+                            "universitySourceImageLink": universityEdit.universitySourceImageLink,
+                            "universitySourceWebsiteLink": universityEdit.universitySourceWebsiteLink,
+                            "universitySourceDisplay": universityEdit.universitySourceDisplay,
+                            "universitySourceCreator":universityEdit.universitySourceCreator,
+                            "universitySourceMoreInfo": universityEdit.universitySourceMoreInfo,
+                            "universitySourceContributors": universityEdit.universitySourceContributors,
+                            "universitySourceLastUpdate": universityEdit.universitySourceLastUpdate,
+                            "universitySourcerPartner": universityEdit.universitySourcerPartner, 
                         })
                     }
                 }
@@ -783,6 +878,7 @@
                 })
             },
 
+        
             updateCreators(universityEdit) {
                 var news = true
 
