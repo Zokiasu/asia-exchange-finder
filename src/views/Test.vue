@@ -121,11 +121,20 @@
             await apps.auth().onAuthStateChanged((user) => {
                 if(user != undefined) {
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
-                        this.userConnected = true
+                        if(snapshot.val().grade != "Admin") {
+                            this.$toast.error(`You are not authorized to access the test page.`, {position:"top", max:3});
+                            setTimeout(this.$toast.clear, 10000)
+                            this.$router.replace('/')
+                        }
                     })
+                } else {
+                    this.$toast.error(`You are not authorized to access the test page.`, {position:"top", max:3});
+                    setTimeout(this.$toast.clear, 10000)
+                    this.$router.replace('/')
                 }
             })
         },
+        
 
         async mounted() {
             this.scroll()
@@ -181,9 +190,16 @@
                 this.universitys.forEach(el => {
                     if(el.universitySourcerPartner){
                         el.universitySourcerPartner.forEach(el2 => {
-                            el2.universityPartnerCycle = []
+                            if(el2.universityPartnerCreator == "Zokiasu") {
+                                el2.universityPartnerCreator = "Studeler"
+                            }
                         })
                     }
+                    
+                    if(el.universitySourceCreator == "Zokiasu") {
+                        el.universitySourceCreator = "Studeler"
+                    }
+                    console.log(el)
                     up['/universitys/' + el.universitySourceId] = el
                     db.ref().update(up)
                 })

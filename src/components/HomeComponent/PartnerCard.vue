@@ -20,7 +20,7 @@
             </div>-->
         </div> 
         <!-- Partner Cycle -->
-        <div v-if="university.universityPartnerSpeciality" class="p-2">
+        <div v-if="university.universityPartnerCycle" class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Partner's Cycle :</p>
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(PartnerCycle, index) in university.universityPartnerCycle" :key="index">
                 <tag :tags="PartnerCycle"/>
