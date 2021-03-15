@@ -208,45 +208,73 @@
 
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
-                    getUniversityDatabase.push(
-                        {
-                            "universitySourceId": element.val().universitySourceId,
-                            "universitySourceName": element.val().universitySourceName,
-                            "universitySourceCountry": element.val().universitySourceCountry,
-                            "universitySourceCity": element.val().universitySourceCity,
-                            "universitySourceAddress": element.val().universitySourceAddress,
-                            "universitySourceImageLink": element.val().universitySourceImageLink,
-                            "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                            "universitySourceDisplay": element.val().universitySourceDisplay,
-                            "universitySourceCreator":element.val().universitySourceCreator,
-                            "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                            "universitySourceContributors": element.val().universitySourceContributors,
-                            "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                            "universitySourcerPartner": element.val().universitySourcerPartner, 
-                        }
-                    )
+                    if(element.val().universitySourceName != undefined) {
+                        getUniversityDatabase.push(
+                            {
+                                "universitySourceId": element.val().universitySourceId,
+                                "universitySourceName": element.val().universitySourceName,
+                                "universitySourceCountry": element.val().universitySourceCountry,
+                                "universitySourceCity": element.val().universitySourceCity,
+                                "universitySourceAddress": element.val().universitySourceAddress,
+                                "universitySourceImageLink": element.val().universitySourceImageLink,
+                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                                "universitySourceDisplay": element.val().universitySourceDisplay,
+                                "universitySourceCreator":element.val().universitySourceCreator,
+                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                                "universitySourceContributors": element.val().universitySourceContributors,
+                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                                "universitySourcerPartner": element.val().universitySourcerPartner, 
+                            }
+                        )
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator = []}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner = []}
+                    }
                 })
             })
 
             await db.ref("universitysEdited").once("value", function(snapshot){
                 snapshot.forEach(function(element){
-                    getUniversityDatabase.push(
-                        {
-                            "universitySourceId": element.val().universitySourceId,
-                            "universitySourceName": element.val().universitySourceName,
-                            "universitySourceCountry": element.val().universitySourceCountry,
-                            "universitySourceCity": element.val().universitySourceCity,
-                            "universitySourceAddress": element.val().universitySourceAddress,
-                            "universitySourceImageLink": element.val().universitySourceImageLink,
-                            "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                            "universitySourceDisplay": element.val().universitySourceDisplay,
-                            "universitySourceCreator":element.val().universitySourceCreator,
-                            "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                            "universitySourceContributors": element.val().universitySourceContributors,
-                            "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                            "universitySourcerPartner": element.val().universitySourcerPartner, 
-                        }
-                    )
+                    if(element.val().universitySourceName != undefined) {
+                        getUniversityDatabase.push(
+                            {
+                                "universitySourceId": element.val().universitySourceId,
+                                "universitySourceName": element.val().universitySourceName,
+                                "universitySourceCountry": element.val().universitySourceCountry,
+                                "universitySourceCity": element.val().universitySourceCity,
+                                "universitySourceAddress": element.val().universitySourceAddress,
+                                "universitySourceImageLink": element.val().universitySourceImageLink,
+                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
+                                "universitySourceDisplay": element.val().universitySourceDisplay,
+                                "universitySourceCreator":element.val().universitySourceCreator,
+                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
+                                "universitySourceContributors": element.val().universitySourceContributors,
+                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
+                                "universitySourcerPartner": element.val().universitySourcerPartner, 
+                            }
+                        )
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator = []}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate = ""}
+                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner = []}
+                    }
                 })
             })
 
@@ -686,16 +714,11 @@
             },
 
             removeUniversity(index){
-                console.log("removeUniversity")
-                console.log(this.universitysSend[index])
                 if(this.universitysSend[index].universitySourceDisplay == "True") {
-                    console.log("Hello1")
                     apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universityHistory/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
                 } else {
-                    console.log("Hello2")
-                    console.log(this.universitysSend[index].universitySourceId)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
                 }
                 this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", max:3});
@@ -724,6 +747,7 @@
                                 "universityPartnerAddress": element2.universityPartnerAddress,
                                 "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
                                 "universityPartnerCondition": element2.universityPartnerCondition,
+                                "universityPartnerCycle": element2.universityPartnerCycle,
                                 "universityPartnerDisplay": element2.universityPartnerDisplay,
                                 "universityPartnerCreator": element2.universityPartnerCreator,
                                 "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
@@ -740,6 +764,7 @@
                                     "universityPartnerAddress": element2.universityPartnerAddress,
                                     "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
                                     "universityPartnerCondition": element2.universityPartnerCondition,
+                                    "universityPartnerCycle": element2.universityPartnerCycle,
                                     "universityPartnerDisplay": element2.universityPartnerDisplay,
                                     "universityPartnerCreator": element2.universityPartnerCreator,
                                     "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
@@ -763,7 +788,6 @@
                 if(universityNotCurrentEdit) {
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
-                        console.log(this.universitysSend)
                         this.universitysSend.push({
                             "universitySourceId": universityEdit.universitySourceId,
                             "universitySourceName": universityEdit.universitySourceName,

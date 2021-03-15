@@ -39,9 +39,9 @@
             :university="university">
         </UniversityCardInfo>
       </div>
-      <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
-          <p>Sorry, we don't have informations about this university's partners yet.</p>
-          <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in editor view.</p>
+      <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-30 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
+          <p>Sorry, we don't have information about this university's partners yet or this one doesn't have a partner in Asia.</p>
+          <p>If you have more information about their partners feel free to help us improve our database, <router-link to="/login" class="text-blue-500">login</router-link> and edit this university in <router-link to="/editorview" class="text-blue-500">edit view</router-link> page.</p>
       </div>
     </aside>
 
@@ -110,9 +110,9 @@
               :key="university.universityPartnerName"
               :university="university">
           </UniversityCardInfo>
-          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
-              <p>Sorry, we don't have informations about this university's partners yet.</p>
-              <p>If you have more information about their partners feel free to help us improve our database, login and edit this university in editor view.</p>
+          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-30 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
+              <p>Sorry, we don't have information about this university's partners yet or this one doesn't have a partner in Asia.</p>
+              <p>If you have more information about their partners feel free to help us improve our database, <router-link to="/login" class="text-blue-500">login</router-link> and edit this university in <router-link to="/editorview" class="text-blue-500">edit view</router-link> page.</p>
           </div>
         </div>
       </div>

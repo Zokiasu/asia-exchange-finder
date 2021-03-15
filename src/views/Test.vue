@@ -179,29 +179,14 @@
             setVisibleSignUp: function() {
                 var up = {};
                 this.universitys.forEach(el => {
-                  el.universitySourceContributors = [
-                    {
-                        "contributorSourceName": name,
-                        "contributorSourceEditNumber": 1
+                    if(el.universitySourcerPartner){
+                        el.universitySourcerPartner.forEach(el2 => {
+                            el2.universityPartnerCycle = []
+                        })
                     }
-                  ]
-                  console.log(el)
-                  up['/universitys/' + el.universitySourceId] = el
-                  db.ref().update(up)
+                    up['/universitys/' + el.universitySourceId] = el
+                    db.ref().update(up)
                 })
-                /*up['/universitys/' + el.universitySourceId] = el
-
-                db.ref().update(up).then(
-                    () => {
-                        this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        if (newEdit) {
-                            this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", max:3});
-                        }
-                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
-                    }
-                )*/
             },
 
             setCreateUniversity: function() {

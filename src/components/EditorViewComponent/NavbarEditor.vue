@@ -61,7 +61,7 @@
         </UniversityCardInfoEditor>
         <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
             <p>Sorry, we don't have informations about this university's partners yet.</p>
-            <p>If you have more information about their partners feel free to help us improve our database, login and edit this university.</p>
+              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="setCreatePartner">new partners</button>.</p>
         </div>
       </div>
     </aside>
@@ -147,9 +147,9 @@
               @editPartner="function(a){editPartenaire(a)}"
               @deletePartner="function(a){removePartenaire(a)}">
           </UniversityCardInfoEditor>
-          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
-              <p>Sorry, we don't have informations about this university's partners yet.</p>
-              <p>If you have more information about their partners feel free to help us improve our database, login and edit this university.</p>
+          <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-30 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
+              <p>Sorry, we don't have information about this university's partners yet or this one doesn't have a partner in Asia.</p>
+              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="setCreatePartner">new partners</button>.</p>
           </div>
         </div>
         <AddUPartnerPopup
@@ -176,7 +176,7 @@
   import UniversityCardInfoEditor from './PartnerCardEditor.vue'
   import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
   import Tag from '../Tag.vue'
-import { init } from 'emailjs-com'
+  import { init } from 'emailjs-com'
 
   export default {
     components:{
@@ -206,8 +206,9 @@ import { init } from 'emailjs-com'
             "universityPartnerCondition": "",
             "universityPartnerDisplay": "True",
             "universityPartnerCreator": name,
-            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),
             "universityPartnerSpeciality": [],
+            "universityPartnerCycle": [],
         },
       }
     },
@@ -252,6 +253,7 @@ import { init } from 'emailjs-com'
         this.universitysPartner.universityPartnerCreator = name
         this.universitysPartner.universityPartnerLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
         this.universitysPartner.universityPartnerSpeciality = []
+        this.universitysPartner.universityPartnerCycle = []
       },
 
       addNewPartnerToUniversity(){
@@ -282,6 +284,7 @@ import { init } from 'emailjs-com'
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
             "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
             "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
             "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
@@ -295,6 +298,7 @@ import { init } from 'emailjs-com'
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
             "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
             "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
             "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
@@ -328,6 +332,7 @@ import { init } from 'emailjs-com'
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
             "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
             "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
             "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
@@ -351,8 +356,6 @@ import { init } from 'emailjs-com'
         country.push('All')
         
         if(this.universitysPartner.universityPartnerName != "") {
-          console.log("Go partner")
-          console.log(this.partner)
           this.partner.push({
             "universityPartnerName": this.universitysPartner.universityPartnerName,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
@@ -360,6 +363,7 @@ import { init } from 'emailjs-com'
             "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
             "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
             "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
+            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
             "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
@@ -386,12 +390,8 @@ import { init } from 'emailjs-com'
         }
       },
 
-      removePDisplay(universityPartnerS){
-        console.log("removePDisplay")
-        console.log(universityPartnerS)        
+      removePDisplay(universityPartnerS){  
         for (let g = 0; g < this.partner.length; g++) {
-            console.log(this.partner.universityPartnerName)
-            console.log(universityPartnerS.universityPartnerName)
             if(this.partner.universityPartnerName == universityPartnerS.universityPartnerName){
               this.partner.splice(g,1)
             }

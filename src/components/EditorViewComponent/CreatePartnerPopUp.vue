@@ -1,8 +1,8 @@
 <template>
     <div class="absolute mx-auto justify-center items-center min-h-screen w-full flex flex-wrap content-center">
-        <div class="mx-auto flex justify-center items-center w-full ">
-            <div class="px-10 py-5 bg-white text-black rounded-xl border-gray-500 shadow-2xl">
-                <h1 class="mb-5 font-semibold text-xl">Creation of new partner</h1>
+        <div class="mx-auto flex justify-center items-center w-full">
+            <div class="px-10 py-5 bg-white text-black rounded-xl border-gray-500 shadow-2xl w-1/3">
+                <h1 class="mb-3 font-semibold text-xl">Creation of new partner</h1>
                 <div class="font-bold grid grid-cols-2 gap-2">
                     <div class="flex flex-wrap col-start-1 col-end-7">
                         <div class="relative w-full appearance-none label-floating">
@@ -38,6 +38,15 @@
                             id="universityPartnerWebsiteLink" v-model="universitysPartner.universityPartnerWebsiteLink" type="url" placeholder="Partner Website Link">
                             <label for="universityPartnerWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website Link</label>
                         </div>
+                    </div>
+                    <div class="flex flex-wrap col-start-1 col-end-7 font-normal bg-gray-200 py-2 px-5 rounded">
+                        <div><p class="text-gray-400">Academic Cycle</p></div>
+                        <ul class="flex">
+                            <li class="ml-5 space-x-2" v-for="(universityCycle, index) in universityCycle" v-bind:key="index">
+                                <input :id="universityCycle" :value="universityCycle" name="universityCycle" type="checkbox" v-model="universitysPartner.universityPartnerCycle" @change="log"/>
+                                <label :for="universityCycle">{{universityCycle}}</label>
+                            </li>
+                        </ul>
                     </div>
                     <div class="flex flex-wrap col-start-1 col-end-7">
                         <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
@@ -86,6 +95,12 @@
             SmartTagz,
         },
 
+        data() {
+            return {
+                universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
+            }
+        },
+
         props: ['universitysPartner', 'listOfSpeciality'],
 
         setup(props) {
@@ -99,6 +114,7 @@
         },
 
         methods: {
+
             close(){
                 this.$emit('close');
             },
@@ -107,7 +123,6 @@
                 this.universitysPartner.universityPartnerDisplay = "True"
                 this.universitysPartner.universityPartnerCreator = name
                 this.universitysPartner.universityPartnerLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-
                 this.$emit("addNewPartnerToUniversity")
                 this.$emit('close');
             },

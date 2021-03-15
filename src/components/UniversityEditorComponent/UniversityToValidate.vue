@@ -122,8 +122,9 @@
                                 "universityPartnerCondition": "",
                                 "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
-                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
+                                "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),
                                 "universityPartnerSpeciality": [],
+                                "universityPartnerCycle": [],
                             }
                         ], 
                     }
@@ -151,7 +152,8 @@
                                 "universityPartnerDisplay": "True",
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                                "universityPartnerSpeciality": [],
+                                "universityPartnerSpeciality": [],  
+                                "universityPartnerCycle": [],
                             }
                         ], 
                     }
@@ -329,6 +331,7 @@
                                 "universityPartnerCreator": name,
                                 "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                                 "universityPartnerSpeciality": [],
+                                "universityPartnerCycle": [],
                             }
                         ], 
                     }
@@ -411,6 +414,7 @@
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
                         "universityPartnerSpeciality": [],
+                        "universityPartnerCycle": [],
                     }
                 )
                 //Check actual filter used
@@ -487,7 +491,8 @@
                         "universityPartnerDisplay": "True",
                         "universityPartnerCreator": name,
                         "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),  
-                        "universityPartnerSpeciality": [],
+                        "universityPartnerSpeciality": [],  
+                        "universityPartnerCycle": [],
                     }
                 )
             },

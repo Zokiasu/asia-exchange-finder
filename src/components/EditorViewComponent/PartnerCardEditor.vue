@@ -16,6 +16,16 @@
                 <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div> 
+        <!-- Partner Cycle -->
+        <div class="p-2">
+            <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Partner's Cycle :</p>
+            <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(universityPartnerCycle, index) in universityP.universityPartnerCycle" :key="index">
+                <tag :tags="universityPartnerCycle"/>
+            </div>
+            <div v-if="!universityP.universityPartnerCycle" class="text-sm 4xl:text-lg">
+                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+            </div>
+        </div> 
         <!-- Exchange -->
         <div class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Requirements :</p>
@@ -24,10 +34,6 @@
                 <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div>
-        <!-- Exchange Error
-        <div v-if="!university.universityPartnerSpeciality || !university.universityPartnerCondition" class="p-5 text-center font-semibold xl:text-lg 4xl:text-xl">
-            <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
-        </div> -->
         <!-- universityPartnerWebsiteLink button -->
         <div class="relative text-sm 4xl:text-lg">
             <div class="container flex justify-center">
@@ -93,6 +99,15 @@
                     id="universitySourceWebsiteLink" v-model="universityPartner.universityPartnerWebsiteLink" :placeholder="universityP.universityPartnerWebsiteLink">
                     <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website</label>
                 </div>
+            </div>
+            <div class="flex flex-wrap col-start-1 col-end-7 text-sm bg-white py-2 px-4 rounded">
+                <div><p class="text-green-600">Academic Cycle</p></div>
+                <ul class="flex">
+                    <li class="ml-5 space-x-2 font-semibold" v-for="(universityCycle, index) in universityCycle" v-bind:key="index">
+                        <input :id="universityCycle" :value="universityCycle" name="universityCycle" type="checkbox" v-model="universityPartner.universityPartnerCycle" @change="log"/>
+                        <label :for="universityCycle">{{universityCycle}}</label>
+                    </li>
+                </ul>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
@@ -183,7 +198,10 @@
             grade:'',
             editPartnerView: false,
             deletePartnerView: false,
+            checked: false,
             link: '#',
+            universityCycle: ["Doctorate/PhD", "Master", "Bachelor"],
+
             "universityPartner": {
                 "universityPartnerName": "",
                 "universityPartnerCountry": "",
@@ -195,6 +213,7 @@
                 "universityPartnerCreator": "",
                 "universityPartnerLastUpdate": "",  
                 "universityPartnerSpeciality": [],
+                "universityPartnerCycle": [],
             },
         }
     },
@@ -212,6 +231,9 @@
 
     mounted(){
         this.universityPartner = JSON.parse(JSON.stringify(this.universityP))
+        if(this.universityPartner.universityPartnerCycle == true || this.universityPartner.universityPartnerCycle == false || this.universityPartner.universityPartnerCycle == undefined) {
+            this.universityPartner.universityPartnerCycle = []
+        }
         this.link = JSON.parse(JSON.stringify(this.universityP.universityPartnerWebsiteLink))
     },
 
@@ -225,6 +247,7 @@
     },
 
     methods: {
+
         callEditPartner(){
             this.editPartnerView = !this.editPartnerView
         },
@@ -234,10 +257,10 @@
         },
 
         editPartner(){
-            console.log(this.universityP.universityPartnerSpeciality)
             if(this.universityP.universityPartnerSpeciality) {
                 this.universityPartner.universityPartnerSpeciality = JSON.parse(JSON.stringify(this.universityP.universityPartnerSpeciality))
             }
+
             this.$emit('editPartner', this.universityPartner)
             this.callEditPartner()
         },

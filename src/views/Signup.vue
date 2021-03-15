@@ -28,13 +28,13 @@
                             id="password" v-model="passwordConfirm" type="password" placeholder="Password Confirm">
                         </div>
                     </div>
+                    <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
+                        <div class="relative w-full appearance-none">
+                            <input type="checkbox" id="checkbox" v-model="checked" />
+                            <label class="text-black" for="checkbox"> I agree to the <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/terms" target="_blank">Terms of Service</a> and <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/privacy" target="_blank">Privacy Policy</a></label>
+                        </div>
+                    </div>
                     <div class="col-start-1 col-end-7">
-                        <div v-if="errorMessage !== ''" class="mb-2 font-semibold text-red-700" role="alert">
-                            {{ errorMessage }}
-                        </div>
-                        <div v-if="successMessage !== ''" class="mb-2 text-green-700" role="alert">
-                            {{ successMessage }}
-                        </div>
                         <button v-bind:disabled="xhrRequest" v-bind:class="{disabled: xhrRequest}" class="Button bg-blue-500 container">
                             <span v-if="!xhrRequest">Sign Up</span>
                             <span v-if="xhrRequest">Please Wait...</span>
@@ -63,6 +63,7 @@
                 email: "",
                 password: "",
                 passwordConfirm: "",
+                checked: false,
                 grade: "Member",
                 created: new Date().toISOString().slice(0, 10),
                 xhrRequest: false,
@@ -81,7 +82,7 @@
                 this.errorMessage = "";
                 this.successMessage = "";
 
-                if(this.password == this.passwordConfirm && this.username != "") {
+                if(this.password == this.passwordConfirm && this.username != "" && this.checked) {
                     apps.auth().createUserWithEmailAndPassword(this.email, this.password).then(
                             (authUser) => {
                                 db.ref(`users/${authUser.user.uid}`).set({
@@ -100,7 +101,10 @@
                             this.xhrRequest = false;
                         }
                     );
-                } else if (this.username == "") {
+                } else if (!this.checked) {
+                    this.xhrRequest = false;
+                    this.$toast.error(`Please accept Terms of Service and Privacy Policy`, {position:"top", duration: 5000, max:1});
+                }  else if (this.username == "") {
                     this.xhrRequest = false;
                     this.$toast.error(`Username is missing`, {position:"top", duration: 5000, max:1});
                 } else if (this.password != this.passwordConfirm) {
