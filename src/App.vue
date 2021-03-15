@@ -57,6 +57,10 @@
       })
     },
 
+    mounted(){
+      console.log(process.env)
+    },
+
     methods:{
 
       signOut: function() {
