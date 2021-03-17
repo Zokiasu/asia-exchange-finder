@@ -1,7 +1,7 @@
 <template>
     <div class="absolute mx-auto justify-center items-center min-h-screen w-full flex flex-wrap content-center">
         <div class="mx-auto flex justify-center items-center w-full">
-            <div class="px-10 py-5 bg-white text-black rounded-xl border-gray-500 shadow-2xl w-full mx-20 xl:w-1/3 xl:mx-0">
+            <div class="px-10 py-5 bg-white text-black rounded-xl border-gray-500 shadow-2xl w-full mx-20 xl:w-1/2 xl:mx-0">
                 <h1 class="mb-3 font-semibold text-xl">Creation of new partner</h1>
                 <div class="font-bold grid grid-cols-2 gap-2">
                     <div class="flex flex-wrap col-start-1 col-end-7">
