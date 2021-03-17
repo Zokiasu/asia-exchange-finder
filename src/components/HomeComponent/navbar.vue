@@ -163,7 +163,7 @@
 
       visitWebsiteUniversity(){
         var websiteUniversity = this.university.universitySourceName
-        analytics.logEvent("webUniversity", {websiteUniversity})
+        analytics.logEvent("web:"+{websiteUniversity}, {websiteUniversity})
       },
 
       drawer() {

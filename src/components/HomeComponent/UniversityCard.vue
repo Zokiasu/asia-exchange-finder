@@ -30,7 +30,7 @@ export default {
     
     methods: {
         openCard(nameUniversity) {
-            analytics.logEvent("showUniversity", {nameUniversity})
+            analytics.logEvent({nameUniversity}, {nameUniversity})
             this.$emit('onClick', nameUniversity)
         }
     }

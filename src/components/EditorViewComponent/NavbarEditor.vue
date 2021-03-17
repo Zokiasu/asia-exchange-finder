@@ -32,7 +32,7 @@
             :universitysPartner="universitysPartner"
             :listOfSpeciality="listOfSpeciality"
             v-if="addUniversityPartnerPopUp" 
-            class="z-50 mx-auto flex flex-col mt-auto">
+            class="z-50">
         </AddUPartnerPopup>
         <div class="flex justify-between">
           <!-- Filters -->
@@ -414,7 +414,7 @@
 
       visitWebsiteUniversity(){
         var websiteUniversity = this.university.universitySourceName
-        analytics.logEvent("webUniversity", {websiteUniversity})
+        analytics.logEvent("web:"+{websiteUniversity}, {websiteUniversity})
       },
 
       drawer() {

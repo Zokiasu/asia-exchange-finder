@@ -119,10 +119,12 @@
 
     import Card from '../components/EditorViewComponent/UniversityCardEditor.vue'
     import NavbarEditor from '../components/EditorViewComponent/NavbarEditor.vue'
-    import AddUSoucePopup from '../components/EditorViewComponent/CreateUniversityPopUp.vue'    
+    import AddUSoucePopup from '../components/EditorViewComponent/CreateUniversityPopUp.vue'
+    import FirebaseLog from '../Mixins/firebase' 
 
     export default {
         name: "Basic",
+        mixins:[FirebaseLog],
 
         components:{
             Card,
@@ -309,6 +311,48 @@
 
         methods: {
 
+            //General function
+            
+            init(){
+                var cityStart = [];
+                var countryPartener = [];
+                var specialityPartener = [];
+
+                this.universitysSend.forEach(el => {
+                    cityStart.push(el.universitySourceCity)
+                    if(el.universitySourcerPartner) {
+                        el.universitySourcerPartner.forEach(el2 => {
+                            if(el2.universityPartnerSpeciality) {
+                                el2.universityPartnerSpeciality.forEach(el3 => {
+                                    if(el3 != "" && el3 != "N/A") {
+                                        specialityPartener.push(el3)
+                                    }
+                                })
+                            }                  
+                            countryPartener.push(el2.universityPartnerCountry)
+                        })
+                    }
+                })
+
+                this.option.countryOption = [...new Set(countryPartener)]
+                this.option.countryOption.sort()
+                this.option.specialityOption = [...new Set(specialityPartener)]
+                this.option.specialityOption.sort()
+                this.option.cityStartOption = [...new Set(cityStart)]
+                this.option.cityStartOption.sort()
+            },
+
+            scroll(){
+                window.onscroll = () => {
+                    let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) 
+                                        || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
+                    if (bottomOfWindow) {
+                        this.minElement = this.minElement + 9;
+                        bottomOfWindow = false;
+                    }
+                }
+            },
+
             async updateDisplayUniversity(){
                 var getUniversityDatabase = []
 
@@ -398,46 +442,6 @@
                 this.addUniversitySourcePopUp = !this.addUniversitySourcePopUp
             },
 
-            scroll(){
-                window.onscroll = () => {
-                    let bottomOfWindow = Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === Math.round(document.documentElement.offsetHeight) 
-                                        || Math.round(Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight) === (Math.round(document.documentElement.offsetHeight)-1)
-                    if (bottomOfWindow) {
-                        this.minElement = this.minElement + 9;
-                        bottomOfWindow = false;
-                    }
-                }
-            },
-            
-            init(){
-                var cityStart = [];
-                var countryPartener = [];
-                var specialityPartener = [];
-
-                this.universitysSend.forEach(el => {
-                    cityStart.push(el.universitySourceCity)
-                    if(el.universitySourcerPartner) {
-                        el.universitySourcerPartner.forEach(el2 => {
-                            if(el2.universityPartnerSpeciality) {
-                                el2.universityPartnerSpeciality.forEach(el3 => {
-                                    if(el3 != "" && el3 != "N/A") {
-                                        specialityPartener.push(el3)
-                                    }
-                                })
-                            }                  
-                            countryPartener.push(el2.universityPartnerCountry)
-                        })
-                    }
-                })
-
-                this.option.countryOption = [...new Set(countryPartener)]
-                this.option.countryOption.sort()
-                this.option.specialityOption = [...new Set(specialityPartener)]
-                this.option.specialityOption.sort()
-                this.option.cityStartOption = [...new Set(cityStart)]
-                this.option.cityStartOption.sort()
-            },
-
             getuniqueUniversityNameCard (index) {
                 
                 this.universityObject.universitySourceId = this.universitysSend[index].universitySourceId,
@@ -455,6 +459,57 @@
                 this.universityObject.universitySourcerPartner = this.universitysSend[index].universitySourcerPartner
                 this.$refs.navbarComponent.drawer();
             },
+
+            enter: function(el, done) {
+                $(el).hide().slideDown(800,done)
+            },
+
+            leave: function(el, done) {
+                $(el).show().slideUp(800, done)
+            },
+
+            setVisible: function() {
+                this.visible = !this.visible
+            },
+
+            sortingParam(sortParameter){
+                switch(sortParameter){
+                    case 'A-Z':
+                        this.actualSorting = "A-Z"
+                        this.universitysSend.sort(function(a,b){
+                            if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return -1;}
+                            if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return 1;}
+                            return 0;
+                        })
+                    break;
+                    case 'Z-A':
+                        this.actualSorting = "Z-A"
+                        this.universitysSend.sort(function(a,b){
+                            if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return -1;}
+                            if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return 1;}
+                            return 0;
+                        })
+                    break;
+                    case 'Creation Date Asc.':
+                        this.actualSorting = "Creation Date Asc."
+                        this.universitysSend.sort(function(a,b){
+                            if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return -1;}
+                            if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return 1;}
+                            return 0;
+                        })
+                    break;
+                    case 'Creation Date Desc.':
+                        this.actualSorting = "Creation Date Desc."
+                        this.universitysSend.sort(function(a,b){
+                            if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return -1;}
+                            if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return 1;}
+                            return 0;
+                        })
+                    break;
+                }
+            },
+
+            //Reset function
 
             resetFilter(){
                 this.CityFilter = undefined
@@ -483,6 +538,8 @@
                 this.displayFilter = undefined
                 this.searchByFilter()
             },
+
+            //Filter function
 
             searchByFilter() {
                 this.modelCity = this.option.cityStartOption[this.CityFilter]
@@ -562,55 +619,7 @@
                 return res        
             },
 
-            enter: function(el, done) {
-                $(el).hide().slideDown(800,done)
-            },
-
-            leave: function(el, done) {
-                $(el).show().slideUp(800, done)
-            },
-
-            setVisible: function() {
-                this.visible = !this.visible
-            },
-
-            sortingParam(sortParameter){
-                switch(sortParameter){
-                    case 'A-Z':
-                        this.actualSorting = "A-Z"
-                        this.universitysSend.sort(function(a,b){
-                            if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return -1;}
-                            if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return 1;}
-                            return 0;
-                        })
-                    break;
-                    case 'Z-A':
-                        this.actualSorting = "Z-A"
-                        this.universitysSend.sort(function(a,b){
-                            if(a.universitySourceName.toLowerCase() > b.universitySourceName.toLowerCase()) {return -1;}
-                            if(a.universitySourceName.toLowerCase() < b.universitySourceName.toLowerCase()) {return 1;}
-                            return 0;
-                        })
-                    break;
-                    case 'Creation Date Asc.':
-                        this.actualSorting = "Creation Date Asc."
-                        this.universitysSend.sort(function(a,b){
-                            if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return -1;}
-                            if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return 1;}
-                            return 0;
-                        })
-                    break;
-                    case 'Creation Date Desc.':
-                        this.actualSorting = "Creation Date Desc."
-                        this.universitysSend.sort(function(a,b){
-                            if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return -1;}
-                            if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return 1;}
-                            return 0;
-                        })
-                    break;
-                }
-            },
-
+            //University function
 
             addNewUniversity(newUniversitys){
                 var testA = "";
@@ -643,14 +652,14 @@
                     "universitySourcerPartner": newUniversitys.universitySourcerPartner, 
                 })
 
-                this.sortingParam("Creation Date Desc.")
 
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
+                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
+                        this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})    
+                        FirebaseLog.methods.logCreateUniversity(name, newUniversitys.universitySourceName)                    
                     }
                 )
             },
@@ -696,19 +705,19 @@
                     this.universitysSend[index].universitySourcerPartner = universityEdit.universitySourcerPartner
                 }
 
-                this.sortingParam("Creation Date Desc.")
                 this.updateCreators(universityEdit)
                 up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
 
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         if (newEdit) {
-                            this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", max:3});
+                            this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", duration: 10000, max:3});
+                            this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})      
                         }
-                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
+                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
+                        FirebaseLog.methods.logEditUniversity(name, universityEdit.universitySourceName)
                     }
                 )
             },
@@ -716,16 +725,17 @@
             removeUniversity(index){
                 if(this.universitysSend[index].universitySourceDisplay == "True") {
                     apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
-                    apps.database().ref('/universityHistory/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
+                    FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 } else {
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
+                    FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 }
-                this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", max:3});
-                setTimeout(this.$toast.clear, 10000)
+                this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", duration: 10000, max:3});
                 this.universitysSend.splice(index,1)
             },
 
+            //Partner function
 
             addNewUniversityPartner(universityEdit){
 
@@ -815,6 +825,7 @@
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
+                        FirebaseLog.methods.logCreatePartner(name, universityEdit.universitySourceName)
                     }
                 )
             },
@@ -857,9 +868,9 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", max:3});
-                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", max:3});
-                        setTimeout(this.$toast.clear, 10000)
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
+                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
+                        FirebaseLog.methods.logEditPartner(name, newPartnerVersion.universityPartnerName)
                     }
                 )
             },
@@ -897,11 +908,10 @@
 
                 return db.ref().update(up).then(() => {
                     this.$router.replace('/editorview')
-                    this.$toast.error(`The partner has been successfully deleted`, {position:"top", max:3});
-                    setTimeout(this.$toast.clear, 10000)
+                    this.$toast.error(`The partner has been successfully deleted`, {position:"top", duration: 10000, max:3});
+                    FirebaseLog.methods.logDeletePartner(name, universityEdit.universitySourceName, partnerToRemove.universityPartnerName)
                 })
             },
-
         
             updateCreators(universityEdit) {
                 var news = true
@@ -921,7 +931,6 @@
                 }
 
             },
-
         },
     }
 </script>
