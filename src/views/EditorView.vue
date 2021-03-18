@@ -311,8 +311,7 @@
 
         methods: {
 
-            //General function
-            
+            //General function            
             init(){
                 var cityStart = [];
                 var countryPartener = [];
@@ -510,7 +509,6 @@
             },
 
             //Reset function
-
             resetFilter(){
                 this.CityFilter = undefined
                 this.DestinationFilter = undefined
@@ -540,7 +538,6 @@
             },
 
             //Filter function
-
             searchByFilter() {
                 this.modelCity = this.option.cityStartOption[this.CityFilter]
                 this.modelDestination = this.option.countryOption[this.DestinationFilter]
@@ -620,7 +617,6 @@
             },
 
             //University function
-
             addNewUniversity(newUniversitys){
                 var testA = "";
                 var up = {};
@@ -673,43 +669,16 @@
                     if (this.universitysSend[index].universitySourceDisplay == "True") {
                         newEdit = true;
                     }
-                    this.universitysSend.push({
-                        "universitySourceId": universityEdit.universitySourceId,
-                        "universitySourceName": universityEdit.universitySourceName,
-                        "universitySourceCountry": universityEdit.universitySourceCountry,
-                        "universitySourceCity": universityEdit.universitySourceCity,
-                        "universitySourceAddress": universityEdit.universitySourceAddress,
-                        "universitySourceImageLink": universityEdit.universitySourceImageLink,
-                        "universitySourceWebsiteLink": universityEdit.universitySourceWebsiteLink,
-                        "universitySourceDisplay": universityEdit.universitySourceDisplay,
-                        "universitySourceCreator": universityEdit.universitySourceCreator,
-                        "universitySourceMoreInfo": universityEdit.universitySourceMoreInfo,
-                        "universitySourceContributors": universityEdit.universitySourceContributors,
-                        "universitySourceLastUpdate": universityEdit.universitySourceLastUpdate,   
-                        "universitySourcerPartner": universityEdit.universitySourcerPartner, 
-                    })
+                    this.universitysSend.push(FirebaseLog.methods.newUniversityObject(universityEdit))
                     this.updateDisplayUniversity()
-                } else {
-                    this.universitysSend[index].universitySourceId = universityEdit.universitySourceId,
-                    this.universitysSend[index].universitySourceName = universityEdit.universitySourceName,
-                    this.universitysSend[index].universitySourceCountry = universityEdit.universitySourceCountry,
-                    this.universitysSend[index].universitySourceCity = universityEdit.universitySourceCity,
-                    this.universitysSend[index].universitySourceAddress = universityEdit.universitySourceAddress,
-                    this.universitysSend[index].universitySourceImageLink = universityEdit.universitySourceImageLink,
-                    this.universitysSend[index].universitySourceWebsiteLink = universityEdit.universitySourceWebsiteLink,
-                    this.universitysSend[index].universitySourceDisplay = universityEdit.universitySourceDisplay,
-                    this.universitysSend[index].universitySourceCreator = universityEdit.universitySourceCreator,
-                    this.universitysSend[index].universitySourceMoreInfo = universityEdit.universitySourceMoreInfo,
-                    this.universitysSend[index].universitySourceContributors = universityEdit.universitySourceContributors,
-                    this.universitysSend[index].universitySourceLastUpdate = universityEdit.universitySourceLastUpdate,
-                    this.universitysSend[index].universitySourcerPartner = universityEdit.universitySourcerPartner
+                } else {                    
+                    FirebaseLog.methods.fillUniversityObject(this.universitysSend[index], universityEdit)
                 }
 
                 this.updateCreators(universityEdit)
                 up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
 
-                return db.ref().update(up).then(
-                    () => {
+                return db.ref().update(up).then(() => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         if (newEdit) {
@@ -736,7 +705,6 @@
             },
 
             //Partner function
-
             addNewUniversityPartner(universityEdit){
 
                 var up = {};
@@ -750,46 +718,23 @@
                         var tmpPartner = []
 
                         universityEdit.universitySourcerPartner.forEach(function(element2){
-                            tmpPartner.push({
-                                "universityPartnerName": element2.universityPartnerName,
-                                "universityPartnerCountry": element2.universityPartnerCountry,
-                                "universityPartnerCity": element2.universityPartnerCity,
-                                "universityPartnerAddress": element2.universityPartnerAddress,
-                                "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
-                                "universityPartnerCondition": element2.universityPartnerCondition,
-                                "universityPartnerCycle": element2.universityPartnerCycle,
-                                "universityPartnerDisplay": element2.universityPartnerDisplay,
-                                "universityPartnerCreator": element2.universityPartnerCreator,
-                                "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
-                                "universityPartnerSpeciality": element2.universityPartnerSpeciality,
-                            })
+                            tmpPartner.push(FirebaseLog.methods.newPartnerObject(element2))
                         })
                         
                         if(element.universitySourcerPartner != undefined) {
                             element.universitySourcerPartner.forEach(function(element2){
-                                tmpPartner.push({
-                                    "universityPartnerName": element2.universityPartnerName,
-                                    "universityPartnerCountry": element2.universityPartnerCountry,
-                                    "universityPartnerCity": element2.universityPartnerCity,
-                                    "universityPartnerAddress": element2.universityPartnerAddress,
-                                    "universityPartnerWebsiteLink": element2.universityPartnerWebsiteLink,
-                                    "universityPartnerCondition": element2.universityPartnerCondition,
-                                    "universityPartnerCycle": element2.universityPartnerCycle,
-                                    "universityPartnerDisplay": element2.universityPartnerDisplay,
-                                    "universityPartnerCreator": element2.universityPartnerCreator,
-                                    "universityPartnerLastUpdate": element2.universityPartnerLastUpdate,  
-                                    "universityPartnerSpeciality": element2.universityPartnerSpeciality,
-                                })
+                                tmpPartner.push(FirebaseLog.methods.newPartnerObject(element2))
                             })
                         }
-
+                            
+                        //Récupère la liste des partenaires de l'université en cours et le nouveau partenaire vérifie qu'il n'y ait pas de doublon pour les supprimés
                         var dataArr = tmpPartner.map(item=>{
                             return [item.universityPartnerName,item]
-                        }); // creates array of array
-                        var maparr = new Map(dataArr); // create key value pair from array of array
-
-                        var result = [...maparr.values()];//converting back to array from mapobject
-
+                        }); //creates array of array
+                        var maparr = new Map(dataArr); //create key value pair from array of array
+                        var result = [...maparr.values()]; //converting back to array from mapobject
+                        
+                        //Reset les partenaires pour remplacer par la nouvelle liste avec le nouveau partenaire
                         element.universitySourcerPartner = result
                         universityNotCurrentEdit = false
                     }
@@ -798,30 +743,16 @@
                 if(universityNotCurrentEdit) {
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
-                        this.universitysSend.push({
-                            "universitySourceId": universityEdit.universitySourceId,
-                            "universitySourceName": universityEdit.universitySourceName,
-                            "universitySourceCountry": universityEdit.universitySourceCountry,
-                            "universitySourceCity": universityEdit.universitySourceCity,
-                            "universitySourceAddress": universityEdit.universitySourceAddress,
-                            "universitySourceImageLink": universityEdit.universitySourceImageLink,
-                            "universitySourceWebsiteLink": universityEdit.universitySourceWebsiteLink,
-                            "universitySourceDisplay": universityEdit.universitySourceDisplay,
-                            "universitySourceCreator":universityEdit.universitySourceCreator,
-                            "universitySourceMoreInfo": universityEdit.universitySourceMoreInfo,
-                            "universitySourceContributors": universityEdit.universitySourceContributors,
-                            "universitySourceLastUpdate": universityEdit.universitySourceLastUpdate,
-                            "universitySourcerPartner": universityEdit.universitySourcerPartner, 
-                        })
+                        this.universitysSend.push(FirebaseLog.methods.newUniversityObject(universityEdit))
                     }
                 }
+
                 this.updateCreators(universityEdit)
                 up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
 
                 this.sortingParam("Creation Date Desc.")
 
-                return db.ref().update(up).then(
-                    () => {
+                return db.ref().update(up).then(() => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
@@ -830,23 +761,44 @@
                 )
             },
 
-            editUniversityPartner(universityEdit, newPartnerVersion){
+            editUniversityPartner(universityEdited, newPartnerVersion){
                 var up = {}
+                var indexIntoOfficialList = ""
 
-                if(universityEdit.universitySourceDisplay == "False") { //University display statut is in progress
-                    for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
-                        if (universityEdit.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
-                        && universityEdit.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
-                        && universityEdit.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
-                            universityEdit.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
+                for (let b = 0; b < this.universitysSend.length; b++) {
+                    if (this.universitysSend[b].universitySourceName == universityEdited.universitySourceName
+                    && this.universitysSend[b].universitySourceCountry == universityEdited.universitySourceCountry
+                    && this.universitysSend[b].universitySourceCity == universityEdited.universitySourceCity
+                    && this.universitysSend[b].universitySourceDisplay == universityEdited.universitySourceDisplay) {
+                        indexIntoOfficialList = b
+                        console.log("Find university into official list")
+                    }
+                }
+
+                //UniversitySourceDisplay statut is in progress
+                if(universityEdited.universitySourceDisplay == "False") {
+                    console.log("UniversitySource is in progress")
+                    for (let m = 0; m < universityEdited.universitySourcerPartner.length; m++) {
+                        if (universityEdited.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
+                        && universityEdited.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
+                        && universityEdited.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
+                            universityEdited.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
+                            console.log("Remplace partner universityEdited")
                         }
                     }
 
-                    universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.updateCreators(universityEdit)
-                    up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
-                } else {//University display statut is online
-                    var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
+                    universityEdited.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                    this.updateCreators(universityEdited)
+                    console.log("1")
+                    console.log(this.universitysSend[indexIntoOfficialList])
+                    console.log("2")
+                    console.log(universityEdited)
+                    this.universitysSend[indexIntoOfficialList].universitySourcerPartner = JSON.parse(JSON.stringify(universityEdited.universitySourcerPartner))
+                    up['/universitysEdited/' + universityEdited.universitySourceId] = universityEdited
+                } 
+                //UniversitySourceDisplay statut is online
+                else {
+                    var tmpUEdit = JSON.parse(JSON.stringify(universityEdited))
                     tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
 
                     for (let m = 0; m < tmpUEdit.universitySourcerPartner.length; m++) {
@@ -865,8 +817,7 @@
 
                 this.sortingParam("Creation Date Desc.")
 
-                return db.ref().update(up).then(
-                    () => {
+                return db.ref().update(up).then(() => {
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
@@ -877,8 +828,9 @@
 
             removeUniversityPartner(universityEdit, partnerToRemove){
                 var up = {}
-
-                if(universityEdit.universitySourceDisplay == "False") { //University display statut is in progress
+                
+                //University display statut is in progress
+                if(universityEdit.universitySourceDisplay == "False") {
                     for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
                         if (universityEdit.universitySourcerPartner[m].universityPartnerName == partnerToRemove.universityPartnerName){
                             universityEdit.universitySourcerPartner.splice(m, 1)
@@ -888,7 +840,9 @@
                     universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
 
                     up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
-                } else {//University display statut is online
+                } 
+                //University display statut is online
+                else {
                     var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
                     tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
 
@@ -914,16 +868,16 @@
             },
         
             updateCreators(universityEdit) {
-                var news = true
+                var newEditor = true
 
                 universityEdit.universitySourceContributors.forEach(el => {
                     if(el.contributorSourceName == name) {
                         el.contributorSourceEditNumber = el.contributorSourceEditNumber + 1
-                        news = false
+                        newEditor = false
                     }
                 })
                 
-                if(news) {
+                if(newEditor) {
                     universityEdit.universitySourceContributors.push({
                         "contributorSourceName": name,
                         "contributorSourceEditNumber": 1

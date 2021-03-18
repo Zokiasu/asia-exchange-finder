@@ -1,24 +1,42 @@
 import db from '../main.js'
-import {apps} from '../main.js'
+import {apps, name, grade, analytics} from '../main.js'
 
 export default {
     methods: {
 
         newUniversityObject(universityData) {
-            return {
-                "universitySourceId": universityData.universitySourceId,
-                "universitySourceName": universityData.universitySourceName,
-                "universitySourceCountry": universityData.universitySourceCountry,
-                "universitySourceCity": universityData.universitySourceCity,
-                "universitySourceAddress": universityData.universitySourceAddress,
-                "universitySourceImageLink": universityData.universitySourceImageLink,
-                "universitySourceWebsiteLink": universityData.universitySourceWebsiteLink,
-                "universitySourceDisplay": universityData.universitySourceDisplay,
-                "universitySourceCreator": universityData.universitySourceCreator,
-                "universitySourceMoreInfo": universityData.universitySourceMoreInfo,
-                "universitySourceContributors": universityData.universitySourceContributors,
-                "universitySourceLastUpdate": universityData.universitySourceLastUpdate,   
-                "universitySourcerPartner": universityData.universitySourcerPartner, 
+            if(universityData != undefined) {
+                return {
+                    "universitySourceId": universityData.universitySourceId,
+                    "universitySourceName": universityData.universitySourceName,
+                    "universitySourceCountry": universityData.universitySourceCountry,
+                    "universitySourceCity": universityData.universitySourceCity,
+                    "universitySourceAddress": universityData.universitySourceAddress,
+                    "universitySourceImageLink": universityData.universitySourceImageLink,
+                    "universitySourceWebsiteLink": universityData.universitySourceWebsiteLink,
+                    "universitySourceDisplay": universityData.universitySourceDisplay,
+                    "universitySourceCreator": universityData.universitySourceCreator,
+                    "universitySourceMoreInfo": universityData.universitySourceMoreInfo,
+                    "universitySourceContributors": universityData.universitySourceContributors,
+                    "universitySourceLastUpdate": universityData.universitySourceLastUpdate,   
+                    "universitySourcerPartner": universityData.universitySourcerPartner, 
+                }
+            } else {
+                return {
+                    "universitySourceId": "",
+                    "universitySourceName": "University Name",
+                    "universitySourceCountry": "France",
+                    "universitySourceCity": "Paris",
+                    "universitySourceAddress": "",
+                    "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
+                    "universitySourceWebsiteLink": "",
+                    "universitySourceDisplay": "False",
+                    "universitySourceCreator": name,
+                    "universitySourceMoreInfo": "",
+                    "universitySourceContributors": [],
+                    "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
+                    "universitySourcerPartner": [], 
+                }
             }
         },
 
@@ -39,24 +57,51 @@ export default {
         },
 
         newPartnerObject(partnerData){
-            return {
-                "universityPartnerName": partnerData.universityPartnerName,
-                "universityPartnerCountry": partnerData.universityPartnerCountry,
-                "universityPartnerCity": partnerData.universityPartnerCity,
-                "universityPartnerAddress": partnerData.universityPartnerAddress,
-                "universityPartnerWebsiteLink": partnerData.universityPartnerWebsiteLink,
-                "universityPartnerCondition": partnerData.universityPartnerCondition,
-                "universityPartnerCycle": partnerData.universityPartnerCycle,
-                "universityPartnerDisplay": partnerData.universityPartnerDisplay,
-                "universityPartnerCreator": partnerData.universityPartnerCreator,
-                "universityPartnerLastUpdate": partnerData.universityPartnerLastUpdate,  
-                "universityPartnerSpeciality": partnerData.universityPartnerSpeciality,
+            if(partnerData != undefined) {
+                return {
+                    "universityPartnerName": partnerData.universityPartnerName,
+                    "universityPartnerCountry": partnerData.universityPartnerCountry,
+                    "universityPartnerCity": partnerData.universityPartnerCity,
+                    "universityPartnerAddress": partnerData.universityPartnerAddress,
+                    "universityPartnerWebsiteLink": partnerData.universityPartnerWebsiteLink,
+                    "universityPartnerCondition": partnerData.universityPartnerCondition,
+                    "universityPartnerCycle": partnerData.universityPartnerCycle,
+                    "universityPartnerDisplay": partnerData.universityPartnerDisplay,
+                    "universityPartnerCreator": partnerData.universityPartnerCreator,
+                    "universityPartnerLastUpdate": partnerData.universityPartnerLastUpdate,  
+                    "universityPartnerSpeciality": partnerData.universityPartnerSpeciality,
+                }
+            } else {
+                return {
+                    "universityPartnerName": "",
+                    "universityPartnerCountry": "",
+                    "universityPartnerCity": "",
+                    "universityPartnerAddress": "",
+                    "universityPartnerWebsiteLink": "",
+                    "universityPartnerCondition": "",
+                    "universityPartnerDisplay": "True",
+                    "universityPartnerCreator": name,
+                    "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),
+                    "universityPartnerSpeciality": [],
+                    "universityPartnerCycle": [],
+                }
             }
         },
 
         fillPartnerObject(partnerToFill, partnerData){
-            
+            partnerToFill.universityPartnerName = partnerData.universityPartnerName,
+            partnerToFill.universityPartnerCountry = partnerData.universityPartnerCountry,
+            partnerToFill.universityPartnerCity = partnerData.universityPartnerCity,
+            partnerToFill.universityPartnerAddress = partnerData.universityPartnerAddress,
+            partnerToFill.universityPartnerWebsiteLink = partnerData.universityPartnerWebsiteLink,
+            partnerToFill.universityPartnerCondition = partnerData.universityPartnerCondition,
+            partnerToFill.universityPartnerCycle = partnerData.universityPartnerCycle,
+            partnerToFill.universityPartnerDisplay = partnerData.universityPartnerDisplay,
+            partnerToFill.universityPartnerCreator = partnerData.universityPartnerCreator,
+            partnerToFill.universityPartnerLastUpdate = partnerData.universityPartnerLastUpdate,
+            partnerToFill.universityPartnerSpeciality = partnerData.universityPartnerSpeciality
         },
+
 
         logCreateUniversity(userEditor, universityEdited){
             var up = {}

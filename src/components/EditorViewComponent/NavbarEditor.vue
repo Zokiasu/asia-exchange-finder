@@ -178,7 +178,11 @@
   import Tag from '../Tag.vue'
   import { init } from 'emailjs-com'
 
+  import FirebaseLog from '../../Mixins/firebase' 
+
   export default {
+    mixins:[FirebaseLog],
+
     components:{
         UniversityCardInfoEditor,
         Tag,
@@ -258,7 +262,7 @@
 
       addNewPartnerToUniversity(){
         
-        var universityEdited = {
+        /*var universityEdited = {
             "universitySourceId": "",
             "universitySourceName": "University Name",
             "universitySourceCountry": "France",
@@ -272,12 +276,14 @@
             "universitySourceContributors": [],
             "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
             "universitySourcerPartner": [], 
-        }
+        }*/
+
+        var universityEdited = FirebaseLog.methods.newUniversityObject()
 
         universityEdited = JSON.parse(JSON.stringify(this.university))
         
         if(universityEdited.universitySourcerPartner == undefined) {
-          universityEdited.universitySourcerPartner = [{
+          /*universityEdited.universitySourcerPartner = [{
             "universityPartnerName": this.universitysPartner.universityPartnerName,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
@@ -289,9 +295,10 @@
             "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
             "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-          }]
+          }]*/
+          universityEdited.universitySourcerPartner = [FirebaseLog.methods.newPartnerObject(this.universitysPartner)]
         } else {
-          universityEdited.universitySourcerPartner.push({
+          /*universityEdited.universitySourcerPartner.push({
             "universityPartnerName": this.universitysPartner.universityPartnerName,
             "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
             "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
@@ -304,7 +311,8 @@
             "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
             "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
 
-          })
+          })*/
+          universityEdited.universitySourcerPartner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
         }
         this.updateUniversity(universityEdited)
 
@@ -313,7 +321,9 @@
         } else {
           this.updateCountry()
         }
-        this.resetPartnerInfo()
+        //this.resetPartnerInfo()
+        //Clear object
+        this.universitysPartner = FirebaseLog.methods.newPartnerObject()
       },
 
       updateUniversity(universityEdited){
@@ -325,20 +335,7 @@
         country.push('All')
         
         if(this.universitysPartner.universityPartnerName != "") {
-          this.partner.push({
-            "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
-            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
-            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
-            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
-            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
-            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
-            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
-            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
-            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
-            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-
-          })
+          this.partner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
         }
         this.partner.forEach(el2 => {
             country.push(el2.universityPartnerCountry)                    
@@ -356,20 +353,7 @@
         country.push('All')
         
         if(this.universitysPartner.universityPartnerName != "") {
-          this.partner.push({
-            "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
-            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
-            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
-            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
-            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
-            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
-            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
-            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
-            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
-            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-
-          })
+          this.partner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
           this.removePDisplay(universityPartnerS)
         }
         this.partner.forEach(el2 => {
@@ -387,10 +371,15 @@
         this.$emit('editPartner', universityPartnerS)
         if(this.university.universitySourceDisplay == "True") {
           this.drawer()
+        } else {
+          this.updateCountry()
+          console.log(this.actualFilter)
+          this.countryFilter(this.actualFilter)
         }
       },
 
-      removePDisplay(universityPartnerS){  
+      removePDisplay(universityPartnerS){
+        console.log("removePDisplay")
         for (let g = 0; g < this.partner.length; g++) {
             if(this.partner.universityPartnerName == universityPartnerS.universityPartnerName){
               this.partner.splice(g,1)
@@ -400,8 +389,9 @@
 
       removePartenaire(universityPartnerS){
         this.$emit('removePartner', universityPartnerS)
-        this.updateRCountry(universityPartnerS)
+        this.updateCountry()
         this.drawer()
+        this.initPartner()
       },
 
       setCreatePartner: function() {
@@ -443,8 +433,7 @@
       },
 
       countryFilter(country){
-        this.partner = this.university.universitySourcerPartner.filter(
-            (el) => {
+        this.partner = this.university.universitySourcerPartner.filter((el) => {
                 if(el.universityPartnerCountry == country || country == 'All'){
                   this.actualFilter = country
                   return true

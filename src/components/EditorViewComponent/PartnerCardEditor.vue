@@ -112,7 +112,7 @@
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
                     <textarea class="autoexpand h-40 tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                        v-model="universityPartner.universityPartnerCondition" @input="resize($event)" :placeholder="universityP.universityPartnerCondition"></textarea>
+                        v-model="universityPartner.universityPartnerCondition" :placeholder="universityP.universityPartnerCondition"></textarea>
                     <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Partner Condition</label>
                 </div>
             </div>
@@ -260,7 +260,6 @@
             if(this.universityP.universityPartnerSpeciality) {
                 this.universityPartner.universityPartnerSpeciality = JSON.parse(JSON.stringify(this.universityP.universityPartnerSpeciality))
             }
-
             this.$emit('editPartner', this.universityPartner)
             this.callEditPartner()
         },

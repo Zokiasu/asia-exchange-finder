@@ -29,9 +29,7 @@
             },
 
             setVisibleSignUp: function() {
-                this.modelCity = this.linkify("Hello dear how are you https://www.nautiljon.com/ go into https://www.google.fr/")
-                console.log(this.modelCity)
-                Firebase.methods.logCreateUniversity("Hello","Dear")
+                console.log(Firebase.methods.newPartnerObject())
             },
         },
     }
