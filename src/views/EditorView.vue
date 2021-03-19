@@ -75,7 +75,7 @@
                     <transition name="slide-fade">
                         <div v-if="show" class="container bg-gray-500 bg-opacity-75 w-full h-full p-10 rounded-lg overflow-hidden shadow-2xl relative justify-center items-center grid grid-cols-1 ">
                             <p class="text-xl lg:text-2xl text-white text-center mb-6">We are sorry,<br>we are not able to find a university or school that fits the selected parameters.</p>
-                            <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/editorview">Editor View</router-link> page.</p>
+                            <p class="text-xl lg:text-2xl text-white text-center">If you know of a university corresponding the chosen conditions, add it to our database by logging on to our site and consulting the <router-link class="text-blue-300" to="/editorview">Editor Mode</router-link>.</p>
                         </div>
                     </transition>
                 </div>
@@ -788,13 +788,9 @@
                     }
 
                     universityEdited.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.updateCreators(universityEdited)
-                    console.log("1")
-                    console.log(this.universitysSend[indexIntoOfficialList])
-                    console.log("2")
-                    console.log(universityEdited)
                     this.universitysSend[indexIntoOfficialList].universitySourcerPartner = JSON.parse(JSON.stringify(universityEdited.universitySourcerPartner))
                     up['/universitysEdited/' + universityEdited.universitySourceId] = universityEdited
+                    this.updateCreators(universityEdited)
                 } 
                 //UniversitySourceDisplay statut is online
                 else {
@@ -811,8 +807,8 @@
 
                     tmpUEdit.universitySourceDisplay = "False"
                     this.universitysSend.push(tmpUEdit)
-                    this.updateCreators(tmpUEdit)
                     up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
+                    this.updateCreators(tmpUEdit)
                 }
 
                 this.sortingParam("Creation Date Desc.")

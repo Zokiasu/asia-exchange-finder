@@ -6,14 +6,14 @@
             <p class="px-2 font-bold text-white">{{universityP.universityPartnerName}}</p>
             <p class="font-bold text-white pl-2 xl:pl-0 xl:absolute xl:top-0 xl:right-2">{{universityP.universityPartnerCity}}, {{universityP.universityPartnerCountry}}</p>
         </div>
-        <!-- Partner speciality -->
+        <!-- Partner major -->
         <div class="p-2">
-            <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Partner's Speciality :</p>
+            <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Partner's Majors :</p>
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(universityPartnerName, index) in universityP.universityPartnerSpeciality" :key="index">
                 <tag :tags="universityPartnerName"/>
             </div>
             <div v-if="!universityP.universityPartnerSpeciality" class="text-sm 4xl:text-lg">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+                <p>Sorry, we don't have more information about partner's majors. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div> 
         <!-- Partner Cycle -->
@@ -23,15 +23,15 @@
                 <tag :tags="universityPartnerCycle"/>
             </div>
             <div v-if="!universityP.universityPartnerCycle" class="text-sm 4xl:text-lg">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+                <p>Sorry, we don't have more information about the cycles offered by this partner. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div> 
-        <!-- Exchange -->
+        <!-- Requirements -->
         <div class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Requirements :</p>
             <p class="whitespace-pre-line text-sm 4xl:text-base">{{universityP.universityPartnerCondition}}</p>
-            <div v-if="!universityP.universityPartnerCondition" class="font-semibold xl:text-lg 4xl:text-xl">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
+            <div v-if="!universityP.universityPartnerCondition" class="text-sm 4xl:text-lg">
+                <p>Sorry, we don't have more information about this partner's requirements. If you have any information please edit this partner to help us improve our database.</p>
             </div>
         </div>
         <!-- universityPartnerWebsiteLink button -->
@@ -69,7 +69,7 @@
                 <div class="relative w-full appearance-none label-floating">
                     <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                     id="universitySourceName" v-model="universityPartner.universityPartnerName" :placeholder="universityP.universityPartnerName">
-                    <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">universityP Partner Name</label>
+                    <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Name</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7 text-sm bg-white py-2 px-4 rounded">
-                <div><p class="text-green-600">Academic Cycle</p></div>
+                <div><p class="text-green-600">Partner Academic Cycle</p></div>
                 <ul class="flex">
                     <li class="ml-5 space-x-2 font-semibold" v-for="(universityCycle, index) in universityCycle" v-bind:key="index">
                         <input :id="universityCycle" :value="universityCycle" name="universityCycle" type="checkbox" v-model="universityPartner.universityPartnerCycle" @change="log"/>
@@ -120,7 +120,7 @@
                 <smart-tagz
                     editable
                     autosuggest
-                    input-placeholder="Speciality ..."
+                    input-placeholder="Majors ..."
                     :defaultTags= universityP.universityPartnerSpeciality
                     :sources= listOfSpeciality
                     :on-changed="logResult"

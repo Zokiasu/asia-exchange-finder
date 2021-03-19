@@ -87,7 +87,7 @@
                             (authUser) => {
                                 this.$router.replace('/')
                                 this.xhrRequest = false;
-                                this.$toast.info("You can help us to improve our database with Editor View page", {position:"top", duration: 7000, max: 1})
+                                this.$toast.info("You can help us to improve our database with Editor Mode", {position:"top", duration: 7000, max: 1})
                                 this.$toast.success(`You have been logged.`, {position:"bottom-left", duration: 1000, max:1});
                                 this.userlog();
                                 this.close();

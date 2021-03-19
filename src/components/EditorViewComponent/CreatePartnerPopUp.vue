@@ -59,7 +59,7 @@
                         <smart-tagz
                             editable
                             autosuggest
-                            input-placeholder="Partner Speciality ..."
+                            input-placeholder="Partner Major ..."
                             :sources= listOfSpeciality
                             :on-changed="logResult"
                             :allowPaste="{delimiter: ','}"

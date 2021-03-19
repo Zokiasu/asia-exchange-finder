@@ -5,7 +5,7 @@
         <p class="invisible md:visible text-xl">|</p>
         <router-link to="/about" class="invisible md:visible">About</router-link>
         <p class="invisible md:visible text-xl" v-if="userAuthenticated">|</p>
-        <router-link to="/editorview" class="invisible md:visible" v-if="userAuthenticated">Editor View</router-link>
+        <router-link to="/editorview" class="invisible md:visible" v-if="userAuthenticated">Editor Mode</router-link>
         <p class="invisible md:visible text-xl" v-if="userAdmin">|</p>
         <router-link to="/dashboard" class="invisible md:visible" v-if="userAdmin">Dashboard</router-link>
       </div>

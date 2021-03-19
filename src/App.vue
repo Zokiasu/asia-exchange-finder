@@ -6,8 +6,8 @@
     
     <!-- Body -->
     <h1 class="font-bold text-center mt-10 ms:mt-20 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"><router-link to="/">Asia Exchange Finder</router-link></h1>
-    <p class="text-center mt-5">(Beta Version)</p>
-    <h2 class="text-center mt-10 mb-5 ms:mb-0 text-xl 2xl:text-2xl">Find your exchange to an Asian country.</h2>
+    <i class="text-center mt-5">(Beta Version)</i>
+    <h2 class="text-center mt-10 mb-5 ms:mb-0 text-xl 2xl:text-2xl">Find your student exchange and become a Studeler <i class="text-xs">(Student Traveler)</i>.</h2>
     <router-view class="mb-16"/>
     <!-- Footer -->
   </div>
