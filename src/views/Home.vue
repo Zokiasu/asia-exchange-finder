@@ -6,7 +6,7 @@
             <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-gray-200  text-black"
+                        class="bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="From All Cities"
@@ -16,7 +16,7 @@
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-gray-200  text-black"
+                        class="bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="To All Destinations"
@@ -26,7 +26,7 @@
                 </div>
                 <div class="pt-6 ms:pl-1 flex">
                     <Multiselect
-                        class="md:w-48 bg-gray-200  text-black"
+                        class="bg-gray-200  text-black"
                         mode="single"
                         :searchable="true"
                         placeholder="For All Majors"

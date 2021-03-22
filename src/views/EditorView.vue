@@ -652,8 +652,8 @@
                 return db.ref().update(up).then(
                     () => {
                         this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
-                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
+                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
+                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 5000, max:3});
                         this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})    
                         FirebaseLog.methods.logCreateUniversity(name, newUniversitys.universitySourceName)                    
                     }

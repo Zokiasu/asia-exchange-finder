@@ -37,7 +37,7 @@
         <div class="flex justify-between">
           <!-- Filters -->
           <div class="px-4 py-2 place-items-center">
-            <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+            <button @click="filter2(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
           </div>
           <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">
               <div class="space-x-1 bottom-0.5 right-3">
@@ -125,7 +125,7 @@
           <div class="flex justify-between">
             <!-- Filters -->
             <div class="px-4 py-2 place-items-center">
-              <button @click="countryFilter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+              <button @click="filter2(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
             </div>
             <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">         
                 <div class="space-x-1 bottom-0.5 right-3">
@@ -331,40 +331,15 @@
       },
 
       updateCountry(){
-        var country = [];
-        country.push('All')
-        
         if(this.universitysPartner.universityPartnerName != "") {
           this.partner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
         }
-        this.partner.forEach(el2 => {
-            country.push(el2.universityPartnerCountry)                    
-        })
         this.partner.sort(function(a,b){
             if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
             if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
             return 0;
         })
-        this.countryPartner = [...new Set(country)]
-      },
-
-      updateRCountry(universityPartnerS){
-        var country = [];
-        country.push('All')
-        
-        if(this.universitysPartner.universityPartnerName != "") {
-          this.partner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
-          this.removePDisplay(universityPartnerS)
-        }
-        this.partner.forEach(el2 => {
-            country.push(el2.universityPartnerCountry)                    
-        })
-        this.partner.sort(function(a,b){
-            if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
-            if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
-            return 0;
-        })
-        this.countryPartner = [...new Set(country)]
+        this.enableCountryFilter()
       },
 
       editPartenaire(universityPartnerS){
@@ -373,8 +348,6 @@
           this.drawer()
         } else {
           this.updateCountry()
-          console.log(this.actualFilter)
-          this.countryFilter(this.actualFilter)
         }
       },
 
@@ -415,35 +388,258 @@
         this.initPartner()   
       },
 
-      initPartner(){
-        var country = [];
-        country.push('All')
+      async initPartner(){
+        var tmpPartner0 = []
         if(this.university.universitySourcerPartner){
-          this.partner = this.university.universitySourcerPartner
-          this.partner.forEach(el2 => {
-              country.push(el2.universityPartnerCountry)                    
-          })
+
+          if(this.university.universitySourceDisplay == "False") {
+            await db.ref("universitysEdited/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+              snapshot.forEach(function(element){
+                if(element.val().universityPartnerName != undefined) {
+                  tmpPartner0.push(
+                    {
+                      "universityPartnerName": element.val().universityPartnerName,
+                      "universityPartnerCountry": element.val().universityPartnerCountry,
+                      "universityPartnerCity": element.val().universityPartnerCity,
+                      "universityPartnerAddress": element.val().universityPartnerAddress,
+                      "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                      "universityPartnerCondition": element.val().universityPartnerCondition,
+                      "universityPartnerCycle": element.val().universityPartnerCycle,
+                      "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                      "universityPartnerCreator": element.val().universityPartnerCreator,
+                      "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                      "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                    }
+                  )
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                }
+              })
+            })
+          } else {
+            await db.ref("universitys/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+              snapshot.forEach(function(element){
+                if(element.val().universityPartnerName != undefined) {
+                  tmpPartner0.push(
+                    {
+                      "universityPartnerName": element.val().universityPartnerName,
+                      "universityPartnerCountry": element.val().universityPartnerCountry,
+                      "universityPartnerCity": element.val().universityPartnerCity,
+                      "universityPartnerAddress": element.val().universityPartnerAddress,
+                      "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                      "universityPartnerCondition": element.val().universityPartnerCondition,
+                      "universityPartnerCycle": element.val().universityPartnerCycle,
+                      "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                      "universityPartnerCreator": element.val().universityPartnerCreator,
+                      "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                      "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                    }
+                  )
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                }
+              })
+            })
+          }
+
+          this.partner = tmpPartner0
           this.partner.sort(function(a,b){
               if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
               if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
               return 0;
           })
-          this.countryPartner = [...new Set(country)]
+          this.enableCountryFilter()
         }
       },
 
-      countryFilter(country){
+      enableCountryFilter(){
+        var country = [];
+        country.push('All')
+        this.partner.forEach(el => {
+            country.push(el.universityPartnerCountry)                    
+        })
+        this.countryPartner = [...new Set(country)]
+      },
+
+      filter(country){
         this.partner = this.university.universitySourcerPartner.filter((el) => {
-                if(el.universityPartnerCountry == country || country == 'All'){
-                  this.actualFilter = country
-                  return true
-                } else {
-                  return false
-                }
+            if(el.universityPartnerCountry == country || country == 'All'){
+              this.actualFilter = country
+              return true
+            } else {
+              return false
             }
-        )
+        })
+      },
+      
+
+      async filter2(country){
+        var tmpPartner0 = []
+        if(this.actualFilter != country) {this.actualFilter = country}
+        if(this.university.universitySourceDisplay == "False") {
+          await db.ref("universitysEdited/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+            snapshot.forEach(function(element){
+              if(element.val().universityPartnerCountry == country) {
+                tmpPartner0.push(
+                  {
+                    "universityPartnerName": element.val().universityPartnerName,
+                    "universityPartnerCountry": element.val().universityPartnerCountry,
+                    "universityPartnerCity": element.val().universityPartnerCity,
+                    "universityPartnerAddress": element.val().universityPartnerAddress,
+                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                    "universityPartnerCondition": element.val().universityPartnerCondition,
+                    "universityPartnerCycle": element.val().universityPartnerCycle,
+                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                    "universityPartnerCreator": element.val().universityPartnerCreator,
+                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                  }
+                )
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+              } else if(country == "All") {
+                tmpPartner0.push(
+                  {
+                    "universityPartnerName": element.val().universityPartnerName,
+                    "universityPartnerCountry": element.val().universityPartnerCountry,
+                    "universityPartnerCity": element.val().universityPartnerCity,
+                    "universityPartnerAddress": element.val().universityPartnerAddress,
+                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                    "universityPartnerCondition": element.val().universityPartnerCondition,
+                    "universityPartnerCycle": element.val().universityPartnerCycle,
+                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                    "universityPartnerCreator": element.val().universityPartnerCreator,
+                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                  }
+                )
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+              }
+            })
+          })
+        } else {
+          await db.ref("universitys/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+            snapshot.forEach(function(element){
+              if(element.val().universityPartnerCountry == country) {
+                tmpPartner0.push(
+                  {
+                    "universityPartnerName": element.val().universityPartnerName,
+                    "universityPartnerCountry": element.val().universityPartnerCountry,
+                    "universityPartnerCity": element.val().universityPartnerCity,
+                    "universityPartnerAddress": element.val().universityPartnerAddress,
+                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                    "universityPartnerCondition": element.val().universityPartnerCondition,
+                    "universityPartnerCycle": element.val().universityPartnerCycle,
+                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                    "universityPartnerCreator": element.val().universityPartnerCreator,
+                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                  }
+                )
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+              } else if(country == "All") {
+                tmpPartner0.push(
+                  {
+                    "universityPartnerName": element.val().universityPartnerName,
+                    "universityPartnerCountry": element.val().universityPartnerCountry,
+                    "universityPartnerCity": element.val().universityPartnerCity,
+                    "universityPartnerAddress": element.val().universityPartnerAddress,
+                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                    "universityPartnerCondition": element.val().universityPartnerCondition,
+                    "universityPartnerCycle": element.val().universityPartnerCycle,
+                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
+                    "universityPartnerCreator": element.val().universityPartnerCreator,
+                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
+                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
+                  }
+                )
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+              }
+            })
+          })
+        }
+
+        this.partner = tmpPartner0
+        this.partner.sort(function(a,b){
+            if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
+            if(a.universityPartnerName.toLowerCase() > b.universityPartnerName.toLowerCase()) {return 1}
+            return 0;
+        })
       },
 
     },
   };
 </script>
+
+<style>
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  height: 0;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>
