@@ -1,21 +1,48 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
 import AboutUs from '../views/About/AboutUs.vue'
 import Contact from '../views/About/Contact.vue'
 import Privacy from '../views/About/Privacy.vue'
 import Terms from '../views/About/Terms.vue'
-import EditorView from '../views/EditorView.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Test from '../views/Test.vue'
 import Dashboard from '../views/Dashboard.vue'
+
+import Home from '../views/Asia-Exchange-Finder/Home.vue'
+import EditorView from '../views/Asia-Exchange-Finder/EditorView.vue'
+import AEF from '../views/AEF.vue'
 import firebase from "firebase";
 
 const routes = [
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'AEF',
+    component: AEF,
+    children: [{
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/editorview',
+      name: 'EditorView',
+      component: EditorView
+    },
+    {
+      path: '/editUniversity',
+      name: 'UniversityEditor',
+      component: () => import("../views/UniversityEditor.vue"),
+    }]
   },
   {
     path: '/about',
@@ -38,21 +65,6 @@ const routes = [
     component: Terms
   },
   {
-    path: '/editorview',
-    name: 'EditorView',
-    component: EditorView
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/signup',
-    name: 'Signup',
-    component: Signup
-  },
-  {
     path: '/test',
     name: 'Test',
     component: Test
@@ -61,9 +73,6 @@ const routes = [
     path: '/Dashboard',
     name: 'Dashboard',
     component: Dashboard,
-    /*meta: {
-      requiresAuth:true
-    }*/
   }
 ]
 

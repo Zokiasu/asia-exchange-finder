@@ -108,19 +108,19 @@
 </template>
 
 <script>
-    import db from '../main.js'
-    import {apps, name, grade} from '../main.js'
-    import imgs from '../assets/plus-symbol.png'
-
     import $ from 'jQuery'
     import Multiselect from '@vueform/multiselect'
     import BackToTop from 'vue-backtotop'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
-    import Card from '../components/EditorViewComponent/UniversityCardEditor.vue'
-    import NavbarEditor from '../components/EditorViewComponent/NavbarEditor.vue'
-    import AddUSoucePopup from '../components/EditorViewComponent/CreateUniversityPopUp.vue'
-    import FirebaseLog from '../Mixins/firebase' 
+    import db from '../../main.js'
+    import {apps, name, grade} from '../../main.js'
+    import imgs from '../../assets/plus-symbol.png'
+
+    import Card from '../../components/EditorViewComponent/UniversityCardEditor.vue'
+    import NavbarEditor from '../../components/EditorViewComponent/NavbarEditor.vue'
+    import AddUSoucePopup from '../../components/EditorViewComponent/CreateUniversityPopUp.vue'
+    import FirebaseLog from '../../Mixins/firebase' 
 
     export default {
         name: "Basic",
@@ -306,6 +306,9 @@
             if(this.universitysSend.length > 0){
                 this.visible = !this.visible;
                 this.init();
+                if(this.$route.query.id) {
+                    this.getuniqueUniversityNameCard1(this.$route.query.id)
+                }
             }
         },
 
@@ -440,9 +443,33 @@
             setCreateUniversity: function() {
                 this.addUniversitySourcePopUp = !this.addUniversitySourcePopUp
             },
+            
+            getuniqueUniversityNameCard1 (idUniv) {
+                this.setValue(idUniv)
+                this.$refs.navbarComponent.drawer();
+            },
 
-            getuniqueUniversityNameCard (index) {
-                
+            setValue: function(universitySourceIdToFind) {
+                for (var i = 0; i < this.universitys.length; i++) {
+                    if(this.universitys[i].universitySourceId === universitySourceIdToFind){
+                        this.universityObject.universitySourceId = this.universitys[i].universitySourceId,
+                        this.universityObject.universitySourceName = this.universitys[i].universitySourceName,
+                        this.universityObject.universitySourceCountry = this.universitys[i].universitySourceCountry,
+                        this.universityObject.universitySourceCity = this.universitys[i].universitySourceCity,
+                        this.universityObject.universitySourceAddress = this.universitys[i].universitySourceAddress,
+                        this.universityObject.universitySourceImageLink = this.universitys[i].universitySourceImageLink,
+                        this.universityObject.universitySourceWebsiteLink = this.universitys[i].universitySourceWebsiteLink,
+                        this.universityObject.universitySourceDisplay = this.universitys[i].universitySourceDisplay,
+                        this.universityObject.universitySourceCreator = this.universitys[i].universitySourceCreator,
+                        this.universityObject.universitySourceMoreInfo = this.universitys[i].universitySourceMoreInfo,
+                        this.universityObject.universitySourceContributors = this.universitys[i].universitySourceContributors,                
+                        this.universityObject.universitySourceLastUpdate = this.universitys[i].universitySourceLastUpdate,
+                        this.universityObject.universitySourcerPartner = this.universitys[i].universitySourcerPartner
+                    }
+                }
+            },
+
+            getuniqueUniversityNameCard (index) {                
                 this.universityObject.universitySourceId = this.universitysSend[index].universitySourceId,
                 this.universityObject.universitySourceName = this.universitysSend[index].universitySourceName,
                 this.universityObject.universitySourceCountry = this.universitysSend[index].universitySourceCountry,

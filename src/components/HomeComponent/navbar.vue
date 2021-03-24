@@ -152,6 +152,7 @@
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
+
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
     },
@@ -168,6 +169,8 @@
 
       drawer() {
         this.isOpen = !this.isOpen;
+        if(this.isOpen) { this.$router.push({path: '/', query:{id: this.university.universitySourceId}}) }
+        else {this.$router.push({path:'/'})}
         this.partner = [];
         this.countryPartner = [];
       },
@@ -182,6 +185,7 @@
           })
           this.countryPartner = [...new Set(country)]
         }
+        this.actualFilter = "All"
       },
 
       countryFilter(country){

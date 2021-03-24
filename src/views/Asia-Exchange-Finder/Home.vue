@@ -35,6 +35,7 @@
                     <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
             </div>
+
             <div class="container flex flex-col justify-center">
                 <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
                 <button @click="resetAllFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
@@ -71,7 +72,6 @@
 
             <!-- Component University Card -->
             <navbar class="z-40" ref="navbarComponent" :university="universityObject"></navbar>
-
         </div>
 
         <back-to-top class="z-30" bottom="50px" right="50px">
@@ -81,17 +81,17 @@
 </template>
 
 <script>
-    import db from '../main.js'
-    import {name} from '../main.js'
-    
     import $ from 'jQuery'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import firebase from 'firebase'
     import Multiselect from '@vueform/multiselect'
     import BackToTop from 'vue-backtotop'
+
+    import db from '../../main.js'
+    import {name} from '../../main.js'
     
-    import Card from '../components/HomeComponent/UniversityCard.vue'
-    import Navbar from '../components/HomeComponent/navbar.vue'
+    import Card from '../../components/HomeComponent/UniversityCard.vue'
+    import Navbar from '../../components/HomeComponent/navbar.vue'
 
     export default {
         name: "Basic",
@@ -226,6 +226,9 @@
             if(this.universitysSend.length > 0){
                 this.visible = !this.visible;
                 this.init();
+                if(this.$route.query.id) {
+                    this.getuniqueUniversityNameCard(this.$route.query.id)
+                }
             }
         },
 
@@ -275,14 +278,15 @@
                 this.option.cityStartOption.sort()
             },
 
-            getuniqueUniversityNameCard (val) {
-                this.setValue(val)
+            getuniqueUniversityNameCard (idUniv) {
+                this.setValue(idUniv)
                 this.$refs.navbarComponent.drawer();
             },
 
-            setValue: function(universitySourceNameToFind) {
+            setValue: function(universitySourceIdToFind) {
                 for (var i = 0; i < this.universitys.length; i++) {
-                    if(this.universitys[i].universitySourceName === universitySourceNameToFind){
+                    if(this.universitys[i].universitySourceId === universitySourceIdToFind){
+                        this.universityObject.universitySourceId = this.universitys[i].universitySourceId,
                         this.universityObject.universitySourceName = this.universitys[i].universitySourceName,
                         this.universityObject.universitySourceCountry = this.universitys[i].universitySourceCountry,
                         this.universityObject.universitySourceCity = this.universitys[i].universitySourceCity,

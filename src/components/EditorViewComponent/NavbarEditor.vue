@@ -381,8 +381,13 @@
       },
 
       drawer() {
-        if(!this.isOpen) {this.resetPartnerInfo()}
         this.isOpen = !this.isOpen
+        if(this.isOpen) {
+          this.$router.push({path: '/editorview', query:{id: this.university.universitySourceId}})
+        } else {
+          this.$router.push({path:'/editorview'})
+          this.resetPartnerInfo()
+        }
         this.partner = []
         this.countryPartner = []
         this.initPartner()   
@@ -468,6 +473,7 @@
           })
           this.enableCountryFilter()
         }
+        this.actualFilter = "All"
       },
 
       enableCountryFilter(){
