@@ -179,8 +179,10 @@
             },
 
             openEditor(){
-                this.university = JSON.parse(JSON.stringify(this.universitySource))
-                this.editorView = !this.editorView
+                this.$router.push({path: '/edit/informations', query:{id: this.universitySource.universitySourceId, statut: this.universitySource.universitySourceDisplay}})
+
+                /*this.university = JSON.parse(JSON.stringify(this.universitySource))
+                this.editorView = !this.editorView*/
             },
 
             openRemove(){

@@ -1,10 +1,10 @@
 <template>
-    <div class="m-10 mb-24  md:mb-10 p-10 xl:mx-52 bg-gray-500 bg-opacity-90">
+    <div class="m-10 mb-24  md:mb-10 p-10 xl:mx-52 bg-gray-900 bg-opacity-70">
         <div class="space-x-3 mb-5">
             <router-link to="/about">About Us</router-link>
             <router-link to="/contact">Contact</router-link>
             <router-link to="/privacy">Privacy Policy</router-link>
-            <router-link to="/terms" class="text-black font-semibold">Terms of Use</router-link>
+            <router-link to="/terms" class="text-red-700 font-semibold">Terms of Use</router-link>
         </div>
         <div class="mb-5 font-bold text-4xl">
             <h1>Terms of Use</h1>
@@ -256,7 +256,7 @@
                 <router-link to="/about">About Us</router-link>
                 <router-link to="/contact">Contact</router-link>
                 <router-link to="/privacy">Privacy Policy</router-link>
-                <router-link to="/terms" class="text-black font-semibold">Terms of Use</router-link>
+                <router-link to="/terms" class="text-red-700 font-semibold">Terms of Use</router-link>
             </div>
         </div>
     </div>

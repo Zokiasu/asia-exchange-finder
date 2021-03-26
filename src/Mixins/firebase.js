@@ -56,6 +56,22 @@ export default {
             universityToFill.universitySourcerPartner = universityData.universitySourcerPartner
         },
 
+        copyUniversityObject(universityToFill, universityData) {
+            if(universityData.universitySourceId) universityToFill.universitySourceId = JSON.parse(JSON.stringify(universityData.universitySourceId))
+            if(universityData.universitySourceName) universityToFill.universitySourceName = JSON.parse(JSON.stringify(universityData.universitySourceName))
+            if(universityData.universitySourceCountry) universityToFill.universitySourceCountry = JSON.parse(JSON.stringify(universityData.universitySourceCountry))
+            if(universityData.universitySourceCity) universityToFill.universitySourceCity = JSON.parse(JSON.stringify(universityData.universitySourceCity))
+            if(universityData.universitySourceAddress) universityToFill.universitySourceAddress = JSON.parse(JSON.stringify(universityData.universitySourceAddress))
+            if(universityData.universitySourceImageLink) universityToFill.universitySourceImageLink = JSON.parse(JSON.stringify(universityData.universitySourceImageLink))
+            if(universityData.universitySourceWebsiteLink) universityToFill.universitySourceWebsiteLink = JSON.parse(JSON.stringify(universityData.universitySourceWebsiteLink))
+            if(universityData.universitySourceDisplay) universityToFill.universitySourceDisplay = JSON.parse(JSON.stringify(universityData.universitySourceDisplay))
+            if(universityData.universitySourceCreator) universityToFill.universitySourceCreator = JSON.parse(JSON.stringify(universityData.universitySourceCreator))
+            if(universityData.universitySourceMoreInfo) universityToFill.universitySourceMoreInfo = JSON.parse(JSON.stringify(universityData.universitySourceMoreInfo))
+            if(universityData.universitySourceContributors) universityToFill.universitySourceContributors = JSON.parse(JSON.stringify(universityData.universitySourceContributors))
+            if(universityData.universitySourceLastUpdate) universityToFill.universitySourceLastUpdate = JSON.parse(JSON.stringify(universityData.universitySourceLastUpdate))
+            if(universityData.universitySourcerPartner) universityToFill.universitySourcerPartner = JSON.parse(JSON.stringify(universityData.universitySourcerPartner))
+        },
+
         newPartnerObject(partnerData){
             if(partnerData != undefined) {
                 return {
@@ -102,6 +118,77 @@ export default {
             partnerToFill.universityPartnerSpeciality = partnerData.universityPartnerSpeciality
         },
 
+        copyPartnerObject(partnerToFill, partnerData){
+            if(partnerData.universityPartnerName) partnerToFill.universityPartnerName = JSON.parse(JSON.stringify(partnerData.universityPartnerName))
+            if(partnerData.universityPartnerCountry) partnerToFill.universityPartnerCountry = JSON.parse(JSON.stringify(partnerData.universityPartnerCountry))
+            if(partnerData.universityPartnerCity) partnerToFill.universityPartnerCity = JSON.parse(JSON.stringify(partnerData.universityPartnerCity))
+            if(partnerData.universityPartnerAddress) partnerToFill.universityPartnerAddress = JSON.parse(JSON.stringify(partnerData.universityPartnerAddress))
+            if(partnerData.universityPartnerWebsiteLink) partnerToFill.universityPartnerWebsiteLink = JSON.parse(JSON.stringify(partnerData.universityPartnerWebsiteLink))
+            if(partnerData.universityPartnerCondition) partnerToFill.universityPartnerCondition = JSON.parse(JSON.stringify(partnerData.universityPartnerCondition))
+            if(partnerData.universityPartnerCycle) partnerToFill.universityPartnerCycle = JSON.parse(JSON.stringify(partnerData.universityPartnerCycle))
+            if(partnerData.universityPartnerDisplay) partnerToFill.universityPartnerDisplay = JSON.parse(JSON.stringify(partnerData.universityPartnerDisplay))
+            if(partnerData.universityPartnerCreator) partnerToFill.universityPartnerCreator = JSON.parse(JSON.stringify(partnerData.universityPartnerCreator))
+            if(partnerData.universityPartnerLastUpdate) partnerToFill.universityPartnerLastUpdate = JSON.parse(JSON.stringify(partnerData.universityPartnerLastUpdate))
+            if(partnerData.universityPartnerSpeciality) partnerToFill.universityPartnerSpeciality = JSON.parse(JSON.stringify(partnerData.universityPartnerSpeciality))
+        },
+
+        //General Function for Firebase
+        
+        updateCreators(universityEdit) {
+            var newEditor = true
+
+            universityEdit.universitySourceContributors.forEach(el => {
+                if(el.contributorSourceName == name) {
+                    el.contributorSourceEditNumber = el.contributorSourceEditNumber + 1
+                    newEditor = false
+                }
+            })
+            
+            if(newEditor) {
+                universityEdit.universitySourceContributors.push({
+                    "contributorSourceName": name,
+                    "contributorSourceEditNumber": 1
+                })
+            }
+
+        },
+
+        //Firebase Function
+
+        addUniversityToFrebase(universityToAdd){
+            var id = ""
+            var up = {}
+
+            if(universityToAdd.universitySourceId == "" || universityToAdd.universitySourceId == undefined) {
+                //If new university add version by user with a new generated id
+                id = db.ref().child('universitys').push().key
+                universityToAdd.universitySourceId = id
+                this.updateCreators(universityToAdd)
+                up['/universitysEdited/' + id + '/' + universityToAdd.universitySourceCreator] = universityToAdd
+            } else {
+                //If existing university add version by user to validate information
+                this.updateCreators(universityToAdd)
+                up['/universitysEdited/' + universityToAdd.universitySourceId + '/' + universityToAdd.universitySourceCreator] = universityToAdd
+            }
+
+            return db.ref().update(up).then(() => {
+                    this.logCreateUniversity(name, universityToAdd.universitySourceName)                 
+                }
+            )
+        },
+
+        validUniversity(universityToValidated){
+            var up = {}
+            universityToValidated.universitySourceDisplay = "True"
+            console.log(universityToValidated)
+            up['/universitys/' + universityToValidated.universitySourceId] = universityToValidated
+            apps.database().ref('/universitysEdited/' + universityToValidated.universitySourceId + '/' + universityToValidated.universitySourceCreator).set(null)
+            return db.ref().update(up).then(() => {
+                this.logConfirmUniversity(name, universityToValidated.universitySourceName)                 
+            })
+        },
+
+        //Firebase Log Function
 
         logCreateUniversity(userEditor, universityEdited){
             var up = {}

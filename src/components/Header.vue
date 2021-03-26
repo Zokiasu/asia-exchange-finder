@@ -1,13 +1,11 @@
 <template>
     <div class="space-x-2 mr-3 ms:mr-10 mt-6 flex justify-end">
-      <div class="h-0 md:h-auto space-x-2 absolute left-8 md:left-10 lg:left-20 ml-6 flex justify-between text-xl">
+      <div class="h-0 md:h-auto space-x-2 absolute left-5 ml-6 flex justify-between text-xl">
         <router-link to="/" class="invisible md:visible">Home</router-link>
         <p class="invisible md:visible text-xl">|</p>
         <router-link to="/about" class="invisible md:visible">About</router-link>
         <p class="invisible md:visible text-xl" v-if="userAuthenticated">|</p>
         <router-link to="/editorview" class="invisible md:visible" v-if="userAuthenticated">Editor Mode</router-link>
-        <p class="invisible md:visible text-xl" v-if="userAdmin">|</p>
-        <router-link to="/dashboard" class="invisible md:visible" v-if="userAdmin">Dashboard</router-link>
       </div>
       <p class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="invisible md:visible bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>

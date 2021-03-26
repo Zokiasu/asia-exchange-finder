@@ -1,11 +1,11 @@
 module.exports = {
+  darkMode: 'class', // or 'media' or 'class'
   purge: [
     './index.html', 
     './src/**/*.html',
     './src/**/*.vue',
     './src/**/*.jsx',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     container: {
       center: true,

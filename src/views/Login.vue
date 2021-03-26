@@ -1,8 +1,8 @@
 <template>
-    <div class="justify-center items-center py-10 m-10 bg-gray-100 bg-opacity-50">
-        <h1 class="text-white text-center mb-10 text-3xl font-bold">Login Form</h1>
+    <div class="justify-center items-center py-20 m-10 bg-gray-900 bg-opacity-70">
+        <h1 class="text-white text-center mb-10 text-3xl font-bold">Login</h1>
         <div class="mx-auto flex justify-center items-center w-full">
-            <form @submit.prevent="loginRequest" id="login-form">
+            <form @submit.prevent="loginRequest" id="login-form" class="w-1/4">
                 <div class="grid grid-cols-1 gap-6">
                     <div class="flex flex-wrap mb-2">
                         <div class="relative w-full appearance-none label-floating">

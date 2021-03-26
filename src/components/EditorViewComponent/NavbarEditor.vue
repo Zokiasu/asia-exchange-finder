@@ -26,24 +26,16 @@
 
       <!-- Partner -->
       <div>
-        <AddUPartnerPopup
-            @close="setCreatePartner" 
-            @addNewPartnerToUniversity="addNewPartnerToUniversity"
-            :universitysPartner="universitysPartner"
-            :listOfSpeciality="listOfSpeciality"
-            v-if="addUniversityPartnerPopUp" 
-            class="z-50">
-        </AddUPartnerPopup>
         <div class="flex justify-between">
           <!-- Filters -->
           <div class="px-4 py-2 place-items-center">
-            <button @click="filter2(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+            <button @click="filter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
           </div>
           <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">
               <div class="space-x-1 bottom-0.5 right-3">
-                  <button @click="setCreatePartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
+                  <button @click="editThisUniversity" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
                       rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                      Add New Partner
+                      Edit This University
                   </button>
               </div>
           </div>
@@ -61,7 +53,7 @@
         </UniversityCardInfoEditor>
         <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
             <p>Sorry, we don't have informations about this university's partners yet.</p>
-              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="setCreatePartner">new partners</button>.</p>
+              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="editThisUniversity">new partners</button>.</p>
         </div>
       </div>
     </aside>
@@ -125,13 +117,13 @@
           <div class="flex justify-between">
             <!-- Filters -->
             <div class="px-4 py-2 place-items-center">
-              <button @click="filter2(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
+              <button @click="filter(value)" :class="[ (actualFilter == value) ? 'font-semibold bg-red-500' : 'bg-blue-500' ]" class="text-white 4xl:text-2xl rounded py-1 px-3 mr-2 mt-2 border border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent" v-for="(value, index) in this.countryPartner" v-bind:key="index">{{value}}</button>
             </div>
             <div class="right-0 text-sm 4xl:text-xl flex justify-end m-5 xl:mx-10">         
                 <div class="space-x-1 bottom-0.5 right-3">
-                    <button @click="setCreatePartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
+                    <button @click="editThisUniversity" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
                         rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                        Add New Partner
+                        Edit This University
                     </button>
                 </div>
             </div>
@@ -149,17 +141,9 @@
           </UniversityCardInfoEditor>
           <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-30 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have information about this university's partners yet or this one doesn't have a partner in Asia.</p>
-              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="setCreatePartner">new partners</button>.</p>
+              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="editThisUniversity">new partners</button>.</p>
           </div>
         </div>
-        <AddUPartnerPopup
-            @close="setCreatePartner" 
-            @addNewPartnerToUniversity="addNewPartnerToUniversity"
-            :universitysPartner="universitysPartner"
-            :listOfSpeciality="listOfSpeciality"
-            v-if="addUniversityPartnerPopUp" 
-            class="z-50 mx-auto flex flex-col mt-auto">
-        </AddUPartnerPopup>
       </div>
 
     </aside>
@@ -174,7 +158,6 @@
   import {apps, name, grade, analytics} from '../../main.js'
 
   import UniversityCardInfoEditor from './PartnerCardEditor.vue'
-  import AddUPartnerPopup from './CreatePartnerPopUp.vue'    
   import Tag from '../Tag.vue'
   import { init } from 'emailjs-com'
 
@@ -186,7 +169,6 @@
     components:{
         UniversityCardInfoEditor,
         Tag,
-        AddUPartnerPopup,
     },
 
     props: ['university', 'listOfSpeciality'],
@@ -261,57 +243,14 @@
       },
 
       addNewPartnerToUniversity(){
-        
-        /*var universityEdited = {
-            "universitySourceId": "",
-            "universitySourceName": "University Name",
-            "universitySourceCountry": "France",
-            "universitySourceCity": "Paris",
-            "universitySourceAddress": "",
-            "universitySourceImageLink": "https://images.unsplash.com/photo-1457282367193-e3b79e38f207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1654&q=80",
-            "universitySourceWebsiteLink": "",
-            "universitySourceDisplay": "False",
-            "universitySourceCreator": name,
-            "universitySourceMoreInfo": "",
-            "universitySourceContributors": [],
-            "universitySourceLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),   
-            "universitySourcerPartner": [], 
-        }*/
 
         var universityEdited = FirebaseLog.methods.newUniversityObject()
 
         universityEdited = JSON.parse(JSON.stringify(this.university))
         
         if(universityEdited.universitySourcerPartner == undefined) {
-          /*universityEdited.universitySourcerPartner = [{
-            "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
-            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
-            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
-            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
-            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
-            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
-            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
-            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
-            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
-            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-          }]*/
           universityEdited.universitySourcerPartner = [FirebaseLog.methods.newPartnerObject(this.universitysPartner)]
         } else {
-          /*universityEdited.universitySourcerPartner.push({
-            "universityPartnerName": this.universitysPartner.universityPartnerName,
-            "universityPartnerCountry":  this.universitysPartner.universityPartnerCountry,
-            "universityPartnerCity":  this.universitysPartner.universityPartnerCity,
-            "universityPartnerAddress":  this.universitysPartner.universityPartnerAddress,
-            "universityPartnerWebsiteLink":  this.universitysPartner.universityPartnerWebsiteLink,
-            "universityPartnerCondition":  this.universitysPartner.universityPartnerCondition,
-            "universityPartnerCycle":  this.universitysPartner.universityPartnerCycle,
-            "universityPartnerDisplay":  this.universitysPartner.universityPartnerDisplay,
-            "universityPartnerCreator":  this.universitysPartner.universityPartnerCreator,
-            "universityPartnerLastUpdate":  this.universitysPartner.universityPartnerLastUpdate,  
-            "universityPartnerSpeciality":  this.universitysPartner.universityPartnerSpeciality,
-
-          })*/
           universityEdited.universitySourcerPartner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
         }
         this.updateUniversity(universityEdited)
@@ -321,8 +260,6 @@
         } else {
           this.updateCountry()
         }
-        //this.resetPartnerInfo()
-        //Clear object
         this.universitysPartner = FirebaseLog.methods.newPartnerObject()
       },
 
@@ -352,7 +289,6 @@
       },
 
       removePDisplay(universityPartnerS){
-        console.log("removePDisplay")
         for (let g = 0; g < this.partner.length; g++) {
             if(this.partner.universityPartnerName == universityPartnerS.universityPartnerName){
               this.partner.splice(g,1)
@@ -367,8 +303,9 @@
         this.initPartner()
       },
 
-      setCreatePartner: function() {
-          this.addUniversityPartnerPopUp = !this.addUniversityPartnerPopUp
+      editThisUniversity: function() {
+        this.drawer()
+        this.$router.push({path: '/edit/informations', query:{id: this.university.universitySourceId, statut: this.university.universitySourceDisplay}})
       },
 
       handleResize() {
@@ -398,7 +335,7 @@
         if(this.university.universitySourcerPartner){
 
           if(this.university.universitySourceDisplay == "False") {
-            await db.ref("universitysEdited/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+            await db.ref("universitysEdited/"+this.university.universitySourceId+'/'+this.university.universitySourceCreator+"/universitySourcerPartner").once("value", function(snapshot){
               snapshot.forEach(function(element){
                 if(element.val().universityPartnerName != undefined) {
                   tmpPartner0.push(
@@ -485,19 +422,7 @@
         this.countryPartner = [...new Set(country)]
       },
 
-      filter(country){
-        this.partner = this.university.universitySourcerPartner.filter((el) => {
-            if(el.universityPartnerCountry == country || country == 'All'){
-              this.actualFilter = country
-              return true
-            } else {
-              return false
-            }
-        })
-      },
-      
-
-      async filter2(country){
+      async filter(country){
         var tmpPartner0 = []
         if(this.actualFilter != country) {this.actualFilter = country}
         if(this.university.universitySourceDisplay == "False") {

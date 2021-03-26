@@ -1,8 +1,8 @@
 <template>
-    <div class="m-10 mb-24  md:mb-10 p-10 xl:mx-52 bg-gray-500 bg-opacity-90">
+    <div class="m-10 mb-24  md:mb-10 p-10 xl:mx-52 bg-gray-900 bg-opacity-70">
         <div class="space-x-3 mb-5">
             <router-link to="/about">About Us</router-link>
-            <router-link to="/contact" class="text-black font-semibold">Contact</router-link>
+            <router-link to="/contact" class="text-red-700 font-semibold">Contact</router-link>
             <router-link to="/privacy">Privacy Policy</router-link>
             <router-link to="/terms">Terms of Use</router-link>
         </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="flex flex-wrap col-start-1 col-end-7">
                             <div class="relative w-full appearance-none">
-                                <input class="w-full tracking-wide py-2 px-4 leading-relaxed appearance-none block text-black bg-green-400 border border-green-400 rounded" 
+                                <input class="w-full cursor-pointer tracking-wide py-2 px-4 leading-relaxed appearance-none block text-black bg-green-400 border border-green-400 rounded" 
                                 type="submit" value="Send">
                             </div>
                         </div>
@@ -58,9 +58,9 @@
 
         data(){
             return{
-                name:'Asia Studeler',
-                email:'',
-                message:'',
+                name:"Asia Studeler",
+                email:"",
+                message:"",
             }
         },
 
@@ -69,7 +69,7 @@
                 if(user != undefined) {
                     this.email = user.email
                 } else {
-                    this.email = ''
+                    this.email = ""
                 }
             })
         },
@@ -80,14 +80,19 @@
             },
 
             sendEmail: function(e) {
-                emailjs.sendForm('service_2i8qxun', 'template_jyrc5ge', e.target, 'user_LjdyAMDHMFXk6Or6Ffd5a')
-                .then((result) => {
-                    console.log('SUCCESS!', result.status, result.text);
-                    this.$toast.success(`Your message has been sent successfully.`, {position:"top", duration: 5000, max:1});
-                    this.close()
-                }, (error) => {
-                    console.log('FAILED...', error);
-                });
+                console.log(this.message)
+                if(this.message != "" || this.message != undefined) {
+                    emailjs.sendForm('service_2i8qxun', 'template_jyrc5ge', e.target, 'user_LjdyAMDHMFXk6Or6Ffd5a')
+                    .then((result) => {
+                        console.log('SUCCESS!', result.status, result.text);
+                        this.$toast.success(`Your message has been sent successfully.`, {position:"top", duration: 5000, max:1});
+                        this.close()
+                    }, (error) => {
+                        console.log('FAILED...', error);
+                    });
+                } else {
+                    this.$toast.error(`Message box is empty`, {position:"top", duration: 5000, max:1});
+                }
             }
         }
     }

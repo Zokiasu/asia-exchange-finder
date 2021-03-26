@@ -6,14 +6,52 @@ import Terms from '../views/About/Terms.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Test from '../views/Test.vue'
-import Dashboard from '../views/Dashboard.vue'
 
 import Home from '../views/Asia-Exchange-Finder/Home.vue'
 import EditorView from '../views/Asia-Exchange-Finder/EditorView.vue'
+import EditView from '../views/Asia-Exchange-Finder/Edit.vue'
 import AEF from '../views/AEF.vue'
 import firebase from "firebase";
 
 const routes = [
+  {
+    path: '/',
+    name: 'AEF',
+    component: AEF,
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: '/editorview',
+        name: 'EditorView',
+        component: EditorView
+      },
+      {
+        path: '/edit',
+        name: 'EditView',
+        component: EditView,
+        children: [
+          {
+            path: '/edit/informations',
+            name: 'Informations',
+            component: () => import("../components/EditView/InformationPageEditor.vue"),
+          },{
+            path: '/edit/partners',
+            name: 'Partners',
+            component: () => import("../components/EditView/PartnerPageEditor.vue"),
+          },{
+            path: '/edit/image',
+            name: 'Image',
+            component: () => import("../components/EditView/ImagePageEditor.vue"),
+          },
+        ]
+      },
+    ]
+  },
+  //General
   {
     path: '/login',
     name: 'Login',
@@ -23,26 +61,6 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup
-  },
-  {
-    path: '/',
-    name: 'AEF',
-    component: AEF,
-    children: [{
-      path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/editorview',
-      name: 'EditorView',
-      component: EditorView
-    },
-    {
-      path: '/editUniversity',
-      name: 'UniversityEditor',
-      component: () => import("../views/UniversityEditor.vue"),
-    }]
   },
   {
     path: '/about',
@@ -68,11 +86,6 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: Test
-  },
-  {
-    path: '/Dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
   }
 ]
 

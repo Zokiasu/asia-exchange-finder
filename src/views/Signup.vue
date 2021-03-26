@@ -1,9 +1,15 @@
 <template>
-    <div class="justify-center items-center py-10 m-10 bg-gray-100 bg-opacity-50">
-        <h1 class="text-white text-center mb-5 text-3xl font-bold">Sign Up Form</h1>
+    <div class="justify-center items-center py-20 m-10 bg-gray-900 bg-opacity-70">
+        <h1 class="text-white text-center mb-5 text-3xl font-bold">Sign Up</h1>
         <div class="mx-auto flex justify-center items-center w-full">
             <form @submit.prevent="signupRequest" id="signup-form">
                 <div class="grid grid-cols-1 gap-2">
+                    <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
+                        <div class="relative w-full appearance-none">
+                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                            id="username" v-model="username" type="text" placeholder="Username">
+                        </div>
+                    </div>
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
@@ -13,16 +19,10 @@
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                            id="username" v-model="username" type="text" placeholder="Username">
-                        </div>
-                    </div>
-                    <div class="flex flex-wrap mb-2 col-span-3">
-                        <div class="relative w-full appearance-none">
-                            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="password" v-model="password" type="password" placeholder="Password">
                         </div>
                     </div>
-                    <div class="flex flex-wrap mb-2 col-span-3">
+                    <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full text-black bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                             id="password" v-model="passwordConfirm" type="password" placeholder="Password Confirm">
@@ -31,7 +31,7 @@
                     <div class="flex flex-wrap mb-2 col-start-1 col-end-7">
                         <div class="relative w-full appearance-none">
                             <input type="checkbox" id="checkbox" v-model="checked" />
-                            <label class="text-black" for="checkbox"> I agree to the <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/terms" target="_blank">Terms of Service</a> and <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/privacy" target="_blank">Privacy Policy</a></label>
+                            <label for="checkbox"> I agree to the <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/terms" target="_blank">Terms of Service</a> and <a class="text-blue-500" href="https://asiaexchangefinder.asiastudeler.com/privacy" target="_blank">Privacy Policy</a></label>
                         </div>
                     </div>
                     <div class="col-start-1 col-end-7">
