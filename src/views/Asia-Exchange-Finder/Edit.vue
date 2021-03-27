@@ -48,6 +48,17 @@
             }
         },
 
+        async beforeCreate(){
+            await apps.auth().onAuthStateChanged((user) => {
+                if(user != undefined) {
+                    //
+                } else {
+                    this.$toast.error(`You are not authorized to access this page. Please login to access it.`, {position:"top", duration: 10000, max:3});
+                    this.$router.replace('/')
+                }
+            })
+        },
+
         async created(){
             var univObject = {
                 universitySourceId: '',

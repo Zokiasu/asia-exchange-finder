@@ -42,6 +42,22 @@
             }
         },
 
+        async beforeCreate(){
+            await apps.auth().onAuthStateChanged((user) => {
+                if(user != undefined) {
+                    db.ref('users/' + user.uid).once('value').then((snapshot) => {
+                        if(snapshot.val().grade != "Admin") {
+                            this.$toast.error(`You are not authorized to access this page.`, {position:"top", duration: 10000, max:3});
+                            this.$router.replace('/')
+                        }
+                    })
+                } else {
+                    this.$toast.error(`You are not authorized to access this page.`, {position:"top", duration: 10000, max:3});
+                    this.$router.replace('/')
+                }
+            })
+        },
+
         async mounted(){
             var univObject = {
                 universitySourceId: '',

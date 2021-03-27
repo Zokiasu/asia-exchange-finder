@@ -55,7 +55,7 @@
                         <div v-if="!show && minElement >= this.universitysSend.length && visible" class="text-sm md:text-xl mx-5 ms:mx-auto bg-gray-500 bg-opacity-75 h-60 p-10 rounded-lg overflow-hidden shadow-2xl relative justify-center items-center grid grid-cols-1 ">
                             <p class="text-center">You know more universities or schools that offer exchanges to asian countries?</p>
                             <p v-if="userConnected" class="text-center">Send us your informations with <router-link to="/editorview" class="text-blue-500 font-semibold">editor mode</router-link>!</p>
-                            <p v-if="!userConnected" class="text-center">Go to <router-link to="/signup" class="font-bold">register</router-link> and propose them to us!</p>
+                            <p v-if="!userConnected" class="text-center">Go to <router-link to="/signup" class="text-blue-500 font-semibold">register</router-link> and propose them to us!</p>
                         </div>
                     </transition>
                 </div>

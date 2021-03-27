@@ -192,6 +192,9 @@
                     db.ref('users/' + user.uid).once('value').then((snapshot) => {
                         this.userConnected = true
                     })
+                } else {
+                    this.$toast.error(`You are not authorized to access this page. Please login to access it.`, {position:"top", duration: 10000, max:3});
+                    this.$router.replace('/')
                 }
             })
         },
