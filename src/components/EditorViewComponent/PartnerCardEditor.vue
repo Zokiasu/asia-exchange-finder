@@ -76,7 +76,7 @@
                 <div class="relative w-full appearance-none label-floating">
                     <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                     id="universitySourceAddress" v-model="universityPartner.universityPartnerAddress" :placeholder="universityP.universityPartnerAddress">
-                    <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Adress</label>
+                    <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Address</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-span-3">

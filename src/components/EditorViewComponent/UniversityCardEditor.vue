@@ -1,6 +1,6 @@
 <template>
     <!-- Normal -->
-    <div v-if="!editorView && !removeView" class="bg-transparent rounded-lg overflow-hidden shadow-2xl relative h-full">
+    <div v-if="!editorView && !removeView" class="bg-transparent rounded-lg overflow-hidden shadow-2xl relative h-60    ">
         <div class="absolute space-x-1.5 right-2 flex  text-xs xl:text-sm 4xl:text-base">
             <button v-if="(grade === 'Admin') || (username === universitySource.universitySourceCreator && universitySource.universitySourceDisplay === 'False')"  @click="openRemove" class="Button bg-red-500 rounded-3xl my-2 px-2 right-28 block">Delete</button>
             <button @click="openEditor()" class="Button bg-green-700 rounded-3xl my-2 px-2 right-52 block">Edit</button>

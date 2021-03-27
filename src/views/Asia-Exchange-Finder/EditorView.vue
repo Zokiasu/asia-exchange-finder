@@ -57,7 +57,7 @@
             <!-- University Card -->
             <transition-group name="slide-fade">
                 <div v-if="visible && userConnected" class="px-8 md:px-10 lg:px-20 2xl:px-32 mb-10 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 4xl:grid-cols-4">
-                    <button @click="createUniversity" class="bg-gray-200 opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-full flex justify-center items-center">
+                    <button @click="createUniversity" class="bg-gray-200 opacity-60 hover:opacity-100 Card rounded-lg overflow-hidden shadow-2xl relative h-60 flex justify-center items-center">
                         <img class="h-full w-full object-cover object-center" v-lazy="imgTmp" alt="">
                         <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
                         <p class="absolute w-full bg-gray-200 bg-opacity-80 p-5 bottom-0 block text-black font-semibold text-lg">

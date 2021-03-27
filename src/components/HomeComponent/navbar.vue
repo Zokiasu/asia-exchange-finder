@@ -74,7 +74,7 @@
                 <p>{{ university.universitySourceCity }}</p>
               </li>
               <li v-if="university.universitySourceAddress">
-                <h3 class="font-semibold">Adress:</h3>
+                <h3 class="font-semibold">Address:</h3>
                 <p>{{ university.universitySourceAddress }}</p>
               </li>
               <li v-if="university.universitySourceMoreInfo">

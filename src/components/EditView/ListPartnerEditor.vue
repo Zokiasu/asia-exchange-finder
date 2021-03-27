@@ -1,7 +1,11 @@
 <template>
     <div class="w-full">
+        <div class="p-2 w-full">
+            <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-white focus:border-4" 
+            type="text" v-model="search" placeholder="Search title.."/>
+        </div>
         <ul class="w-full p-2 space-y-3">
-            <li class="w-full" v-for="(partner, index) in universityPartnerList.slice((page-1)*10, ((page-1)*10)+9)" :key="index">
+            <li class="w-full" v-for="(partner, index) in filteredList.slice((page-1)*10, ((page-1)*10)+9)" :key="index">
                 <button @click="editPartner(partner)" class="Button transition duration-500 ease-in-out bg-gray-700 hover:bg-red-800 shadow transform hover:-translate-y-1 w-full h-full flex justify-between rounded py-2 px-3">
                     <span>{{partner.universityPartnerName}}</span>
                     <span>{{partner.universityPartnerCity}}, {{partner.universityPartnerCountry}}</span>
@@ -46,6 +50,7 @@
 
                 id: this.$route.query.id,
                 listOfSpeciality:'',
+                search: '',
                 universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
                 universityPartnerList: []
             }
@@ -63,6 +68,17 @@
             }
         },
 
+        
+        computed: {
+            filteredList() {
+                return this.universityPartnerList.filter(partner => {
+                    return (partner.universityPartnerName.toLowerCase().includes(this.search.toLowerCase())
+                        || partner.universityPartnerCountry.toLowerCase().includes(this.search.toLowerCase())
+                        || partner.universityPartnerCity.toLowerCase().includes(this.search.toLowerCase()))
+                })
+            }
+        },
+
         setup(props) {
             const logResult = (result) =>{
                 props.university.universitySourcerPartner.universityPartnerSpeciality = result
@@ -70,10 +86,6 @@
             return {
                 logResult,
             };
-        },
-
-        mounted(){
-            
         },
 
         methods:{
