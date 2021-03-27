@@ -1,10 +1,11 @@
 <template>
-  <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-40 dark:bg-opacity-50 p-0 min-h-screen">
+  <div class="relative justify-between text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-40 dark:bg-opacity-50 p-0 min-h-screen">
     <!-- Header -->
     <Header/>
     <!-- Body -->
-    <router-view class="mb-16"/>
+    <router-view/>
     <!-- Footer -->
+    <Footer/>
   </div>
   <a class="z-50 text-white text-sm 4xl:text-base font-bold bg-black rounded-tl-xl border border-white bottom-0 right-0 fixed align-bottom px-2 py-1" href="https://www.instagram.com/asiastudeler/" target="_blank" style="padding-top: 4px !important;">Asia Studeler</a>
 </template>
@@ -14,10 +15,12 @@
   import {apps} from './main.js'
 
   import Header from './components/Header.vue'
+  import Footer from './components/Footer.vue'
 
   export default {
     components:{
         Header,
+        Footer,
     },
 
     data(){

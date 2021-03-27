@@ -104,6 +104,7 @@
 
         methods:{
             sendUniversity(){
+                this.university.universitySourceDisplay = "False"
                 MethodsGeneral.methods.addUniversityToFrebase(this.university)
                 this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
                 this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 3000, max:3});

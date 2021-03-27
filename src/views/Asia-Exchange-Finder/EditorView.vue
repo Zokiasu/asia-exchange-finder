@@ -2,9 +2,11 @@
     <div class="mt-1 md:mt-12 mx-auto flex justify-center items-center w-full h-full">
 
         <div class="grid grid-cols-1 w-full">
+            <input class="tracking-wide hidden mx-64 py-2 px-4 leading-relaxed appearance-none bg-gray-200 rounded focus:outline-none focus:border-white focus:border-4 text-gray-900" 
+                type="text" v-model="search" placeholder="Find an University.."/>
             <!-- Filter City/Destination/Speciality -->
-            <div class="container flex justify-center flex-col ms:flex-row text-gray-900">
-                <div class="pt-6 ms:pl-1 flex">
+            <div class="my-5 flex justify-center flex-col ms:flex-row text-gray-900">
+                <div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
@@ -14,7 +16,7 @@
                         :options="option.cityStartOption"/>
                     <button @click="resetCity" class="px-1 rounded-none" :class="(CityFilter === '' || CityFilter === null || CityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-1 flex">
+                <div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
@@ -24,17 +26,17 @@
                         :options="option.countryOption"/>
                     <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-1 flex">
+                <div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="For All Specialities"
+                        placeholder="For All Majors"
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
                     <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
-                <div class="pt-6 ms:pl-1 flex">
+                <div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
@@ -46,7 +48,7 @@
                 </div>
             </div>
             <div class="container flex flex-col justify-center">
-                <button @click="searchByFilter" class="mx-auto mt-6 px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
+                <button @click="searchByFilter" class="mx-auto px-10 ms:px-20 md:px-10 py-2 border rounded-md bg-red-800 text-white">Search</button>
                 <button @click="resetFilter" class="mt-2 mx-auto focus:border-transparent">Reset Filter</button>
             </div>
             <div class="px-8 md:px-10 lg:px-20 2xl:px-32 py-2 mb-5 w-full place-items-center">
@@ -65,7 +67,7 @@
                         </p>
                     </button>
                     <card
-                        v-for="(universitySource, index) in this.universitysSend.slice(0,minElement)"
+                        v-for="(universitySource, index) in filteredList.slice(0,minElement)"
                         :key="index"
                         :universitySource="universitySource"
                         @removeUniversitySource="removeUniversity(index)"
@@ -135,6 +137,7 @@
                 modelDestination:'',
                 modelSpeciality:'',
                 modelDisplay:'',
+                search: '',
 
                 CityFilter:'',
                 DestinationFilter:'',
@@ -303,6 +306,14 @@
                 if(this.$route.query.id) {
                     this.getuniqueUniversityNameCard1(this.$route.query.id)
                 }
+            }
+        },
+        
+        computed: {
+            filteredList() {
+                return this.universitysSend.filter(university => {
+                    return university.universitySourceName.toLowerCase().includes(this.search.toLowerCase())
+                })
             }
         },
 
