@@ -2,7 +2,7 @@
     <div class="w-full">
         <div class="p-2 w-full">
             <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-white focus:border-4" 
-            type="text" v-model="search" placeholder="Search title.."/>
+            type="text" v-model="search" placeholder="University, City, Country.."/>
         </div>
         <ul class="w-full p-2 space-y-3">
             <li class="w-full" v-for="(partner, index) in filteredList.slice((page-1)*10, ((page-1)*10)+9)" :key="index">
