@@ -1,5 +1,5 @@
 <template>
-  <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 dark:bg-opacity-50 p-0 min-h-screen">
+  <div class="relative text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-40 dark:bg-opacity-50 p-0 min-h-screen">
     <!-- Header -->
     <Header/>
     <!-- Body -->

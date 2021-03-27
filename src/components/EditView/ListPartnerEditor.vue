@@ -11,7 +11,7 @@
                 <span class="bg-gray-700 shadow-xl w-full h-full flex justify-center rounded py-2 px-3 font-semibold">No Partner</span>
             </li>
         </ul>
-        <v-pagination class="w-full m-2 py-2 flex justify-center"
+        <v-pagination class="w-full h-10 flex justify-center"
             v-model="page"
             :pages="numberPageTmp"
             :range-size="1"
