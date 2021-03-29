@@ -180,7 +180,6 @@ export default {
         validUniversity(universityToValidated){
             var up = {}
             universityToValidated.universitySourceDisplay = "True"
-            console.log(universityToValidated)
             up['/universitys/' + universityToValidated.universitySourceId] = universityToValidated
             apps.database().ref('/universitysEdited/' + universityToValidated.universitySourceId + '/' + universityToValidated.universitySourceCreator).set(null)
             return db.ref().update(up).then(() => {

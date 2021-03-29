@@ -61,11 +61,12 @@
         <div class="w-full col-start-1 col-end-7">
             <label for="universitySourceName">Partner Majors</label>
             <smart-tagz
+                class="bg-gray-500 text-black"
                 editable
                 autosuggest
                 input-placeholder="Majors ..."
-                :defaultTags= partner.universityPartnerSpeciality
-                :sources= listOfSpeciality
+                :defaultTags="partner.universityPartnerSpeciality"
+                :sources="listOfSpeciality"
                 :on-changed="logResult"
                 :allowPaste="{delimiter: ','}"
                 :allowDuplicates="false"
@@ -78,6 +79,9 @@
 </template>
 
 <script>
+    import db from '../../main.js'
+    import {apps, name, grade} from '../../main.js'
+
     import { SmartTagz } from "smart-tagz";
     import "smart-tagz/dist/smart-tagz.css";
     import { defineComponent } from "vue";
@@ -87,7 +91,7 @@
     export default defineComponent ({
         name: "Basic",
         mixins:[MethodsGeneral],
-        props: ['university', 'universityPartner'],
+        props: ['university', 'universityPartner', 'listOfSpeciality'],
 
         components:{
             SmartTagz,
@@ -97,7 +101,6 @@
             return {
                 id: this.$route.query.id,
                 hello:'',
-                listOfSpeciality: ["Bachelor", "Master", "Doctorate/PhD"],
                 universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
                 partner:{}
             }
@@ -112,7 +115,7 @@
             };
         },
 
-        created(){
+        async created(){
             MethodsGeneral.methods.copyPartnerObject(this.partner, this.universityPartner)
         },
 

@@ -80,7 +80,6 @@
             },
 
             sendEmail: function(e) {
-                console.log(this.message)
                 if(this.message != "" || this.message != undefined) {
                     emailjs.sendForm('service_2i8qxun', 'template_jyrc5ge', e.target, 'user_LjdyAMDHMFXk6Or6Ffd5a')
                     .then((result) => {

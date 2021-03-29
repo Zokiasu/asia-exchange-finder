@@ -76,7 +76,7 @@
                 universitySourcerPartner: []
             }
             var ids = this.$route.query.id
-
+            //Get university info
             if(this.$route.query.id != undefined){
                 if(this.$route.query.statut == "True") {
                     await db.ref("universitys").once("value", function(snapshot){

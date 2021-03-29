@@ -24,6 +24,7 @@
     "vue-backtotop": "^1.6.1",
     "vue-lazy-loading": "^1.0.3",
     "vue-router": "^4.0.3",
+    "vue-select": "^3.11.2",
     "vue-spinner": "^1.0.4",
     "vue3-pagination": "^1.0.14",
     "xmlhttprequest": "^1.8.0"

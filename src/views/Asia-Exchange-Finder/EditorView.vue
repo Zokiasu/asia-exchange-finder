@@ -274,7 +274,6 @@
                             if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors = ""}
                             if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate = ""}
                             if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner = []}
-                            console.log(getUniversityDatabase[getUniversityDatabase.length-1])
                         }
                     })
                 })
@@ -661,11 +660,11 @@
                     testA = db.ref().child('universitys').push().key;
                     newUniversitys.universitySourceId = testA;
                     this.updateCreators(newUniversitys)
-                    up['/universitysEdited/' + testA] = newUniversitys
+                    up['/universitysEdited/' + testA+'/'+newUniversitys.universitySourceCreator] = newUniversitys
                     
                 } else {
                     this.updateCreators(newUniversitys)
-                    up['/universitysEdited/' + newUniversitys.universitySourceId] = newUniversitys
+                    up['/universitysEdited/' + newUniversitys.universitySourceId+'/'+newUniversitys.universitySourceCreator] = newUniversitys
                 }
 
                 this.universitysSend.push({
@@ -712,7 +711,7 @@
                 }
 
                 this.updateCreators(universityEdit)
-                up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
+                up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
 
                 return db.ref().update(up).then(() => {
                         this.$router.replace('/editorview')
@@ -730,10 +729,10 @@
             removeUniversity(index){
                 if(this.universitysSend[index].universitySourceDisplay == "True") {
                     apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
-                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
+                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
                     FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 } else {
-                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId).set(null)
+                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
                     FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 }
                 this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", duration: 10000, max:3});
@@ -784,7 +783,7 @@
                 }
 
                 this.updateCreators(universityEdit)
-                up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
+                up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
 
                 this.sortingParam("Creation Date Desc.")
 
@@ -822,7 +821,7 @@
 
                     universityEdited.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                     this.universitysSend[indexIntoOfficialList].universitySourcerPartner = JSON.parse(JSON.stringify(universityEdited.universitySourcerPartner))
-                    up['/universitysEdited/' + universityEdited.universitySourceId] = universityEdited
+                    up['/universitysEdited/' + universityEdited.universitySourceId+'/'+universityEdited.universitySourceCreator] = universityEdited
                     this.updateCreators(universityEdited)
                 } 
                 //UniversitySourceDisplay statut is online
@@ -840,7 +839,7 @@
 
                     tmpUEdit.universitySourceDisplay = "False"
                     this.universitysSend.push(tmpUEdit)
-                    up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
+                    up['/universitysEdited/' + tmpUEdit.universitySourceId+'/'+tmpUEdit.universitySourceCreator] = JSON.parse(JSON.stringify(tmpUEdit))
                     this.updateCreators(tmpUEdit)
                 }
 
@@ -868,7 +867,7 @@
 
                     universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
 
-                    up['/universitysEdited/' + universityEdit.universitySourceId] = universityEdit
+                    up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
                 } 
                 //University display statut is online
                 else {
@@ -883,7 +882,7 @@
 
                     tmpUEdit.universitySourceDisplay = "False"
                     this.universitysSend.push(tmpUEdit)
-                    up['/universitysEdited/' + tmpUEdit.universitySourceId] = JSON.parse(JSON.stringify(tmpUEdit))
+                    up['/universitysEdited/' + tmpUEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = JSON.parse(JSON.stringify(tmpUEdit))
                     
                 }
 

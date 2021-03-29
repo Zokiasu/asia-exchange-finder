@@ -49,16 +49,32 @@
 
 <script>
     import MethodsGeneral from '../../Mixins/firebase'
+    import Multiselect from '@vueform/multiselect'
 
     export default {
         mixins:[MethodsGeneral],
         props: ['university'],
 
+        components:{
+            Multiselect,
+        },
+
         data(){
             return {
                 id: this.$route.query.id,
                 hello:"",
-                univ:{}
+                univ:{},
+                test:['Test1', 'Test2', 'Test3', 'Test4'],
+                selected: '',
+            }
+        },
+
+        watch: {
+            selected: {
+                immediate: true,
+                handler(selected) {
+                    this.university.universitySourceCountry = this.test[selected]
+                }
             }
         },
 

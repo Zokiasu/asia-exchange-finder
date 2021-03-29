@@ -426,7 +426,7 @@
         var tmpPartner0 = []
         if(this.actualFilter != country) {this.actualFilter = country}
         if(this.university.universitySourceDisplay == "False") {
-          await db.ref("universitysEdited/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
+          await db.ref("universitysEdited/"+this.university.universitySourceId+'/'+this.university.universitySourceCreator+"/universitySourcerPartner").once("value", function(snapshot){
             snapshot.forEach(function(element){
               if(element.val().universityPartnerCountry == country) {
                 tmpPartner0.push(
