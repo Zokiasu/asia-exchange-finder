@@ -7,35 +7,47 @@
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="w-full space-y-3 pt-5">
                     <label for="universitySourceName">Name*</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-white rounded focus:outline-none focus:border-red-700 focus:border-4" 
                     id="universitySourceName" v-model="university.universitySourceName" type="text" placeholder="Name">
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="w-full space-y-3 pt-5">
                     <label for="universitySourceName">Address</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-white rounded focus:outline-none focus:border-red-700 focus:border-4" 
                     id="universitySourceName" v-model="university.universitySourceAddress" type="text" placeholder="Address">
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="w-full space-y-3 pt-5">
                     <label for="universitySourceName">Country*</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-white rounded focus:outline-none focus:border-red-700 focus:border-4" 
                     id="universitySourceName" v-model="university.universitySourceCountry" type="text" placeholder="Country">
                 </div>
+                    <!--<Multiselect<
+                        class="tracking-wide text-white leading-relaxed appearance-none block w-full bg-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                        mode="single"
+                        :searchable="true"
+                        v-model="modelCountry"
+                        :options="test"/>-->
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="w-full space-y-3 pt-5">
                     <label for="universitySourceName">City*</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-white rounded focus:outline-none focus:border-red-700 focus:border-4" 
                     id="universitySourceName" v-model="university.universitySourceCity" type="text" placeholder="City">
+                    <!--<Multiselect
+                        class="tracking-wide text-white leading-relaxed appearance-none block w-full bg-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                        mode="single"
+                        :searchable="true"
+                        v-model="modelCity"
+                        :options="test"/>-->
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7">
                 <div class="w-full space-y-3 pt-5">
                     <label for="universitySourceName">Website Link</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
+                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-white rounded focus:outline-none focus:border-red-700 focus:border-4" 
                     id="universitySourceName" v-model="university.universitySourceWebsiteLink" type="text" placeholder="Website Link">
                 </div>
             </div>
@@ -62,18 +74,19 @@
         data(){
             return {
                 id: this.$route.query.id,
-                hello:"",
-                univ:{},
                 test:['Test1', 'Test2', 'Test3', 'Test4'],
-                selected: '',
+                modelCountry: '',
+                modelCity: '',
+                listCountry: [],
+                listCity: [],
             }
         },
 
         watch: {
-            selected: {
+            modelCountry: {
                 immediate: true,
-                handler(selected) {
-                    this.university.universitySourceCountry = this.test[selected]
+                handler(modelCountry) {
+                    if(this.test[modelCountry]) this.university.universitySourceCountry = this.test[modelCountry]
                 }
             }
         },

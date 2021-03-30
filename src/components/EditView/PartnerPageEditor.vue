@@ -28,6 +28,9 @@
     import PartnerEditor from './PartnerEditor.vue'
 
     import MethodsGeneral from '../../Mixins/firebase'
+    
+    import db from '../../main.js'
+    import {apps, name, grade} from '../../main.js'
 
     export default {
         mixins:[MethodsGeneral],

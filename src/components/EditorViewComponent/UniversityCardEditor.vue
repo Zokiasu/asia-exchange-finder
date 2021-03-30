@@ -12,7 +12,7 @@
             <p class="text-black hover:text-blue-600 font-semibold text-lg">
                 {{ universitySource.universitySourceName }}
             </p>
-            <p v-if="username === universitySource.universitySourceCreator" class="text-red-500 font-semibold text-lg">
+            <p v-if="universitySource.universitySourceDisplay == 'False'" class="text-red-500 font-semibold text-lg">
                 {{ universitySource.universitySourceCreator }}
             </p>
         </div>

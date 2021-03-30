@@ -95,7 +95,7 @@
                         snapshot.forEach(function(el){
                             el.forEach(function(element){
                                 if(ids === element.val().universitySourceId){
-                                    univObject = element.val()
+                                    univObject = JSON.parse(JSON.stringify(element.val()))
                                 }
                             })
                         })
