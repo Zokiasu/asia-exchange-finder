@@ -122,6 +122,7 @@
         methods:{
             validEditNewPartner(){
                 var count = 0
+                this.partner.universityPartnerSpeciality = this.universityPartner.universityPartnerSpeciality
                 var tmpPartner = this.partner
 
                 if(this.partner.universityPartnerName != undefined 
