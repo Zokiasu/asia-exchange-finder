@@ -6,7 +6,7 @@
             <p class="px-2 font-bold text-white">{{university.universityPartnerName}}</p>
             <p class="font-bold text-white pl-2 xl:pl-0 xl:absolute xl:top-0 xl:right-2">{{university.universityPartnerCity}}, {{university.universityPartnerCountry}}</p>
         </div>
-        <div v-if="!university.universityPartnerCondition || !university.universityPartnerSpeciality || !university.universityPartnerSpeciality" class="px-2 pt-3 4xl:text-lg">
+        <div v-if="!university.universityPartnerCondition && !university.universityPartnerSpeciality && !university.universityPartnerSpeciality" class="px-2 pt-3 4xl:text-lg">
             <p>We don't have more information about this partner. If you have any information please use edit mode to help us improve our database.</p>
         </div>
         <!-- Partner speciality -->
@@ -15,9 +15,6 @@
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(PartnerSpeciality, index) in university.universityPartnerSpeciality" :key="index">
                     <tag :tags="PartnerSpeciality"/>
             </div>
-            <!--<div v-if="!university.universityPartnerSpeciality" class="4xl:text-lg">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
-            </div>-->
         </div> 
         <!-- Partner Cycle -->
         <div v-if="university.universityPartnerCycle" class="p-2">
@@ -25,17 +22,11 @@
             <div class="relative inline-block mr-1 mb-1 bg-gray-300 py-1 px-2 rounded-full text-xs 4xl:text-base text-gray-700"  v-for="(PartnerCycle, index) in university.universityPartnerCycle" :key="index">
                 <tag :tags="PartnerCycle"/>
             </div>
-            <!--<div v-if="!university.universityPartnerSpeciality" class="4xl:text-lg">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
-            </div>-->
         </div> 
         <!-- Exchange -->
         <div v-if="university.universityPartnerCondition" class="p-2">
             <p class="mb-1 font-bold text-sm 2xl:text-base 4xl:text-xl">Requirements :</p>
             <p class="whitespace-pre-line 4xl:text-lg">{{university.universityPartnerCondition}}</p>
-            <!--<div v-if="!university.universityPartnerCondition" class="font-semibold 4xl:text-lg">
-                <p>Sorry, we don't have more information about this partner. If you have any information please edit this partner to help us improve our database.</p>
-            </div>-->
         </div>
         <!-- universityPartnerWebsiteLink button -->
         <div class="container flex justify-center">

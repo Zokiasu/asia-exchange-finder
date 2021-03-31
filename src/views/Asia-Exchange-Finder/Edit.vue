@@ -45,7 +45,8 @@
                 hello:"",
                 university: {},
                 univMainName:"",
-                intervalId:""
+                intervalId:"",
+                intervalId2:"",
             }
         },
 
@@ -118,15 +119,19 @@
             this.startAutoSave()
         },
 
+        beforeDestroy(){
+          this.stopAutoSave()  
+        },
+
         methods:{
 
             startAutoSave(){
-                this.intervalId = setInterval(() => {
-                                this.saveUniversity()
-                            }, 300000)
+                console.log("Start auto save")
+                this.intervalId = setInterval(() => {this.saveUniversity()}, 300000)
             },
 
             stopAutoSave(){
+                console.log("Stop auto save")
                 clearInterval(this.intervalId)
             },
 
@@ -157,6 +162,7 @@
                 MethodsGeneral.methods.validUniversity(this.university)
                 this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
                 this.$router.push({path: '/editorview'})
+                this.stopAutoSave()
             },
             
             routerLink(page){
