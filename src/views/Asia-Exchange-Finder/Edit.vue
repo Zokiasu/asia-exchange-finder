@@ -19,7 +19,7 @@
                     <button  @click="validUniversity" v-if="this.$route.query.statut == 'False'" class="Button bg-gray-700 hover:bg-green-500 w-full rounded my-5 block">Validated University</button>
                 </div>
                 <transition-group name="slide-fade">
-                    <router-view @sendUniversity="sendUniversity" @cancelUniversity="cancelUniversity" v-if="visible" :university="university"/>
+                    <router-view @saveUniversity="saveUniversity" @sendUniversity="sendUniversity" @cancelUniversity="cancelUniversity" v-if="visible" :university="university"/>
                 </transition-group>
             </div>
         </div>
@@ -45,6 +45,7 @@
                 hello:"",
                 university: {},
                 univMainName:"",
+                intervalId:""
             }
         },
 
@@ -113,17 +114,43 @@
             }
         },
 
+        mounted(){
+            this.startAutoSave()
+        },
+
         methods:{
+
+            startAutoSave(){
+                this.intervalId = setInterval(() => {
+                                this.saveUniversity()
+                            }, 300000)
+            },
+
+            stopAutoSave(){
+                clearInterval(this.intervalId)
+            },
+
             sendUniversity(){
+                this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
                 this.university.universitySourceDisplay = "False"
                 MethodsGeneral.methods.addUniversityToFrebase(this.university)
                 this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
                 this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 3000, max:3});
                 this.$router.push({path: '/editorview'})
+                this.stopAutoSave()
+            },
+
+            saveUniversity(){
+                this.university.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
+                this.university.universitySourceDisplay = "False"
+                MethodsGeneral.methods.addUniversityToFrebase(this.university)
+                this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 1000, max:3});
+                this.$toast.success(`We automatically save your work so that it will not be lost.`, {position:"top", duration: 2000, max:3});
             },
 
             cancelUniversity(){
                 this.$router.push({path: '/editorview'})
+                this.stopAutoSave()
             },
 
             validUniversity(){

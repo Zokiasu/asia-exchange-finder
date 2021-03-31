@@ -1,4 +1,4 @@
-<template>    
+<template>
     <div class="flex flex-wrap lg:col-start-2 lg:col-end-7 mx-2">
         <div class="w-full pt-10 lg:pt-0 lg:px-3 py-1 text-xl justify-start">
             <h5 class="font-semibold">Partner</h5>
@@ -14,8 +14,9 @@
         <button @click="newPartner()" v-if="currentComponent == 'ListPartnerEditor'" class="Button bg-gray-700 hover:bg-white hover:text-blue-500 w-full rounded mx-2 block">New partner</button>
 
         <div class="w-full pt-5 justify-end space-x-1.5 flex text-sm 4xl:text-base">
+            <button @click="saveUniversity" class="Button bg-transparent my-3 px-2 hover:bg-green-500 text-green-500 font-semibold hover:text-white border border-green-500 rounded">Save</button>
             <button @click="sendUniversity" class="Button bg-green-500 rounded my-3 px-2 block">Send</button>
-            <button @click="cancelUniversity" class="bg-transparent my-3 px-2 hover:bg-red-500 text-red-700 font-semibold hover:text-white border border-red-500 hover:border-transparent rounded">Cancel</button>
+            <button @click="cancelUniversity" class="bg-transparent my-3 px-2 hover:bg-red-500 text-red-700 font-semibold hover:text-white border border-red-500 rounded">Cancel</button>
         </div>
     </div>
 </template>
@@ -54,6 +55,7 @@
                 universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
                 universityPartner:{},
                 listOfSpeciality: [],
+                intervalId:""
             }
         },
 
@@ -98,6 +100,11 @@
             sendUniversity(){
                 this.$emit('sendUniversity')
             },
+
+            saveUniversity(){
+                this.$emit('saveUniversity')
+            },
+
             cancelUniversity(){
                 this.$emit('cancelUniversity')
             },

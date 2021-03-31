@@ -204,7 +204,7 @@
             this.universitysSend.splice(0,1)
 
             for (let index = this.universitysSend.length-1; index >= 0; index--) {
-                if(this.universitysSend[index].universitySourceDisplay === "False"){
+                if(this.universitysSend[index].universitySourceDisplay === "False" || !this.universitysSend[index].universitySourcerPartner){
                     this.universitysSend.splice(index, 1)
                 } else {
                     if(this.universitysSend[index].universitySourcerPartner){
