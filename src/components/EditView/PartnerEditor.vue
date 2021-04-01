@@ -124,10 +124,10 @@
                 var count = 0
                 this.partner.universityPartnerSpeciality = this.universityPartner.universityPartnerSpeciality
                 var tmpPartner = this.partner
-
-                if(this.partner.universityPartnerName != undefined 
-                || this.partner.universityPartnerName != "" 
-                || this.university.universitySourcerPartner != undefined){
+                if(!this.university.universitySourcerPartner) {
+                    this.university.universitySourcerPartner = [this.partner]
+                    MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
+                } else if(this.partner.universityPartnerName != undefined || this.partner.universityPartnerName != ""){
                     this.university.universitySourcerPartner.forEach(function(element){
                         if(element.universityPartnerCreator == tmpPartner.universityPartnerCreator
                         && element.universityPartnerLastUpdate == tmpPartner.universityPartnerLastUpdate) {
