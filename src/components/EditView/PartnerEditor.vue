@@ -62,7 +62,7 @@
             <div class="w-full">
                 <label for="universitySourceName">More Info Link*</label>
                 <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
-                id="universitySourceName" v-model="partner.universityPartnerMoreInfoLink" type="text" placeholder="Website Link">
+                id="universitySourceName" v-model="partner.universityPartnerMoreInfoLink" type="text" placeholder="More Info Link">
             </div>
         </div>
         <div class="w-full col-start-1 col-end-7">
