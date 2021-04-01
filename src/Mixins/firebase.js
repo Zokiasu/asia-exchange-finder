@@ -4,6 +4,8 @@ import {apps, name, grade, analytics} from '../main.js'
 export default {
     methods: {
 
+        //University
+
         newUniversityObject(universityData) {
             if(universityData != undefined) {
                 return {
@@ -72,6 +74,8 @@ export default {
             if(universityData.universitySourcerPartner) universityToFill.universitySourcerPartner = JSON.parse(JSON.stringify(universityData.universitySourcerPartner))
         },
 
+        //Partner
+
         newPartnerObject(partnerData){
             if(partnerData != undefined) {
                 return {
@@ -80,11 +84,12 @@ export default {
                     "universityPartnerCity": partnerData.universityPartnerCity,
                     "universityPartnerAddress": partnerData.universityPartnerAddress,
                     "universityPartnerWebsiteLink": partnerData.universityPartnerWebsiteLink,
+                    "universityPartnerMoreInfoLink": partnerData.universityPartnerMoreInfoLink,
                     "universityPartnerCondition": partnerData.universityPartnerCondition,
                     "universityPartnerCycle": partnerData.universityPartnerCycle,
                     "universityPartnerDisplay": partnerData.universityPartnerDisplay,
                     "universityPartnerCreator": partnerData.universityPartnerCreator,
-                    "universityPartnerLastUpdate": partnerData.universityPartnerLastUpdate,  
+                    "universityPartnerLastUpdate": partnerData.universityPartnerLastUpdate,
                     "universityPartnerSpeciality": partnerData.universityPartnerSpeciality,
                 }
             } else {
@@ -94,6 +99,7 @@ export default {
                     "universityPartnerCity": "",
                     "universityPartnerAddress": "",
                     "universityPartnerWebsiteLink": "",
+                    "universityPartnerMoreInfoLink": "",
                     "universityPartnerCondition": "",
                     "universityPartnerDisplay": "True",
                     "universityPartnerCreator": name,
@@ -110,6 +116,7 @@ export default {
             partnerToFill.universityPartnerCity = partnerData.universityPartnerCity,
             partnerToFill.universityPartnerAddress = partnerData.universityPartnerAddress,
             partnerToFill.universityPartnerWebsiteLink = partnerData.universityPartnerWebsiteLink,
+            partnerToFill.universityPartnerMoreInfoLink = partnerData.universityPartnerMoreInfoLink,
             partnerToFill.universityPartnerCondition = partnerData.universityPartnerCondition,
             partnerToFill.universityPartnerCycle = partnerData.universityPartnerCycle,
             partnerToFill.universityPartnerDisplay = partnerData.universityPartnerDisplay,
@@ -124,6 +131,7 @@ export default {
             if(partnerData.universityPartnerCity) partnerToFill.universityPartnerCity = JSON.parse(JSON.stringify(partnerData.universityPartnerCity))
             if(partnerData.universityPartnerAddress) partnerToFill.universityPartnerAddress = JSON.parse(JSON.stringify(partnerData.universityPartnerAddress))
             if(partnerData.universityPartnerWebsiteLink) partnerToFill.universityPartnerWebsiteLink = JSON.parse(JSON.stringify(partnerData.universityPartnerWebsiteLink))
+            if(partnerData.universityPartnerMoreInfoLink) partnerToFill.universityPartnerMoreInfoLink = JSON.parse(JSON.stringify(partnerData.universityPartnerMoreInfoLink))
             if(partnerData.universityPartnerCondition) partnerToFill.universityPartnerCondition = JSON.parse(JSON.stringify(partnerData.universityPartnerCondition))
             if(partnerData.universityPartnerCycle) partnerToFill.universityPartnerCycle = JSON.parse(JSON.stringify(partnerData.universityPartnerCycle))
             if(partnerData.universityPartnerDisplay) partnerToFill.universityPartnerDisplay = JSON.parse(JSON.stringify(partnerData.universityPartnerDisplay))

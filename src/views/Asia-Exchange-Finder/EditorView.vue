@@ -114,11 +114,12 @@
 
     import Card from '../../components/EditorViewComponent/UniversityCardEditor.vue'
     import NavbarEditor from '../../components/EditorViewComponent/NavbarEditor.vue'
-    import FirebaseLog from '../../Mixins/firebase' 
+    
+    import MethodsGeneral from '../../Mixins/firebase'
 
     export default {
         name: "Basic",
-        mixins:[FirebaseLog],
+        mixins:[MethodsGeneral],
 
         components:{
             Card,
@@ -168,21 +169,7 @@
 
                 universitys: [],
 
-                universityObject: {
-                    universitySourceId: '',
-                    universitySourceName: '',
-                    universitySourceCountry: '',
-                    universitySourceCity: '',
-                    universitySourceAddress: '',
-                    universitySourceImageLink: '',
-                    universitySourceWebsiteLink: '',
-                    universitySourceDisplay: '',
-                    universitySourceCreator: '',
-                    universitySourceMoreInfo: '',
-                    universitySourceContributors: [],
-                    universitySourceLastUpdate: '',
-                    universitySourcerPartner: []
-                },
+                universityObject: {},
             }
         },
 
@@ -366,46 +353,14 @@
 
                 await db.ref("universitys").once("value", function(snapshot){
                     snapshot.forEach(function(element){
-                        getUniversityDatabase.push(
-                            {
-                                "universitySourceId": element.val().universitySourceId,
-                                "universitySourceName": element.val().universitySourceName,
-                                "universitySourceCountry": element.val().universitySourceCountry,
-                                "universitySourceCity": element.val().universitySourceCity,
-                                "universitySourceAddress": element.val().universitySourceAddress,
-                                "universitySourceImageLink": element.val().universitySourceImageLink,
-                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                                "universitySourceDisplay": element.val().universitySourceDisplay,
-                                "universitySourceCreator":element.val().universitySourceCreator,
-                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                                "universitySourceContributors": element.val().universitySourceContributors,
-                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                                "universitySourcerPartner": element.val().universitySourcerPartner, 
-                            }
-                        )
+                        getUniversityDatabase.push(MethodsGeneral.methods.newUniversityObject(element.val()))
                     })
                 })
 
                 await db.ref("universitysEdited").once("value", function(snapshot){
                     snapshot.forEach(function(el){
                         el.forEach(function(element){
-                            getUniversityDatabase.push(
-                                {
-                                    "universitySourceId": element.val().universitySourceId,
-                                    "universitySourceName": element.val().universitySourceName,
-                                    "universitySourceCountry": element.val().universitySourceCountry,
-                                    "universitySourceCity": element.val().universitySourceCity,
-                                    "universitySourceAddress": element.val().universitySourceAddress,
-                                    "universitySourceImageLink": element.val().universitySourceImageLink,
-                                    "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                                    "universitySourceDisplay": element.val().universitySourceDisplay,
-                                    "universitySourceCreator":element.val().universitySourceCreator,
-                                    "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                                    "universitySourceContributors": element.val().universitySourceContributors,
-                                    "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                                    "universitySourcerPartner": element.val().universitySourcerPartner, 
-                                }
-                            )
+                            getUniversityDatabase.push(MethodsGeneral.methods.newUniversityObject(element.val()))
                         })
                     })
                 })
@@ -460,37 +415,13 @@
             setValue: function(universitySourceIdToFind) {
                 for (var i = 0; i < this.universitys.length; i++) {
                     if(this.universitys[i].universitySourceId === universitySourceIdToFind){
-                        this.universityObject.universitySourceId = this.universitys[i].universitySourceId,
-                        this.universityObject.universitySourceName = this.universitys[i].universitySourceName,
-                        this.universityObject.universitySourceCountry = this.universitys[i].universitySourceCountry,
-                        this.universityObject.universitySourceCity = this.universitys[i].universitySourceCity,
-                        this.universityObject.universitySourceAddress = this.universitys[i].universitySourceAddress,
-                        this.universityObject.universitySourceImageLink = this.universitys[i].universitySourceImageLink,
-                        this.universityObject.universitySourceWebsiteLink = this.universitys[i].universitySourceWebsiteLink,
-                        this.universityObject.universitySourceDisplay = this.universitys[i].universitySourceDisplay,
-                        this.universityObject.universitySourceCreator = this.universitys[i].universitySourceCreator,
-                        this.universityObject.universitySourceMoreInfo = this.universitys[i].universitySourceMoreInfo,
-                        this.universityObject.universitySourceContributors = this.universitys[i].universitySourceContributors,                
-                        this.universityObject.universitySourceLastUpdate = this.universitys[i].universitySourceLastUpdate,
-                        this.universityObject.universitySourcerPartner = this.universitys[i].universitySourcerPartner
+                        MethodsGeneral.methods.copyUniversityObject(this.universityObject, this.universitys[i])
                     }
                 }
             },
 
-            getuniqueUniversityNameCard (index) { 
-                this.universityObject.universitySourceId = this.universitysSend[index].universitySourceId,
-                this.universityObject.universitySourceName = this.universitysSend[index].universitySourceName,
-                this.universityObject.universitySourceCountry = this.universitysSend[index].universitySourceCountry,
-                this.universityObject.universitySourceCity = this.universitysSend[index].universitySourceCity,
-                this.universityObject.universitySourceAddress = this.universitysSend[index].universitySourceAddress,
-                this.universityObject.universitySourceImageLink = this.universitysSend[index].universitySourceImageLink,
-                this.universityObject.universitySourceWebsiteLink = this.universitysSend[index].universitySourceWebsiteLink,
-                this.universityObject.universitySourceDisplay = this.universitysSend[index].universitySourceDisplay,
-                this.universityObject.universitySourceCreator = this.universitysSend[index].universitySourceCreator,
-                this.universityObject.universitySourceMoreInfo = this.universitysSend[index].universitySourceMoreInfo,
-                this.universityObject.universitySourceContributors = this.universitysSend[index].universitySourceContributors,                
-                this.universityObject.universitySourceLastUpdate = this.universitysSend[index].universitySourceLastUpdate,
-                this.universityObject.universitySourcerPartner = this.universitysSend[index].universitySourcerPartner
+            getuniqueUniversityNameCard (index) {                
+                MethodsGeneral.methods.copyUniversityObject(this.universityObject, this.universitysSend[index])
                 this.$refs.navbarComponent.drawer();
             },
 
@@ -690,7 +621,7 @@
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
                         this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 5000, max:3});
                         this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})    
-                        FirebaseLog.methods.logCreateUniversity(name, newUniversitys.universitySourceName)                    
+                        MethodsGeneral.methods.logCreateUniversity(name, newUniversitys.universitySourceName)                    
                     }
                 )
             },
@@ -704,10 +635,10 @@
                     if (this.universitysSend[index].universitySourceDisplay == "True") {
                         newEdit = true;
                     }
-                    this.universitysSend.push(FirebaseLog.methods.newUniversityObject(universityEdit))
+                    this.universitysSend.push(MethodsGeneral.methods.newUniversityObject(universityEdit))
                     this.updateDisplayUniversity()
                 } else {                    
-                    FirebaseLog.methods.fillUniversityObject(this.universitysSend[index], universityEdit)
+                    MethodsGeneral.methods.fillUniversityObject(this.universitysSend[index], universityEdit)
                 }
 
                 this.updateCreators(universityEdit)
@@ -721,7 +652,7 @@
                             this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})      
                         }
                         this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
-                        FirebaseLog.methods.logEditUniversity(name, universityEdit.universitySourceName)
+                        MethodsGeneral.methods.logEditUniversity(name, universityEdit.universitySourceName)
                     }
                 )
             },
@@ -730,10 +661,10 @@
                 if(this.universitysSend[index].universitySourceDisplay == "True") {
                     apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
-                    FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
+                    MethodsGeneral.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 } else {
                     apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
-                    FirebaseLog.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
+                    MethodsGeneral.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
                 }
                 this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", duration: 10000, max:3});
                 this.universitysSend.splice(index,1)
@@ -753,12 +684,12 @@
                         var tmpPartner = []
 
                         universityEdit.universitySourcerPartner.forEach(function(element2){
-                            tmpPartner.push(FirebaseLog.methods.newPartnerObject(element2))
+                            tmpPartner.push(MethodsGeneral.methods.newPartnerObject(element2))
                         })
                         
                         if(element.universitySourcerPartner != undefined) {
                             element.universitySourcerPartner.forEach(function(element2){
-                                tmpPartner.push(FirebaseLog.methods.newPartnerObject(element2))
+                                tmpPartner.push(MethodsGeneral.methods.newPartnerObject(element2))
                             })
                         }
                             
@@ -778,7 +709,7 @@
                 if(universityNotCurrentEdit) {
                     if(universityEdit.universitySourceDisplay == "True") {
                         universityEdit.universitySourceDisplay = "False"
-                        this.universitysSend.push(FirebaseLog.methods.newUniversityObject(universityEdit))
+                        this.universitysSend.push(MethodsGeneral.methods.newUniversityObject(universityEdit))
                     }
                 }
 
@@ -791,7 +722,7 @@
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
-                        FirebaseLog.methods.logCreatePartner(name, universityEdit.universitySourceName)
+                        MethodsGeneral.methods.logCreatePartner(name, universityEdit.universitySourceName)
                     }
                 )
             },
@@ -849,7 +780,7 @@
                         this.$router.replace('/editorview')
                         this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
                         this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
-                        FirebaseLog.methods.logEditPartner(name, newPartnerVersion.universityPartnerName)
+                        MethodsGeneral.methods.logEditPartner(name, newPartnerVersion.universityPartnerName)
                     }
                 )
             },
@@ -891,7 +822,7 @@
                 return db.ref().update(up).then(() => {
                     this.$router.replace('/editorview')
                     this.$toast.error(`The partner has been successfully deleted`, {position:"top", duration: 10000, max:3});
-                    FirebaseLog.methods.logDeletePartner(name, universityEdit.universitySourceName, partnerToRemove.universityPartnerName)
+                    MethodsGeneral.methods.logDeletePartner(name, universityEdit.universitySourceName, partnerToRemove.universityPartnerName)
                 })
             },
         

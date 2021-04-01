@@ -33,6 +33,7 @@
             <div v-if="!universityP.universityPartnerCondition" class="text-sm 4xl:text-lg">
                 <p>Sorry, we don't have more information about this partner's requirements. If you have any information please edit this partner to help us improve our database.</p>
             </div>
+            <a v-if="universityP.universityPartnerMoreInfoLink" :href="universityP.universityPartnerMoreInfoLink" target="_blank" class="text-blue-500 text-sm 4xl:text-lg cursor-pointer font-semibold">More Info</a>
         </div>
         <!-- universityPartnerWebsiteLink button -->
         <div class="relative text-sm 4xl:text-lg">
@@ -98,6 +99,13 @@
                     <input type="url" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
                     id="universitySourceWebsiteLink" v-model="universityPartner.universityPartnerWebsiteLink" :placeholder="universityP.universityPartnerWebsiteLink">
                     <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website</label>
+                </div>
+            </div>
+            <div class="flex flex-wrap col-start-1 col-end-7">
+                <div class="relative w-full appearance-none label-floating">
+                    <input type="url" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
+                    id="universityPartnerMoreInfoLink" v-model="universityPartner.universityPartnerMoreInfoLink" :placeholder="universityP.universityPartnerMoreInfoLink">
+                    <label for="universityPartnerMoreInfoLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner More Info Link</label>
                 </div>
             </div>
             <div class="flex flex-wrap col-start-1 col-end-7 text-sm bg-white py-2 px-4 rounded">
@@ -180,9 +188,12 @@
     import Tag from '../Tag.vue'
     import {apps, name} from '../../main.js'
     import db from '../../main.js'
+    
+    import MethodsGeneral from '../../Mixins/firebase'
 
   export default defineComponent ({
     name: "Basic",
+    mixins:[MethodsGeneral],
 
     components:{
         SmartTagz,
@@ -202,19 +213,7 @@
             link: '#',
             universityCycle: ["Doctorate/PhD", "Master", "Bachelor"],
 
-            "universityPartner": {
-                "universityPartnerName": "",
-                "universityPartnerCountry": "",
-                "universityPartnerCity": "",
-                "universityPartnerAddress": "",
-                "universityPartnerWebsiteLink": "",
-                "universityPartnerCondition": "",
-                "universityPartnerDisplay": "",
-                "universityPartnerCreator": "",
-                "universityPartnerLastUpdate": "",  
-                "universityPartnerSpeciality": [],
-                "universityPartnerCycle": [],
-            },
+            "universityPartner": {},
         }
     },
 
@@ -230,7 +229,9 @@
     },
 
     mounted(){
-        this.universityPartner = JSON.parse(JSON.stringify(this.universityP))
+        console.log(this.universityP.universityPartnerMoreInfoLink)
+        MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.universityP)
+        //this.universityPartner = JSON.parse(JSON.stringify(this.universityP))
         if(this.universityPartner.universityPartnerCycle == true || this.universityPartner.universityPartnerCycle == false || this.universityPartner.universityPartnerCycle == undefined) {
             this.universityPartner.universityPartnerCycle = []
         }

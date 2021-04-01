@@ -63,7 +63,7 @@
             var specialityPartener = []
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(el){
-                    el.forEach(function(element){                    
+                    el.forEach(function(element){
                         if(element.val().universitySourcerPartner){
                             element.val().universitySourcerPartner.forEach(function(element2){
                                 if(element2.universityPartnerSpeciality){
@@ -78,7 +78,7 @@
             }).then(async () => {
                 await db.ref("universitysEdited").once("value", function(snapshot){
                     snapshot.forEach(function(el){
-                        el.forEach(function(element){                    
+                        el.forEach(function(element){
                             if(element.val().universitySourcerPartner){
                                 element.val().universitySourcerPartner.forEach(function(element2){
                                     if(element2.universityPartnerSpeciality){

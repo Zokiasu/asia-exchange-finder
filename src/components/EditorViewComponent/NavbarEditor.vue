@@ -189,6 +189,7 @@
             "universityPartnerCity": "",
             "universityPartnerAddress": "",
             "universityPartnerWebsiteLink": "",
+            "universityPartnerMoreInfoLink": "",
             "universityPartnerCondition": "",
             "universityPartnerDisplay": "True",
             "universityPartnerCreator": name,
@@ -234,6 +235,7 @@
         this.universitysPartner.universityPartnerCity = ""
         this.universitysPartner.universityPartnerAddress = ""
         this.universitysPartner.universityPartnerWebsiteLink = ""
+        this.universitysPartner.universityPartnerMoreInfoLink = ""
         this.universitysPartner.universityPartnerCondition = ""
         this.universitysPartner.universityPartnerDisplay = "True"
         this.universitysPartner.universityPartnerCreator = name
@@ -345,6 +347,7 @@
                       "universityPartnerCity": element.val().universityPartnerCity,
                       "universityPartnerAddress": element.val().universityPartnerAddress,
                       "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                      "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
                       "universityPartnerCondition": element.val().universityPartnerCondition,
                       "universityPartnerCycle": element.val().universityPartnerCycle,
                       "universityPartnerDisplay": element.val().universityPartnerDisplay,
@@ -358,6 +361,7 @@
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
@@ -378,6 +382,7 @@
                       "universityPartnerCity": element.val().universityPartnerCity,
                       "universityPartnerAddress": element.val().universityPartnerAddress,
                       "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                      "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
                       "universityPartnerCondition": element.val().universityPartnerCondition,
                       "universityPartnerCycle": element.val().universityPartnerCycle,
                       "universityPartnerDisplay": element.val().universityPartnerDisplay,
@@ -391,6 +396,7 @@
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                   if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
@@ -436,6 +442,7 @@
                     "universityPartnerCity": element.val().universityPartnerCity,
                     "universityPartnerAddress": element.val().universityPartnerAddress,
                     "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
+                    "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
                     "universityPartnerCondition": element.val().universityPartnerCondition,
                     "universityPartnerCycle": element.val().universityPartnerCycle,
                     "universityPartnerDisplay": element.val().universityPartnerDisplay,
@@ -449,6 +456,7 @@
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
@@ -476,6 +484,7 @@
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
@@ -509,6 +518,7 @@
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
@@ -536,6 +546,7 @@
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
+                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
                 if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
