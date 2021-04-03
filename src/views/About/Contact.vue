@@ -58,7 +58,7 @@
 
         data(){
             return{
-                name:"Asia Studeler",
+                name:"Studeler",
                 email:"",
                 message:"",
             }

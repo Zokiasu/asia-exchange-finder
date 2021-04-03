@@ -229,9 +229,7 @@
     },
 
     mounted(){
-        console.log(this.universityP.universityPartnerMoreInfoLink)
         MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.universityP)
-        //this.universityPartner = JSON.parse(JSON.stringify(this.universityP))
         if(this.universityPartner.universityPartnerCycle == true || this.universityPartner.universityPartnerCycle == false || this.universityPartner.universityPartnerCycle == undefined) {
             this.universityPartner.universityPartnerCycle = []
         }

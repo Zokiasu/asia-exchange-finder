@@ -27,7 +27,7 @@
                     </li>
                 </ul>
             </div>
-            <p class="w-full text-center">Copyright © 2021 Asia Studeler.</p>
+            <p class="w-full text-center">Copyright © 2021 Studeler.</p>
         </div>
     </div>
 </template>

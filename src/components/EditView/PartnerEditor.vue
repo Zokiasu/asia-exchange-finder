@@ -73,7 +73,7 @@
                 autosuggest
                 input-placeholder="Majors ..."
                 :defaultTags="partner.universityPartnerSpeciality"
-                :sources="listOfSpeciality"
+                :sources= listOfSpeciality
                 :on-changed="logResult"
                 :allowPaste="{delimiter: ','}"
                 :allowDuplicates="false"
@@ -87,7 +87,6 @@
 
 <script>
     import db from '../../main.js'
-    import {apps, name, grade} from '../../main.js'
 
     import { SmartTagz } from "smart-tagz";
     import "smart-tagz/dist/smart-tagz.css";
@@ -109,7 +108,8 @@
                 id: this.$route.query.id,
                 hello:'',
                 universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
-                partner:{}
+                partner:{},
+                country:[],
             }
         },
 
@@ -122,7 +122,17 @@
             };
         },
 
-        async created(){
+        async beforeCreate(){
+            var countryTmp = []
+            await db.ref("data").once("value", function(snapshot){
+                snapshot.forEach(function(element){
+                    countryTmp = element.val()
+                })
+            })
+            this.country = countryTmp
+        },
+
+        created(){
             MethodsGeneral.methods.copyPartnerObject(this.partner, this.universityPartner)
         },
 
@@ -134,10 +144,10 @@
                 if(!this.university.universitySourcerPartner) {
                     this.university.universitySourcerPartner = [this.partner]
                     MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
+                    console.log(this.university.universitySourcerPartner)
                 } else if(this.partner.universityPartnerName != undefined || this.partner.universityPartnerName != ""){
                     this.university.universitySourcerPartner.forEach(function(element){
-                        if(element.universityPartnerCreator == tmpPartner.universityPartnerCreator
-                        && element.universityPartnerLastUpdate == tmpPartner.universityPartnerLastUpdate) {
+                        if(element.universityPartnerCreator == tmpPartner.universityPartnerCreator && element.universityPartnerLastUpdate == tmpPartner.universityPartnerLastUpdate) {
                             MethodsGeneral.methods.copyPartnerObject(element, tmpPartner)
                         } else {
                             count++

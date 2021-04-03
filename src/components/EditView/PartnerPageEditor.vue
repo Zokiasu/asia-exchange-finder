@@ -6,6 +6,7 @@
         <component 
             :university="university"
             :universityPartner="universityPartner"
+            :listOfSpeciality="listOfSpeciality"
             @editPartner="function(a){editPartner(a)}"
             @closeEditNewPartner="closeEditNewPartner()"
             :is="currentComponent">
@@ -54,26 +55,24 @@
                 id: this.$route.query.id,
                 universityCycle: ["Bachelor", "Master", "Doctorate/PhD"],
                 universityPartner:{},
+                intervalId:"",
                 listOfSpeciality: [],
-                intervalId:""
             }
         },
-
-        async created(){
+        
+        async beforeCreate(){
             var specialityPartener = []
             await db.ref("universitys").once("value", function(snapshot){
-                snapshot.forEach(function(el){
-                    el.forEach(function(element){
-                        if(element.val().universitySourcerPartner){
-                            element.val().universitySourcerPartner.forEach(function(element2){
-                                if(element2.universityPartnerSpeciality){
-                                    for (let index = 0; index < element2.universityPartnerSpeciality.length; index++) {
-                                        specialityPartener.push(element2.universityPartnerSpeciality[index])
-                                    }
+                snapshot.forEach(function(element){
+                    if(element.val().universitySourcerPartner){
+                        element.val().universitySourcerPartner.forEach(function(element2){
+                            if(element2.universityPartnerSpeciality){
+                                for (let index = 0; index < element2.universityPartnerSpeciality.length; index++) {
+                                    specialityPartener.push(element2.universityPartnerSpeciality[index])
                                 }
-                            })
-                        }
-                    })
+                            }
+                        })
+                    }
                 })
             }).then(async () => {
                 await db.ref("universitysEdited").once("value", function(snapshot){

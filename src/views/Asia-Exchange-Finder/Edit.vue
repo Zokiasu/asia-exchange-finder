@@ -126,12 +126,10 @@
         methods:{
 
             startAutoSave(){
-                console.log("Start auto save")
                 this.intervalId = setInterval(() => {this.saveUniversity()}, 300000)
             },
 
             stopAutoSave(){
-                console.log("Stop auto save")
                 clearInterval(this.intervalId)
             },
 
