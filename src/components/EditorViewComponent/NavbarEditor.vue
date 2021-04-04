@@ -35,7 +35,7 @@
               <div class="space-x-1 bottom-0.5 right-3">
                   <button @click="editThisUniversity" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
                       rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                      Edit This University
+                      Edit University
                   </button>
               </div>
           </div>
@@ -48,7 +48,6 @@
             :universityP="universityP"
             :listOfSpeciality="listOfSpeciality"
             :display="university.universitySourceDisplay"
-            @editPartner="function(a){editPartenaire(a)}"
             @deletePartner="function(a){removePartenaire(a)}">
         </UniversityCardInfoEditor>
         <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-20 rounded shadow-lg text-center font-semibold text-lg">
@@ -123,7 +122,7 @@
                 <div class="space-x-1 bottom-0.5 right-3">
                     <button @click="editThisUniversity" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
                         rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                        Edit This University
+                        Edit University
                     </button>
                 </div>
             </div>
@@ -136,12 +135,11 @@
               :universityP="universityP"
               :listOfSpeciality="listOfSpeciality"
               :display="university.universitySourceDisplay"
-              @editPartner="function(a){editPartenaire(a)}"
               @deletePartner="function(a){removePartenaire(a)}">
           </UniversityCardInfoEditor>
           <div v-if="(this.partner <= 0)" class="mb-6 m-3 p-5 bg-gray-500 bg-opacity-30 rounded shadow-lg text-center font-semibold text-lg 4xl:text-xl">
               <p>Sorry, we don't have information about this university's partners yet or this one doesn't have a partner in Asia.</p>
-              <p>If you have more information about their partners, please help us to improve our database by adding <button class="text-blue-500 font-semibold" @click="editThisUniversity">new partners</button>.</p>
+              <p>If you have more information about their partners, please help us to improve our database by editing <button class="text-blue-500 font-semibold" @click="editThisUniversity">this university</button>.</p>
           </div>
         </div>
       </div>
@@ -161,10 +159,10 @@
   import Tag from '../Tag.vue'
   import { init } from 'emailjs-com'
 
-  import FirebaseLog from '../../Mixins/firebase' 
+  import MethodsGeneral from '../../Mixins/firebase' 
 
   export default {
-    mixins:[FirebaseLog],
+    mixins:[MethodsGeneral],
 
     components:{
         UniversityCardInfoEditor,
@@ -176,31 +174,16 @@
     data() {
       return {
         isOpen: false,
-        hello: false,
-        addUniversityPartnerPopUp: false,
         partner: [],
         width: 0,
         countryPartner:[''],
         actualFilter: 'All',
-
-        universitysPartner: {
-            "universityPartnerName": "",
-            "universityPartnerCountry": "",
-            "universityPartnerCity": "",
-            "universityPartnerAddress": "",
-            "universityPartnerWebsiteLink": "",
-            "universityPartnerMoreInfoLink": "",
-            "universityPartnerCondition": "",
-            "universityPartnerDisplay": "True",
-            "universityPartnerCreator": name,
-            "universityPartnerLastUpdate": new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19),
-            "universityPartnerSpeciality": [],
-            "universityPartnerCycle": [],
-        },
+        universitysPartner: {},
       }
     },
 
     created() {
+        this.universitysPartner = MethodsGeneral.methods.newPartnerObject()
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },
@@ -230,48 +213,12 @@
     methods: {
 
       resetPartnerInfo(){
-        this.universitysPartner.universityPartnerName = ""
-        this.universitysPartner.universityPartnerCountry = ""
-        this.universitysPartner.universityPartnerCity = ""
-        this.universitysPartner.universityPartnerAddress = ""
-        this.universitysPartner.universityPartnerWebsiteLink = ""
-        this.universitysPartner.universityPartnerMoreInfoLink = ""
-        this.universitysPartner.universityPartnerCondition = ""
-        this.universitysPartner.universityPartnerDisplay = "True"
-        this.universitysPartner.universityPartnerCreator = name
-        this.universitysPartner.universityPartnerLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-        this.universitysPartner.universityPartnerSpeciality = []
-        this.universitysPartner.universityPartnerCycle = []
-      },
-
-      addNewPartnerToUniversity(){
-
-        var universityEdited = FirebaseLog.methods.newUniversityObject()
-
-        universityEdited = JSON.parse(JSON.stringify(this.university))
-        
-        if(universityEdited.universitySourcerPartner == undefined) {
-          universityEdited.universitySourcerPartner = [FirebaseLog.methods.newPartnerObject(this.universitysPartner)]
-        } else {
-          universityEdited.universitySourcerPartner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
-        }
-        this.updateUniversity(universityEdited)
-
-        if(this.university.universitySourceDisplay == "True") {
-          this.drawer()
-        } else {
-          this.updateCountry()
-        }
-        this.universitysPartner = FirebaseLog.methods.newPartnerObject()
-      },
-
-      updateUniversity(universityEdited){
-        this.$emit('updateUniv', universityEdited)
+        this.universitysPartner = MethodsGeneral.methods.newPartnerObject()
       },
 
       updateCountry(){
         if(this.universitysPartner.universityPartnerName != "") {
-          this.partner.push(FirebaseLog.methods.newPartnerObject(this.universitysPartner))
+          this.partner.push(MethodsGeneral.methods.newPartnerObject(this.universitysPartner))
         }
         this.partner.sort(function(a,b){
             if(a.universityPartnerName.toLowerCase() < b.universityPartnerName.toLowerCase()) {return -1}
@@ -279,15 +226,6 @@
             return 0;
         })
         this.enableCountryFilter()
-      },
-
-      editPartenaire(universityPartnerS){
-        this.$emit('editPartner', universityPartnerS)
-        if(this.university.universitySourceDisplay == "True") {
-          this.drawer()
-        } else {
-          this.updateCountry()
-        }
       },
 
       removePDisplay(universityPartnerS){
@@ -340,34 +278,7 @@
             await db.ref("universitysEdited/"+this.university.universitySourceId+'/'+this.university.universitySourceCreator+"/universitySourcerPartner").once("value", function(snapshot){
               snapshot.forEach(function(element){
                 if(element.val().universityPartnerName != undefined) {
-                  tmpPartner0.push(
-                    {
-                      "universityPartnerName": element.val().universityPartnerName,
-                      "universityPartnerCountry": element.val().universityPartnerCountry,
-                      "universityPartnerCity": element.val().universityPartnerCity,
-                      "universityPartnerAddress": element.val().universityPartnerAddress,
-                      "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
-                      "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
-                      "universityPartnerCondition": element.val().universityPartnerCondition,
-                      "universityPartnerCycle": element.val().universityPartnerCycle,
-                      "universityPartnerDisplay": element.val().universityPartnerDisplay,
-                      "universityPartnerCreator": element.val().universityPartnerCreator,
-                      "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
-                      "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
-                    }
-                  )
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                  tmpPartner0.push(MethodsGeneral.methods.newPartnerObject(element.val()))
                 }
               })
             })
@@ -375,34 +286,7 @@
             await db.ref("universitys/"+this.university.universitySourceId+"/universitySourcerPartner").once("value", function(snapshot){
               snapshot.forEach(function(element){
                 if(element.val().universityPartnerName != undefined) {
-                  tmpPartner0.push(
-                    {
-                      "universityPartnerName": element.val().universityPartnerName,
-                      "universityPartnerCountry": element.val().universityPartnerCountry,
-                      "universityPartnerCity": element.val().universityPartnerCity,
-                      "universityPartnerAddress": element.val().universityPartnerAddress,
-                      "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
-                      "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
-                      "universityPartnerCondition": element.val().universityPartnerCondition,
-                      "universityPartnerCycle": element.val().universityPartnerCycle,
-                      "universityPartnerDisplay": element.val().universityPartnerDisplay,
-                      "universityPartnerCreator": element.val().universityPartnerCreator,
-                      "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
-                      "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
-                    }
-                  )
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
-                  if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                  tmpPartner0.push(MethodsGeneral.methods.newPartnerObject(element.val()))
                 }
               })
             })
@@ -435,62 +319,9 @@
           await db.ref("universitysEdited/"+this.university.universitySourceId+'/'+this.university.universitySourceCreator+"/universitySourcerPartner").once("value", function(snapshot){
             snapshot.forEach(function(element){
               if(element.val().universityPartnerCountry == country) {
-                tmpPartner0.push(
-                  {
-                    "universityPartnerName": element.val().universityPartnerName,
-                    "universityPartnerCountry": element.val().universityPartnerCountry,
-                    "universityPartnerCity": element.val().universityPartnerCity,
-                    "universityPartnerAddress": element.val().universityPartnerAddress,
-                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
-                    "universityPartnerMoreInfoLink": element.val().universityPartnerMoreInfoLink,
-                    "universityPartnerCondition": element.val().universityPartnerCondition,
-                    "universityPartnerCycle": element.val().universityPartnerCycle,
-                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
-                    "universityPartnerCreator": element.val().universityPartnerCreator,
-                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
-                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
-                  }
-                )
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                tmpPartner0.push(MethodsGeneral.methods.newPartnerObject(element.val()))
               } else if(country == "All") {
-                tmpPartner0.push(
-                  {
-                    "universityPartnerName": element.val().universityPartnerName,
-                    "universityPartnerCountry": element.val().universityPartnerCountry,
-                    "universityPartnerCity": element.val().universityPartnerCity,
-                    "universityPartnerAddress": element.val().universityPartnerAddress,
-                    "universityPartnerWebsiteLink": element.val().universityPartnerWebsiteLink,
-                    "universityPartnerCondition": element.val().universityPartnerCondition,
-                    "universityPartnerCycle": element.val().universityPartnerCycle,
-                    "universityPartnerDisplay": element.val().universityPartnerDisplay,
-                    "universityPartnerCreator": element.val().universityPartnerCreator,
-                    "universityPartnerLastUpdate": element.val().universityPartnerLastUpdate,  
-                    "universityPartnerSpeciality": element.val().universityPartnerSpeciality,
-                  }
-                )
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerName == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerName = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCountry == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCountry = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCity == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCity = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerAddress == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerAddress = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerWebsiteLink = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerMoreInfoLink = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCondition == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCondition = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCycle == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCycle = []}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerDisplay = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerCreator == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerCreator = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerLastUpdate = ""}
-                if(tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality == undefined) {tmpPartner0[tmpPartner0.length-1].universityPartnerSpeciality = []}
+                tmpPartner0.push(MethodsGeneral.methods.newPartnerObject(element.val()))
               }
             })
           })

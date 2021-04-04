@@ -85,13 +85,11 @@
             </transition-group>
 
             <!-- Component University Card -->
-            <NavbarEditor 
+            <NavbarEditor
                 class="z-40" ref="navbarComponent" 
                 :university="universityObject" 
                 :listOfSpeciality="listOfSpeciality"
-                @updateUniv="function(a){addNewUniversityPartner(a)}"
-                @removePartner="function(a){removeUniversityPartner(universityObject, a)}"
-                @editPartner="function(a){editUniversityPartner(universityObject, a)}">
+                @removePartner="function(a){removeUniversityPartner(universityObject, a)}">
             </NavbarEditor>
 
         </div>
@@ -195,35 +193,7 @@
             await db.ref("universitys").once("value", function(snapshot){
                 snapshot.forEach(function(element){
                     if(element.val().universitySourceName != undefined) {
-                        getUniversityDatabase.push(
-                            {
-                                "universitySourceId": element.val().universitySourceId,
-                                "universitySourceName": element.val().universitySourceName,
-                                "universitySourceCountry": element.val().universitySourceCountry,
-                                "universitySourceCity": element.val().universitySourceCity,
-                                "universitySourceAddress": element.val().universitySourceAddress,
-                                "universitySourceImageLink": element.val().universitySourceImageLink,
-                                "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                                "universitySourceDisplay": element.val().universitySourceDisplay,
-                                "universitySourceCreator":element.val().universitySourceCreator,
-                                "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                                "universitySourceContributors": element.val().universitySourceContributors,
-                                "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                                "universitySourcerPartner": element.val().universitySourcerPartner, 
-                            }
-                        )
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator = []}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate = ""}
-                        if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner = []}
+                        getUniversityDatabase.push(MethodsGeneral.methods.newUniversityObject(element.val()))
                     }
                 })
             })
@@ -232,35 +202,7 @@
                 snapshot.forEach(function(el){
                     el.forEach(function(element){
                         if(element.val().universitySourceName != undefined) {
-                            getUniversityDatabase.push(
-                                {
-                                    "universitySourceId": element.val().universitySourceId,
-                                    "universitySourceName": element.val().universitySourceName,
-                                    "universitySourceCountry": element.val().universitySourceCountry,
-                                    "universitySourceCity": element.val().universitySourceCity,
-                                    "universitySourceAddress": element.val().universitySourceAddress,
-                                    "universitySourceImageLink": element.val().universitySourceImageLink,
-                                    "universitySourceWebsiteLink": element.val().universitySourceWebsiteLink,
-                                    "universitySourceDisplay": element.val().universitySourceDisplay,
-                                    "universitySourceCreator":element.val().universitySourceCreator,
-                                    "universitySourceMoreInfo": element.val().universitySourceMoreInfo,
-                                    "universitySourceContributors": element.val().universitySourceContributors,
-                                    "universitySourceLastUpdate": element.val().universitySourceLastUpdate,
-                                    "universitySourcerPartner": element.val().universitySourcerPartner, 
-                                }
-                            )
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceName = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCountry = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCity = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceAddress = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceImageLink = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceWebsiteLink = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceDisplay = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceCreator = []}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceMoreInfo = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceContributors = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourceLastUpdate = ""}
-                            if(getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner == undefined) {getUniversityDatabase[getUniversityDatabase.length-1].universitySourcerPartner = []}
+                            getUniversityDatabase.push(MethodsGeneral.methods.newUniversityObject(element.val()))
                         }
                     })
                 })
@@ -420,7 +362,7 @@
                 }
             },
 
-            getuniqueUniversityNameCard (index) {                
+            getuniqueUniversityNameCard (index) {
                 MethodsGeneral.methods.copyUniversityObject(this.universityObject, this.universitysSend[index])
                 this.$refs.navbarComponent.drawer();
             },
@@ -583,208 +525,13 @@
             },
 
             //University function
-            addNewUniversity(newUniversitys){
-                var testA = "";
-                var up = {};
-                
-                if(newUniversitys.universitySourceId == "" || newUniversitys.universitySourceId == undefined) {
-                    testA = db.ref().child('universitys').push().key;
-                    newUniversitys.universitySourceId = testA;
-                    this.updateCreators(newUniversitys)
-                    up['/universitysEdited/' + testA+'/'+newUniversitys.universitySourceCreator] = newUniversitys
-                    
-                } else {
-                    this.updateCreators(newUniversitys)
-                    up['/universitysEdited/' + newUniversitys.universitySourceId+'/'+newUniversitys.universitySourceCreator] = newUniversitys
-                }
-
-                this.universitysSend.push({
-                    "universitySourceId": newUniversitys.universitySourceId,
-                    "universitySourceName": newUniversitys.universitySourceName,
-                    "universitySourceCountry": newUniversitys.universitySourceCountry,
-                    "universitySourceCity": newUniversitys.universitySourceCity,
-                    "universitySourceAddress": newUniversitys.universitySourceAddress,
-                    "universitySourceImageLink": newUniversitys.universitySourceImageLink,
-                    "universitySourceWebsiteLink": newUniversitys.universitySourceWebsiteLink,
-                    "universitySourceDisplay": newUniversitys.universitySourceDisplay,
-                    "universitySourceCreator": newUniversitys.universitySourceCreator,
-                    "universitySourceMoreInfo": newUniversitys.universitySourceMoreInfo,
-                    "universitySourceContributors": newUniversitys.universitySourceContributors,
-                    "universitySourceLastUpdate": newUniversitys.universitySourceLastUpdate,   
-                    "universitySourcerPartner": newUniversitys.universitySourcerPartner, 
-                })
-
-
-                return db.ref().update(up).then(
-                    () => {
-                        this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 5000, max:3});
-                        this.$toast.success(`Your university has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 5000, max:3});
-                        this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})    
-                        MethodsGeneral.methods.logCreateUniversity(name, newUniversitys.universitySourceName)                    
-                    }
-                )
-            },
-
-            editUniversity(index, universityEdit){
-                var up = {};
-                var newEdit = false;
-                
-                if((this.universitysSend[index].universitySourceId == universityEdit.universitySourceId) 
-                && (this.universitysSend[index].universitySourceDisplay != universityEdit.universitySourceDisplay)) {
-                    if (this.universitysSend[index].universitySourceDisplay == "True") {
-                        newEdit = true;
-                    }
-                    this.universitysSend.push(MethodsGeneral.methods.newUniversityObject(universityEdit))
-                    this.updateDisplayUniversity()
-                } else {                    
-                    MethodsGeneral.methods.fillUniversityObject(this.universitysSend[index], universityEdit)
-                }
-
-                this.updateCreators(universityEdit)
-                up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
-
-                return db.ref().update(up).then(() => {
-                        this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
-                        if (newEdit) {
-                            this.$toast.show(`If you wish to continue your modifications it is still accessible but are displayed as "In Progress".`, {position:"top", duration: 10000, max:3});
-                            this.updateDisplayUniversity().then(()=>{this.sortingParam("Creation Date Desc.")})      
-                        }
-                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
-                        MethodsGeneral.methods.logEditUniversity(name, universityEdit.universitySourceName)
-                    }
-                )
-            },
-
             removeUniversity(index){
-                if(this.universitysSend[index].universitySourceDisplay == "True") {
-                    apps.database().ref('/universitys/' + this.universitysSend[index].universitySourceId).set(null)
-                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
-                    MethodsGeneral.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
-                } else {
-                    apps.database().ref('/universitysEdited/' + this.universitysSend[index].universitySourceId+'/'+this.universitysSend[index].universitySourceCreator).set(null)
-                    MethodsGeneral.methods.logDeleteUniversity(name, this.universitysSend[index].universitySourceName)
-                }
-                this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", duration: 10000, max:3});
+                MethodsGeneral.methods.removeUniversityToFirebase(this.universitysSend[index])
                 this.universitysSend.splice(index,1)
+                this.$toast.error(this.universitysSend[index].universitySourceName + ` has been removed.`, {position:"top", duration: 10000, max:3});
             },
 
             //Partner function
-            addNewUniversityPartner(universityEdit){
-
-                var up = {};
-                var universityNotCurrentEdit = true
-                universityEdit.universitySourceLastUpdate =  new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-
-                this.universitysSend.forEach(function(element){
-                    //Si l'universités est déjà en cours d'édition fusionne sa liste de partenaire avec le nouveau partenaire
-                    if(element.universitySourceName == universityEdit.universitySourceName && element.universitySourceDisplay == "False") {
-
-                        var tmpPartner = []
-
-                        universityEdit.universitySourcerPartner.forEach(function(element2){
-                            tmpPartner.push(MethodsGeneral.methods.newPartnerObject(element2))
-                        })
-                        
-                        if(element.universitySourcerPartner != undefined) {
-                            element.universitySourcerPartner.forEach(function(element2){
-                                tmpPartner.push(MethodsGeneral.methods.newPartnerObject(element2))
-                            })
-                        }
-                            
-                        //Récupère la liste des partenaires de l'université en cours et le nouveau partenaire vérifie qu'il n'y ait pas de doublon pour les supprimés
-                        var dataArr = tmpPartner.map(item=>{
-                            return [item.universityPartnerName,item]
-                        }); //creates array of array
-                        var maparr = new Map(dataArr); //create key value pair from array of array
-                        var result = [...maparr.values()]; //converting back to array from mapobject
-                        
-                        //Reset les partenaires pour remplacer par la nouvelle liste avec le nouveau partenaire
-                        element.universitySourcerPartner = result
-                        universityNotCurrentEdit = false
-                    }
-                })
-
-                if(universityNotCurrentEdit) {
-                    if(universityEdit.universitySourceDisplay == "True") {
-                        universityEdit.universitySourceDisplay = "False"
-                        this.universitysSend.push(MethodsGeneral.methods.newUniversityObject(universityEdit))
-                    }
-                }
-
-                this.updateCreators(universityEdit)
-                up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
-
-                this.sortingParam("Creation Date Desc.")
-
-                return db.ref().update(up).then(() => {
-                        this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
-                        this.$toast.success(`Your university partner has been successfully added in "In Progress" list for a validation.`, {position:"top", duration: 10000, max:3});
-                        MethodsGeneral.methods.logCreatePartner(name, universityEdit.universitySourceName)
-                    }
-                )
-            },
-
-            editUniversityPartner(universityEdited, newPartnerVersion){
-                var up = {}
-                var indexIntoOfficialList = ""
-
-                for (let b = 0; b < this.universitysSend.length; b++) {
-                    if (this.universitysSend[b].universitySourceName == universityEdited.universitySourceName
-                    && this.universitysSend[b].universitySourceCountry == universityEdited.universitySourceCountry
-                    && this.universitysSend[b].universitySourceCity == universityEdited.universitySourceCity
-                    && this.universitysSend[b].universitySourceDisplay == universityEdited.universitySourceDisplay) {
-                        indexIntoOfficialList = b
-                    }
-                }
-
-                //UniversitySourceDisplay statut is in progress
-                if(universityEdited.universitySourceDisplay == "False") {
-                    for (let m = 0; m < universityEdited.universitySourcerPartner.length; m++) {
-                        if (universityEdited.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
-                        && universityEdited.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
-                        && universityEdited.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
-                            universityEdited.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
-                        }
-                    }
-
-                    universityEdited.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-                    this.universitysSend[indexIntoOfficialList].universitySourcerPartner = JSON.parse(JSON.stringify(universityEdited.universitySourcerPartner))
-                    up['/universitysEdited/' + universityEdited.universitySourceId+'/'+universityEdited.universitySourceCreator] = universityEdited
-                    this.updateCreators(universityEdited)
-                } 
-                //UniversitySourceDisplay statut is online
-                else {
-                    var tmpUEdit = JSON.parse(JSON.stringify(universityEdited))
-                    tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
-
-                    for (let m = 0; m < tmpUEdit.universitySourcerPartner.length; m++) {
-                        if (tmpUEdit.universitySourcerPartner[m].universityPartnerCountry == newPartnerVersion.universityPartnerCountry 
-                        && tmpUEdit.universitySourcerPartner[m].universityPartnerCity == newPartnerVersion.universityPartnerCity 
-                        && tmpUEdit.universitySourcerPartner[m].universityPartnerLastUpdate == newPartnerVersion.universityPartnerLastUpdate){
-                            tmpUEdit.universitySourcerPartner[m] = JSON.parse(JSON.stringify(newPartnerVersion))
-                        }
-                    }
-
-                    tmpUEdit.universitySourceDisplay = "False"
-                    this.universitysSend.push(tmpUEdit)
-                    up['/universitysEdited/' + tmpUEdit.universitySourceId+'/'+tmpUEdit.universitySourceCreator] = JSON.parse(JSON.stringify(tmpUEdit))
-                    this.updateCreators(tmpUEdit)
-                }
-
-                this.sortingParam("Creation Date Desc.")
-
-                return db.ref().update(up).then(() => {
-                        this.$router.replace('/editorview')
-                        this.$toast.show(`Thank you for your help in improving our database.`, {position:"bottom-left", duration: 10000, max:3});
-                        this.$toast.success(`Your changes have been sent for validation.`, {position:"top", duration: 10000, max:3});
-                        MethodsGeneral.methods.logEditPartner(name, newPartnerVersion.universityPartnerName)
-                    }
-                )
-            },
-
             removeUniversityPartner(universityEdit, partnerToRemove){
                 var up = {}
                 
@@ -798,7 +545,7 @@
 
                     universityEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)
 
-                    up['/universitysEdited/' + universityEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = universityEdit
+                    up['/universitysEdited/' + universityEdit.universitySourceId + '/' + universityEdit.universitySourceCreator] = universityEdit
                 } 
                 //University display statut is online
                 else {
@@ -813,36 +560,15 @@
 
                     tmpUEdit.universitySourceDisplay = "False"
                     this.universitysSend.push(tmpUEdit)
-                    up['/universitysEdited/' + tmpUEdit.universitySourceId+'/'+universityEdit.universitySourceCreator] = JSON.parse(JSON.stringify(tmpUEdit))
+                    up['/universitysEdited/' + tmpUEdit.universitySourceId + '/' + universityEdit.universitySourceCreator] = tmpUEdit
                     
                 }
-
-                this.sortingParam("Creation Date Desc.")
 
                 return db.ref().update(up).then(() => {
                     this.$router.replace('/editorview')
                     this.$toast.error(`The partner has been successfully deleted`, {position:"top", duration: 10000, max:3});
                     MethodsGeneral.methods.logDeletePartner(name, universityEdit.universitySourceName, partnerToRemove.universityPartnerName)
                 })
-            },
-        
-            updateCreators(universityEdit) {
-                var newEditor = true
-
-                universityEdit.universitySourceContributors.forEach(el => {
-                    if(el.contributorSourceName == name) {
-                        el.contributorSourceEditNumber = el.contributorSourceEditNumber + 1
-                        newEditor = false
-                    }
-                })
-                
-                if(newEditor) {
-                    universityEdit.universitySourceContributors.push({
-                        "contributorSourceName": name,
-                        "contributorSourceEditNumber": 1
-                    })
-                }
-
             },
         },
     }

@@ -8,6 +8,19 @@ export default {
 
         newUniversityObject(universityData) {
             if(universityData != undefined) {
+                if(universityData.universitySourceId == undefined) {universityData.universitySourceId = ""}
+                if(universityData.universitySourceName == undefined) {universityData.universitySourceName = ""}
+                if(universityData.universitySourceCountry == undefined) {universityData.universitySourceCountry = ""}
+                if(universityData.universitySourceCity == undefined) {universityData.universitySourceCity = ""}
+                if(universityData.universitySourceAddress == undefined) {universityData.universitySourceAddress = ""}
+                if(universityData.universitySourceImageLink == undefined) {universityData.universitySourceImageLink = ""}
+                if(universityData.universitySourceWebsiteLink == undefined) {universityData.universitySourceWebsiteLink = ""}
+                if(universityData.universitySourceDisplay == undefined) {universityData.universitySourceDisplay = ""}
+                if(universityData.universitySourceCreator == undefined) {universityData.universitySourceCreator = []}
+                if(universityData.universitySourceMoreInfo == undefined) {universityData.universitySourceMoreInfo = ""}
+                if(universityData.universitySourceContributors == undefined) {universityData.universitySourceContributors = ""}
+                if(universityData.universitySourceLastUpdate == undefined) {universityData.universitySourceLastUpdate = ""}
+                if(universityData.universitySourcerPartner == undefined) {universityData.universitySourcerPartner = []}
                 return {
                     "universitySourceId": universityData.universitySourceId,
                     "universitySourceName": universityData.universitySourceName,
@@ -78,6 +91,18 @@ export default {
 
         newPartnerObject(partnerData){
             if(partnerData != undefined) {
+                if(partnerData.universityPartnerName == undefined) {partnerData.universityPartnerName = ""}
+                if(partnerData.universityPartnerCountry == undefined) {partnerData.universityPartnerCountry = ""}
+                if(partnerData.universityPartnerCity == undefined) {partnerData.universityPartnerCity = ""}
+                if(partnerData.universityPartnerAddress == undefined) {partnerData.universityPartnerAddress = ""}
+                if(partnerData.universityPartnerWebsiteLink == undefined) {partnerData.universityPartnerWebsiteLink = ""}
+                if(partnerData.universityPartnerMoreInfoLink == undefined) {partnerData.universityPartnerMoreInfoLink = ""}
+                if(partnerData.universityPartnerCondition == undefined) {partnerData.universityPartnerCondition = ""}
+                if(partnerData.universityPartnerCycle == undefined) {partnerData.universityPartnerCycle = []}
+                if(partnerData.universityPartnerDisplay == undefined) {partnerData.universityPartnerDisplay = ""}
+                if(partnerData.universityPartnerCreator == undefined) {partnerData.universityPartnerCreator = ""}
+                if(partnerData.universityPartnerLastUpdate == undefined) {partnerData.universityPartnerLastUpdate = ""}
+                if(partnerData.universityPartnerSpeciality == undefined) {partnerData.universityPartnerSpeciality = []}
                 return {
                     "universityPartnerName": partnerData.universityPartnerName,
                     "universityPartnerCountry": partnerData.universityPartnerCountry,
@@ -161,7 +186,7 @@ export default {
 
         },
 
-        //Firebase Function
+        //Firebase University Function
 
         addUniversityToFrebase(universityToAdd){
             var id = ""
@@ -183,6 +208,15 @@ export default {
                     this.logCreateUniversity(name, universityToAdd.universitySourceName)                 
                 }
             )
+        },
+
+        removeUniversityToFirebase(universityToDelete){
+            if(universityToDelete.universitySourceDisplay == "True") {
+                apps.database().ref('/universitys/' + universityToDelete.universitySourceId).set(null)
+            } else {
+                apps.database().ref('/universitysEdited/' + universityToDelete.universitySourceId + '/' + universityToDelete.universitySourceCreator).set(null)
+            }
+            this.logDeleteUniversity(name, universityToDelete.universitySourceName)
         },
 
         validUniversity(universityToValidated){

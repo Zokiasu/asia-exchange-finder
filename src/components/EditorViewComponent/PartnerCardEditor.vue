@@ -1,4 +1,4 @@
-<template>
++<template>
     <!-- Normal View -->
     <div v-if="!editPartnerView && !deletePartnerView" class=" mb-6 m-3 pb-2 bg-gray-200 rounded shadow-lg text-lg 4xl:text-xl">
         <!-- Université + Ville + Pays-->
@@ -46,108 +46,9 @@
                 </a>
             </div>            
             <div class="space-x-1 absolute bottom-0.5 right-3">
-                <button @click="callEditPartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
-                    rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                    Edit
-                </button>
                 <button @click="callDeletePartner" v-if="(grade === 'Admin') || (username === universityP.universityPartnerCreator && display === 'False')" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-red-500 
                     rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-red-900">
                     Delete
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- Edited View -->
-    <div v-else-if="editPartnerView && !deletePartnerView" class=" mb-6 mx-10 m-3 pb-2 bg-gray-200 rounded shadow-lg text-lg 4xl:text-xl">
-        <!-- Université + Ville + Pays-->
-        <div class="relative w-full bg-blue-500 rounded-t-sm pb-1 xl:text-xl 2xl:text-2xl">
-            <p class="px-2 font-bold text-white">{{universityP.universityPartnerName}}</p>
-            <p class="font-bold text-white pl-2 xl:pl-0 xl:absolute xl:top-0 xl:right-2">{{universityP.universityPartnerCity}}, {{universityP.universityPartnerCountry}}</p>
-        </div>
-        <!-- ??? -->
-        <div class="font-bold grid grid-cols-2 gap-1 text-xs text-black w-full pt-5 pb-10 px-5">
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceName" v-model="universityPartner.universityPartnerName" :placeholder="universityP.universityPartnerName">
-                    <label for="universitySourceName" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Name</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceAddress" v-model="universityPartner.universityPartnerAddress" :placeholder="universityP.universityPartnerAddress">
-                    <label for="universitySourceAddress" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Address</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-span-3">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceCountry" v-model="universityPartner.universityPartnerCountry" :placeholder="universityP.universityPartnerCountry">
-                    <label for="universitySourceCountry" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Country</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-span-3">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="text" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceCity" v-model="universityPartner.universityPartnerCity" :placeholder="universityP.universityPartnerCity">
-                    <label for="universitySourceCity" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner City</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="url" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universitySourceWebsiteLink" v-model="universityPartner.universityPartnerWebsiteLink" :placeholder="universityP.universityPartnerWebsiteLink">
-                    <label for="universitySourceWebsiteLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner Website</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="relative w-full appearance-none label-floating">
-                    <input type="url" autocomplete="off" class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                    id="universityPartnerMoreInfoLink" v-model="universityPartner.universityPartnerMoreInfoLink" :placeholder="universityP.universityPartnerMoreInfoLink">
-                    <label for="universityPartnerMoreInfoLink" class="absolute tracking-wide py-2 px-4 mb-4 opacity-0 leading-tight block top-0 left-0 cursor-text">Partner More Info Link</label>
-                </div>
-            </div>
-            <div class="flex flex-wrap col-start-1 col-end-7 text-sm bg-white py-2 px-4 rounded">
-                <div><p class="text-green-600">Partner Academic Cycle</p></div>
-                <ul class="flex">
-                    <li class="ml-5 space-x-2 font-semibold" v-for="(universityCycle, index) in universityCycle" v-bind:key="index">
-                        <input :id="universityCycle" :value="universityCycle" name="universityCycle" type="checkbox" v-model="universityPartner.universityPartnerCycle" @change="log"/>
-                        <label :for="universityCycle">{{universityCycle}}</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="relative w-full appearance-none label-floating col-start-1 col-end-7">
-                    <textarea class="autoexpand h-40 tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-white border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" 
-                        v-model="universityPartner.universityPartnerCondition" :placeholder="universityP.universityPartnerCondition"></textarea>
-                    <label class="absolute tracking-wide py-2 px-4 opacity-0 leading-tight block top-0 left-0 cursor-text" for="Condition">Partner Condition</label>
-                </div>
-            </div>
-            <div class="w-full col-start-1 col-end-7">
-                <smart-tagz
-                    editable
-                    autosuggest
-                    input-placeholder="Majors ..."
-                    :defaultTags= universityP.universityPartnerSpeciality
-                    :sources= listOfSpeciality
-                    :on-changed="logResult"
-                    :allowPaste="{delimiter: ','}"
-                    :allowDuplicates="false"
-                    :max-tags="100"
-                />
-            </div>
-        </div>
-        <!-- universityPartnerWebsiteLink button -->
-        <div class="relative text-sm 4xl:text-xl">
-            <div class="space-x-1 absolute bottom-0.5 right-3">
-                <button @click="callEditPartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-red-500 
-                    rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-red-900">
-                    Cancel
-                </button>
-                <button @click="editPartner" class="inline-block px-4 py-1 font-medium text-center text-white leading-6 transition bg-green-500 
-                    rounded-full shadow ripple waves-light hover:shadow-lg focus:outline-none hover:bg-green-900">
-                    Send
                 </button>
             </div>
         </div>
@@ -247,10 +148,6 @@
 
     methods: {
 
-        callEditPartner(){
-            this.editPartnerView = !this.editPartnerView
-        },
-
         callDeletePartner(){
             this.deletePartnerView = !this.deletePartnerView
         },
@@ -260,7 +157,6 @@
                 this.universityPartner.universityPartnerSpeciality = JSON.parse(JSON.stringify(this.universityP.universityPartnerSpeciality))
             }
             this.$emit('editPartner', this.universityPartner)
-            this.callEditPartner()
         },
 
         removePart(){
