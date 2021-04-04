@@ -26,7 +26,7 @@
                         :options="option.countryOption"/>
                     <button @click="resetDestination" class="px-1 rounded-none" :class="(DestinationFilter === '' || DestinationFilter === null || DestinationFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
                 </div>
-                <div class="ms:pl-1 flex">
+                <!--<div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
@@ -35,7 +35,7 @@
                         v-model="SpecialityFilter"
                         :options="option.specialityOption"/>
                     <button @click="resetSpeciality" class="px-1 rounded-none" :class="(SpecialityFilter === '' || SpecialityFilter === null || SpecialityFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
-                </div>
+                </div>-->
                 <div class="ms:pl-1 flex">
                     <Multiselect
                         class="md:w-48 bg-gray-200 text-black"
