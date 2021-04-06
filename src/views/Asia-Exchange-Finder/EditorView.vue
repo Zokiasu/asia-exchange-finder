@@ -3,7 +3,7 @@
 
         <div class="grid grid-cols-1 w-full">
             <input class="tracking-wide hidden mx-64 py-2 px-4 leading-relaxed appearance-none bg-gray-200 rounded focus:outline-none focus:border-white focus:border-4 text-gray-900" 
-                type="text" v-model="search" placeholder="Find an University.."/>
+                type="text" v-model="search" placeholder="Find a University.."/>
             <!-- Filter City/Destination/Speciality -->
             <div class="my-5 flex justify-center flex-col ms:flex-row text-gray-900">
                 <div class="ms:pl-1 flex">
@@ -41,7 +41,7 @@
                         class="md:w-48 bg-gray-200 text-black"
                         mode="single"
                         :searchable="true"
-                        placeholder="Display Statut"
+                        placeholder="Display Status"
                         v-model="displayFilter"
                         :options="option.displayOption"/>
                     <button @click="resetDisplay" class="px-1 rounded-none" :class="(displayFilter === '' || displayFilter === null || displayFilter === undefined) ? 'bg-gray-200 border border-gray-200 invisible' : 'bg-red-700 border border-red-700 visible text-white'">X</button>
@@ -63,7 +63,7 @@
                         <img class="h-full w-full object-cover object-center" v-lazy="imgTmp" alt="">
                         <img class="h-14 w-14 absolute" v-lazy="imgTmp2" alt="">
                         <p class="absolute w-full bg-gray-200 bg-opacity-80 p-5 bottom-0 block text-black font-semibold text-lg">
-                            Add New University
+                            Add A New University
                         </p>
                     </button>
                     <card
@@ -155,7 +155,7 @@
                 userName: '',
                 universitysSend: [],
                 listOfSpeciality: [],
-                sortBy: ['A-Z', 'Z-A', 'Creation Date Asc.', 'Creation Date Desc.'],
+                sortBy: ['A-Z', 'Z-A', 'Recently Modified'],
                 actualSorting: 'A-Z',
 
                 option: {
@@ -397,16 +397,8 @@
                             return 0;
                         })
                     break;
-                    case 'Creation Date Asc.':
-                        this.actualSorting = "Creation Date Asc."
-                        this.universitysSend.sort(function(a,b){
-                            if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return -1;}
-                            if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return 1;}
-                            return 0;
-                        })
-                    break;
-                    case 'Creation Date Desc.':
-                        this.actualSorting = "Creation Date Desc."
+                    case 'Recently Modified':
+                        this.actualSorting = "Recently Modified"
                         this.universitysSend.sort(function(a,b){
                             if(a.universitySourceLastUpdate.toLowerCase() > b.universitySourceLastUpdate.toLowerCase()) {return -1;}
                             if(a.universitySourceLastUpdate.toLowerCase() < b.universitySourceLastUpdate.toLowerCase()) {return 1;}
@@ -535,7 +527,7 @@
             removeUniversityPartner(universityEdit, partnerToRemove){
                 var up = {}
                 
-                //University display statut is in progress
+                //University Display Status is in progress
                 if(universityEdit.universitySourceDisplay == "False") {
                     for (let m = 0; m < universityEdit.universitySourcerPartner.length; m++) {
                         if (universityEdit.universitySourcerPartner[m].universityPartnerName == partnerToRemove.universityPartnerName){
@@ -547,7 +539,7 @@
 
                     up['/universitysEdited/' + universityEdit.universitySourceId + '/' + universityEdit.universitySourceCreator] = universityEdit
                 } 
-                //University display statut is online
+                //University Display Status is online
                 else {
                     var tmpUEdit = JSON.parse(JSON.stringify(universityEdit))
                     tmpUEdit.universitySourceLastUpdate = new Date().toISOString().slice(0, 10) + ", " + new Date().toISOString().slice(11, 19)

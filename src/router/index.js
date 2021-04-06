@@ -13,6 +13,7 @@ import EditView from '../views/Asia-Exchange-Finder/Edit.vue'
 import AEF from '../views/AEF.vue'
 import firebase from "firebase";
 
+
 const routes = [
   {
     path: '/',

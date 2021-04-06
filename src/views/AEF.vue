@@ -4,7 +4,7 @@
     <h1 class="font-bold text-center mt-10 ms:mt-20 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"><router-link to="/">Asia Exchange Finder</router-link></h1>
     <i class="text-center mt-5">(Beta Version)</i>
     <div class="mx-5">
-      <h2 class="text-center mt-12 text-xl 2xl:text-2xl">Find an university to realize your student exchange to an Asian country and become a Studeler.</h2>
+      <h2 class="text-center mt-12 text-xl 2xl:text-2xl">Find a university to make your student exchange to an Asian country dream come true and become a Studeler.</h2>
     </div>
     <router-view class="mb-16"/>
   </div>
