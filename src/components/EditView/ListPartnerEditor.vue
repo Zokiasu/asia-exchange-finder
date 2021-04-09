@@ -60,14 +60,15 @@
             if(this.university.universitySourcerPartner != undefined) {
                 this.universityPartnerList = this.university.universitySourcerPartner
                 this.universityPartnerList.sort(function(a,b){
-                    if(a.universityPartnerCountry.toLowerCase() > b.universityPartnerCountry.toLowerCase()) {return 1;}
-                    if(a.universityPartnerCountry.toLowerCase() < b.universityPartnerCountry.toLowerCase()) {return -1;}
-                    return 0;
+                    if(a.universityPartnerCountry && b.universityPartnerCountry) {
+                        if(a.universityPartnerCountry.toLowerCase() > b.universityPartnerCountry.toLowerCase()) {return 1;}
+                        if(a.universityPartnerCountry.toLowerCase() < b.universityPartnerCountry.toLowerCase()) {return -1;}
+                    }
+                    return 1;
                 })
-                this.numberPageTmp = Math.round(this.universityPartnerList.length/9)
+                this.numberPageTmp = Math.ceil(this.universityPartnerList.length/9)
             }
         },
-
         
         computed: {
             filteredList() {

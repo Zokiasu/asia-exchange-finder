@@ -138,28 +138,30 @@
 
         methods:{
             validEditNewPartner(){
-                var count = 0
-                this.partner.universityPartnerSpeciality = this.universityPartner.universityPartnerSpeciality
-                var tmpPartner = this.partner
-                if(!this.university.universitySourcerPartner) {
-                    this.university.universitySourcerPartner = [this.partner]
-                    MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
-                    console.log(this.university.universitySourcerPartner)
-                } else if(this.partner.universityPartnerName != undefined || this.partner.universityPartnerName != ""){
-                    this.university.universitySourcerPartner.forEach(function(element){
-                        if(element.universityPartnerCreator == tmpPartner.universityPartnerCreator && element.universityPartnerLastUpdate == tmpPartner.universityPartnerLastUpdate) {
-                            MethodsGeneral.methods.copyPartnerObject(element, tmpPartner)
-                        } else {
-                            count++
+                if(this.partner.universityPartnerName && this.partner.universityPartnerCountry && this.partner.universityPartnerCity && this.partner.universityPartnerWebsiteLink) {
+                    var count = 0
+                    this.partner.universityPartnerSpeciality = this.universityPartner.universityPartnerSpeciality
+                    var tmpPartner = this.partner
+                    if(!this.university.universitySourcerPartner) {
+                        this.university.universitySourcerPartner = [this.partner]
+                        MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
+                    } else if(this.partner.universityPartnerName != undefined || this.partner.universityPartnerName != ""){
+                        this.university.universitySourcerPartner.forEach(function(element){
+                            if(element.universityPartnerCreator == tmpPartner.universityPartnerCreator && element.universityPartnerLastUpdate == tmpPartner.universityPartnerLastUpdate) {
+                                MethodsGeneral.methods.copyPartnerObject(element, tmpPartner)
+                            } else {
+                                count++
+                            }
+                        })
+                        if(count == this.university.universitySourcerPartner.length){
+                            this.university.universitySourcerPartner.push(this.partner)
                         }
-                    })
-                    if(count == this.university.universitySourcerPartner.length){
-                        this.university.universitySourcerPartner.push(this.partner)
+                        MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
                     }
-
-                    MethodsGeneral.methods.copyPartnerObject(this.universityPartner, this.partner)
+                    this.$emit('closeEditNewPartner')
+                } else {
+                    this.$toast.error(`Please do not forget to fill in all the fields with a *.`, {position:"top", duration: 3000, max:3});
                 }
-                this.$emit('closeEditNewPartner')
             },
 
             closeEditNewPartner(){

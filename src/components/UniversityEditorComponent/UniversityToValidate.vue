@@ -229,7 +229,7 @@
             this.form.splice(0,1)
             this.editedForm.splice(0,1)
             this.universitySend = this.form
-            this.numberPage = Math.round(this.universitySend.length/9)
+            this.numberPage = Math.ceil(this.universitySend.length/9)
         },
 
         mounted: function () {
@@ -290,7 +290,7 @@
                 }
 
                 this.universitySend = [...new Set(tmpUniversitySend)]
-                this.numberPage = Math.round(this.universitySend.length/9)
+                this.numberPage = Math.ceil(this.universitySend.length/9)
             },
 
             setGeneral: function() {
