@@ -3,6 +3,7 @@ import AboutUs from '../views/About/AboutUs.vue'
 import Contact from '../views/About/Contact.vue'
 import Privacy from '../views/About/Privacy.vue'
 import Terms from '../views/About/Terms.vue'
+
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Test from '../views/Test.vue'
