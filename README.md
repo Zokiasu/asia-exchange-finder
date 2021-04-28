@@ -1,4 +1,4 @@
-# asia-exchange-finder
+# Asia Exchange Finder
 
 ## Project setup
 ```
