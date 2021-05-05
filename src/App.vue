@@ -1,13 +1,21 @@
 <template>
-  <div class="relative justify-between text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 dark:bg-opacity-50 p-0 min-h-screen">
-    <!-- Header -->
-    <Header/>
-    <!-- Body -->
-    <router-view/>
-    <!-- Footer -->
-    <Footer/>
+  <div class="relative justify-center text-white inset-x-0 top-0 flex flex-col bg-black bg-opacity-30 dark:bg-opacity-50 p-0 min-h-screen">
+    <!-- Header
+    <Header/> -->
+    <!-- Body
+    <router-view/> -->
+    <!-- Footer
+    <Footer/> -->
+    
+    <div class="relative text-white inset-x-0 top-0 flex flex-col p-0">
+      <h1 class="font-bold text-center mt-10 ms:mt-20 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-9xl"><router-link to="/">Asia Studeler</router-link></h1>
+      <div class="mx-5">
+        <h2 class="text-center mt-12 text-4xl">We are under construction</h2>
+        <h3 class="text-center mt-12 text-2xl">Please come back shortly</h3>
+      </div>
+    </div>
   </div>
-  <a class="z-50 text-white text-sm 4xl:text-base font-bold bg-black rounded-tl-xl border border-white bottom-0 right-0 fixed align-bottom px-2 py-1" href="https://www.instagram.com/asiastudeler/" target="_blank" style="padding-top: 4px !important;">Asia Studeler</a>
+  <!--<a class="z-50 text-white text-sm 4xl:text-base font-bold bg-black rounded-tl-xl border border-white bottom-0 right-0 fixed align-bottom px-2 py-1" href="https://www.instagram.com/asiastudeler/" target="_blank" style="padding-top: 4px !important;">Asia Studeler</a>-->
 </template>
 
 <script>
