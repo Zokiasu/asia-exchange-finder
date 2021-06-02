@@ -1,1 +1,4 @@
 # Asia Exchange Finder
+
+Asia Exchange Finder est un projet de site communautaire regroupant les informations des divers universités proposant des échanges universitaire en direction des pays d'Asie. L'outil à pour but de simplifier la recherche d'une université correspondant au domaine dans lequel l'étudiante souhaiterait s'orienté et le pays dans lequel il souhaiterait faire un échange.
+L'outil est communautaire afin que tous puisse ajouter des nouvelles universités, école ou organisme qui proposerait des échanges universitaires vers des universités ou établissement en Asie, tout le monde peut participer à l'enrichissement de la base de donnée et voir son évolution à travers une page dédié à l'édition des différentes universités déjà enregistré ou en cours de validation par un administrateur du site.
