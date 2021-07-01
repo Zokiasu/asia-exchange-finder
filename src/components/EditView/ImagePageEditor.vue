@@ -9,11 +9,22 @@
                     <img class="h-full w-full object-cover object-center" v-lazy="university.universitySourceImageLink" alt="">
                 </div>
             </div>
-            <div class="flex flex-wrap col-start-1 col-end-7">
-                <div class="w-full space-y-3 pt-5">
-                    <label for="universitySourceName">Image Link</label>
-                    <input class="tracking-wide py-2 px-4 leading-relaxed appearance-none block w-full bg-gray-500 border border-gray-500 rounded focus:outline-none focus:border-red-700 focus:border-4" 
-                    id="University Picture Link" v-model="university.universitySourceImageLink" type="text" placeholder="University Picture Link">
+            <div id="image" class="flex flex-col xl:flex-row space-y-5 xl:space-y-0 xl:space-x-5">
+                <!--<img class="w-40 h-40 rounded-full object-cover" v-lazy="university.universitySourceImageLink">-->
+                <div>
+                    <button 
+                        class="px-3 py-1 rounded-sm text-xl font-semibold flex justify-center transition duration-500 ease-in-out bg-red-900 hover:bg-red-700 hover:border-white border border-transparent transform hover:-translate-y-0.5 hover:scale-100 hover:font-bold focus:outline-none max-h-10"
+                        @click="launchImageFile"
+                        :disabled="isUploadingImage"
+                        type="button">
+                        {{ isUploadingImage ? 'Uploading...' : 'Upload' }}
+                    </button>
+                    <input
+                        ref="imageFile"
+                        @change.prevent="uploadImageFile($event.target.files)"
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        class="hidden">
                 </div>
             </div>
         </div>
@@ -26,6 +37,7 @@
 
 <script>
     import MethodsGeneral from '../../Mixins/firebase'
+    import {apps} from '../../main.js'
 
     export default {
         mixins:[MethodsGeneral],
@@ -35,7 +47,8 @@
             return {
                 id: this.$route.query.id,
                 hello:"",
-                univ:{}
+                univ:{},
+                isUploadingImage: false,
             }
         },
 
@@ -49,6 +62,42 @@
             },
             cancelUniversity(){
                 this.$emit('cancelUniversity')
+            },
+
+            launchImageFile () {
+                this.$refs.imageFile.click()
+            },
+
+            uploadImageFile (files) {
+                if (!files.length) {
+                return
+                }
+                let file = files[0]
+
+                if (!file.type.match('image.*')) {
+                alert('Please upload an image.')
+                return
+                }
+
+                let metadata = {
+                contentType: file.type
+                }
+
+                this.isUploadingImage = true
+
+                let imageRef = apps.storage().ref(`university/${this.university.universitySourceName}`)
+
+                let uploadTask = imageRef.put(file, metadata).then((snapshot) => {
+                return snapshot.ref.getDownloadURL().then((url) => {
+                    return url
+                })
+                }).catch((error) => {
+                console.error(error)
+                })
+                uploadTask.then((url) => {
+                this.university.universitySourceImageLink = url
+                this.isUploadingImage = false
+                })
             },
         },
     }

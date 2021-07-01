@@ -9,11 +9,9 @@
       </div>
       <p class="invisible md:visible text-xl 2xl:text-2xl" v-if="userAuthenticated">Hi, {{actualUser.username}}</p>
       <button v-if="userAuthenticated" @click="signOut" class="invisible md:visible bg-red-800 rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log Out</button>
-      <button v-if="!userAuthenticated" @click="setVisibleLogin" class="invisible md:visible bg-blue-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log In</button>
-      <button v-if="!userAuthenticated" @click="setVisibleSignUp" class="invisible md:visible bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</button>
+      <router-link to="/login" v-if="!userAuthenticated" class="invisible md:visible bg-blue-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Log In</router-link>
+      <router-link to="/signup" v-if="!userAuthenticated" class="invisible md:visible bg-red-500 shadow-lg rounded-sm px-3 py-1 font-bold text-xs ms:text-md Button">Sign Up</router-link>
     </div>
-    <LoginPopup @loged="setUserAuthenticated" @created="setVisibleLogin" v-if="loginPopup" class="mx-auto z-50 flex flex-col"/>
-    <SignupPopUp @created="setVisibleSignUp" v-if="signupPopup" class="mx-auto z-50 flex flex-col"/>
 </template>
 
 <script>
