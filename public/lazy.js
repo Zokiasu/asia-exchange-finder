@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     var lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
-  
     if ("IntersectionObserver" in window) {
       let lazyBackgroundObserver = new IntersectionObserver(function(entries, observer) {
         entries.forEach(function(entry) {
