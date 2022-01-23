@@ -16,7 +16,7 @@
                 {{ universitySource.universitySourceCreator }}
             </p>
         </div>
-        <img class="h-full w-full object-cover object-center" v-lazy="universitySource.universitySourceImageLink" alt="">
+        <img loading="lazy" class="h-full w-full object-cover object-center" v-lazy="universitySource.universitySourceImageLink" alt="">
     </div>
     <!-- Delete -->
     <div v-else-if="removeView" class="bg-white border-red-500 border-4 rounded-lg overflow-hidden shadow-2xl relative flex flex-wrap content-center justify-center">

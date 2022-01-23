@@ -12,7 +12,7 @@
     <aside v-if="width <= 1280" class="transform top-0 left-0 w-full bg-white fixed h-full overflow-auto ease-in-out transition-all duration-1000 z-30" :class="isOpen ? 'translate-x-0' : '-translate-x-full'">
       <!-- Header -->
       <div>
-        <img class="relative h-60 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
+        <img loading="lazy" class="relative h-60 w-full object-cover object-center" v-bind:src="university.universitySourceImageLink" alt="">
         <div class="container absolute top-48 right-0 flex justify-end">
             <a :href="university.universitySourceWebsiteLink" target="_blank">
                 <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-xs font-medium leading-8 text-center text-white uppercase transition bg-black 
@@ -64,7 +64,7 @@
       <div class="grid grid-cols-5">
         <!-- Header -->
         <div class="relative">
-          <img class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
+          <img loading="lazy" class="relative h-60 w-full object-cover object-center border-white border-2 shadow-2xl" v-bind:src="university.universitySourceImageLink" alt="">
           <div class="absolute top-48 w-full justify-center flex">
               <a :href="university.universitySourceWebsiteLink" target="_blank">
                   <button @click="visitWebsiteUniversity()" class="inline-block px-4 py-1 text-sm 4xl:text-xl font-medium leading-8 text-center text-white transition bg-black 

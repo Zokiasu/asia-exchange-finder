@@ -5,7 +5,7 @@
             <p class="absolute w-full bg-white bg-opacity-80 p-5 bottom-0 block">
                 {{ university.universitySourceName }}
             </p>
-            <img class="h-full w-full object-cover object-center" v-lazy="university.universitySourceImageLink" alt="">
+            <img loading="lazy" class="h-full w-full object-cover object-center" :src="university.universitySourceImageLink" alt="">
         </div>
     </div>
 </template>
