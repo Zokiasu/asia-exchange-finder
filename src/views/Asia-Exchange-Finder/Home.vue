@@ -43,7 +43,7 @@
 
             <!-- University Card -->
             <transition-group name="slide-fade">
-                <div v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                <lazy-component v-if="visible" class="p-8 md:p-10 lg:px-20 2xl:px-32 grid gap-4 grid-cols-1 ms:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                     <card
                         class="w-full"
                         v-for="(university, index) in this.universitysSend.slice(0,minElement)"
@@ -59,7 +59,7 @@
                             <p v-if="!userConnected" class="text-center">Go to <router-link to="/signup" class="text-blue-500 font-semibold">register</router-link> and propose them to us!</p>
                         </div>
                     </transition>
-                </div>
+                </lazy-component>
                 <pulse-loader v-if="minElement <= this.universitysSend.length || !visible" class=" mt-10 m-auto"></pulse-loader>
             </transition-group>
 

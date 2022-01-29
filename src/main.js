@@ -34,7 +34,12 @@ firebase.auth().onAuthStateChanged((user) =>  {
     }
 })
 
-createApp(App).use(router).use(LazyLoading).use(Toaster).mount('#app')
+createApp(App).use(router).use(LazyLoading, {
+    preLoad: 1.3,
+    attempt: 3,
+    lazyComponent: true,
+    listenEvents: [ 'scroll' ]
+  }).use(Toaster).mount('#app')
 
 export default db
 export {apps, name, grade, analytics}
