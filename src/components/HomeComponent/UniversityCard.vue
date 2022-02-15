@@ -31,7 +31,7 @@ export default {
     methods: {
         openCard(nameUniversity, idUniversity) {
             analytics.logEvent({nameUniversity}, {nameUniversity})
-            this.$emit('onClick', idUniverùsity)
+            this.$emit('onClick', idUniversity)
         }
     }
 }
