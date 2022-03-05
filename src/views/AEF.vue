@@ -1,5 +1,5 @@
 <template>
-  <div class="relative text-white inset-x-0 top-0 flex flex-col p-0">
+  <div class="relative text-white inset-x-0 top-0 flex flex-col p-0 min-h-screen">
     <!-- Body -->
     <h1 class="font-bold text-center mt-10 ms:mt-20 text-4xl ms:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"><router-link to="/">Asia Exchange Finder</router-link></h1>
     <i class="text-center mt-5">(Beta Version)</i>
