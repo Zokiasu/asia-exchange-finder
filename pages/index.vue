@@ -1,13 +1,9 @@
 <template>
-  <a>{{tags}}</a>
+  <Tutorial />
 </template>
 
 <script>
 export default {
-    props:['tags']
+  name: 'IndexPage',
 }
 </script>
-
-<style>
-
-</style>
